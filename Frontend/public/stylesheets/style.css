@@ -1,0 +1,76 @@
+/* layout */
+html{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(243, 243, 243);
+}
+body{
+  height: 100%;
+  margin: 0;
+}
+.wrapper{
+  height: 92%; /* navbar height == 8% */
+}
+.sampleDiv{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.sampleDiv > div{
+  padding: 10px;
+}
+
+/* button */
+button{
+  background-color: #0D6EFD;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 18px;
+  margin: 10px;
+  transition: all 0.5s;
+}
+button:hover{
+  cursor: pointer;
+  opacity: 0.5;
+}
+.naverLogin{
+  background-color: #19CE60;
+  font-weight: bold;
+}
+.kakaoLogin{
+  background-color: #FAE100;
+  color: #3C1F19;
+  font-weight: bold;
+}
+
+/* navbar */
+.navbar{
+  display: flex;
+  width: 100vw;
+  height: 8%;
+  background-color: #526CE1;
+}
+.navbar > ul{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  color: white;
+  list-style: none;
+}
+
+.navbar a{
+  color: white;
+  text-decoration: none;
+}
+.navbar a:visited{
+  color: white;
+}
+
