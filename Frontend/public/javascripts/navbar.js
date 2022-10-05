@@ -1,13 +1,24 @@
 //서브메뉴 닫는 이벤트리스너
-document.getElementById('sampleDiv').addEventListener('mousedown', closeSub);
+document.getElementsByClassName('wrapper')[0].addEventListener('mousedown', closeSub);
 document.getElementById('mainMenu').addEventListener('mousedown', closeSub);
 document.getElementById('subMenu').addEventListener('mousedown', closeSub);
 
 //서브메뉴 닫는 함수
 function closeSub(event){
-    if(event.target == event.currentTarget.querySelector('.fa-chevron-down') || event.target == event.currentTarget.querySelector('.fa-paint-roller')){
+    console.log(event.target)
+    let targetUser = event.currentTarget.querySelector('.fa-chevron-down')
+    let targetColor = event.currentTarget.querySelector('.fa-paint-roller')
+    let targetSubDiv = event.currentTarget.querySelectorAll('.subDiv')
+
+    if(event.target == targetUser || event.target == targetColor){
         return;
     }
+    for(let i = 0; i < targetSubDiv.length; i++){
+        if(event.target == targetSubDiv[i]){
+            return;
+        }
+    }
+
     document.getElementsByClassName('userSub')[0].style.display = 'none';
     document.getElementsByClassName('bgSub')[0].style.display = 'none';
 }
