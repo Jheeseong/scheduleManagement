@@ -4,18 +4,18 @@ const checkLogIn = require('../config/passport/Middleware').checkLogIn
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { user: req.user });
 });
 
 router.get('/home', checkLogIn, function(req, res, next) {
-  res.render('home', { title: '대쉬보드' });
+  res.render('home', { user: req.user });
 });
 
 router.get('/calendar', checkLogIn, function(req, res, next) {
-  res.render('calendar', { title: '캘린더' });
+  res.render('calendar', { user: req.user });
 });
 router.get('/tagStatistics', checkLogIn, function(req, res, next) {
-  res.render('tagStatistics', { title: '태그 통계' });
+  res.render('tagStatistics', { user: req.user });
 });
 
 
