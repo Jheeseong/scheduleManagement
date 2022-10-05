@@ -2,56 +2,59 @@
       integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
       crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <div class="navbar" id="mainMenu">
-    <ul>
-        <li><a href="/home">대쉬보드</a></li>
-        <li><a href="/calendar">캘린더</a></li>
-        <li><a href="/tagStatistics">태그 통계</a></li>
-        <li class="userInfo">
-            <div style="width: 30px; height: 30px; border-radius: 100px; background-color: tomato" ;></div>
-            <div style="margin-left: 10px; margin-right: 10px">배도훈</div>
-            <div><i onclick="userSub();" class="fa-solid fa-chevron-down"></i></div>
-        </li>
-        <li><i onclick="bgSub();" class="fa-solid fa-paint-roller"></i></li>
-    </ul>
+    <div class="infoBox">
+        <div class="infoBox__top">
+            <ul>
+                <li class="userInfo">
+                    <div style="width: 60px; height: 60px; border-radius: 100px; background-color: tomato" ;></div>
+                    <div style="margin-left: 10px; margin-right: 10px">배도훈</div>
+                    <div><i onclick="userSub();" class="fa-solid fa-chevron-down"></i></div>
+                </li>
+            </ul>
+        </div>
+        <div class="infoBox__bottom">
+            <ul>
+                <li><a href="/home">대쉬보드</a></li>
+                <li><a href="/calendar">캘린더</a></li>
+                <li><a href="/tagStatistics">태그 통계</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="colorDiv">
+        <i onclick="bgSub();" class="fa-solid fa-paint-roller colorBtn"></i>
+    </div>
 </div>
 <div class="navbar" id="subMenu">
     <ul>
         <li class="userSub subDiv">
-            <div class="subDiv">1</div>
-            <div class="subDiv">2</div>
-            <div class="subDiv" onclick="location.href='/login'">로그아웃</div>
+            <div class="subDiv" onclick="location.href='/login'"><i class="fa-solid fa-arrow-right-from-bracket"></i> 로그아웃</div>
         </li>
         <li class="bgSub">
             <div class="colorHead subDiv">메뉴 색상 선택</div>
             <div class="colorRow subDiv">
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
+                <div class="subDiv colorElement" style="background-color: #F9F9F9" value="#F9F9F9"> </div>
+                <div class="subDiv colorElement" style="background-color: #FFE1E1" value="#FFE1E1"> </div>
+                <div class="subDiv colorElement" style="background-color: #FFDACA" value="#FFDACA"> </div>
             </div>
             <div class="colorRow subDiv">
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
+                <div class="subDiv colorElement" style="background-color: #E8E2D5" value="#E8E2D5"> </div>
+                <div class="subDiv colorElement" style="background-color: #D3EAF7" value="#D3EAF7"> </div>
+                <div class="subDiv colorElement" style="background-color: #D9F1E9" value="#D9F1E9"> </div>
             </div>
             <div class="colorRow subDiv">
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
+                <div class="subDiv colorElement" style="background-color: #FFB1B1" value="#FFB1B1"> </div>
+                <div class="subDiv colorElement" style="background-color: #FFCA96" value="#FFCA96"> </div>
+                <div class="subDiv colorElement" style="background-color: #FFE398" value="#FFE398"> </div>
             </div>
             <div class="colorRow subDiv">
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
+                <div class="subDiv colorElement" style="background-color: #A5DAC5" value="#A5DAC5"> </div>
+                <div class="subDiv colorElement" style="background-color: #ADD2E7" value="#ADD2E7"> </div>
+                <div class="subDiv colorElement" style="background-color: #505D72" value="#505D72"> </div>
             </div>
             <div class="colorRow subDiv">
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
-            </div>
-            <div class="colorRow subDiv">
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
-                <div class="subDiv"> </div>
+                <div class="subDiv colorElement" style="background-color: #4C7465" value="#4C7465"> </div>
+                <div class="subDiv colorElement" style="background-color: #4C4F50" value="#4C4F50"> </div>
+                <div class="subDiv colorElement" style="background-color: #B1B2FF" value="#B1B2FF"> </div>
             </div>
         </li>
     </ul>

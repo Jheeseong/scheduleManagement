@@ -5,11 +5,10 @@ document.getElementById('subMenu').addEventListener('mousedown', closeSub);
 
 //서브메뉴 닫는 함수
 function closeSub(event){
-    console.log(event.target)
     let targetUser = event.currentTarget.querySelector('.fa-chevron-down')
     let targetColor = event.currentTarget.querySelector('.fa-paint-roller')
     let targetSubDiv = event.currentTarget.querySelectorAll('.subDiv')
-
+    console.log(event.target);
     if(event.target == targetUser || event.target == targetColor){
         return;
     }
@@ -21,9 +20,6 @@ function closeSub(event){
 
     document.getElementsByClassName('userSub')[0].style.display = 'none';
     document.getElementsByClassName('bgSub')[0].style.display = 'none';
-}
-function menuColor() {
-    document.getElementsByClassName('navbar')[0].style.backgroundColor = '#000000';
 }
 
 function userSub() {
@@ -48,4 +44,11 @@ function bgSub() {
     else{
         bgSub.style.display = 'flex';
     }
+}
+
+let colorElement = document.getElementsByClassName('colorElement');
+for(let i = 0; i < colorElement.length; i++){
+    colorElement[i].addEventListener('click', function () {
+        document.getElementsByClassName('navbar')[0].style.backgroundColor = colorElement[i].getAttribute('value');
+    })
 }
