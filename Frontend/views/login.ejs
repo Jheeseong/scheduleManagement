@@ -11,11 +11,13 @@
     <link rel="stylesheet" href="/stylesheets/login/login.css">
 </head>
 <body>
-<%- include ('layout/navbar.ejs') %>
+<h1>로그인</h1>
 <div class="wrapper">
     <div class="loginBtnDiv">
-        <button class="naverLogin">네이버 로그인</button>
-        <button class="kakaoLogin">카카오 로그인</button>
+        <button class="naverLogin">
+            <a href="/login/auth/naver">네이버 로그인</button>
+        <button class="kakaoLogin">
+            <a href="/login/auth/kakao"> 카카오 로그인</button>
     </div>
 </div>
 </body>

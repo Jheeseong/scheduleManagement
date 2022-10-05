@@ -16,6 +16,12 @@ const userSchema = mongoose.Schema({
     email: {
         type: String,
         trim: true,
+    },
+    token: {
+        type: String
+    },
+    provider: {
+        type: String
     }
 })
 

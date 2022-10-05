@@ -3,13 +3,35 @@ const app = express(); // app생성
 const port = 3000;
 const path = require('path');
 const cookieParser = require('cookie-parser');
-
 const config = require('./Backend/config/MongoDB/key');
 const bodyParser = require("body-parser"); //body-parser 사용
+const session = require('express-session')
+
+const indexRouter = require('./Backend/routes/index');
+const loginRouter = require('./Backend/routes/login')
+const {User} = require("./Backend/models/User");
+
 app.use(bodyParser.urlencoded({ extended: true })); //application/x-www-form-urlencoded 로 된 데이터를 분석해서 가져올 수 있게 한다
 app.use(bodyParser.json()); //application/json 타입으로 된 데이터를 분석해서 가져올 수 있게 한다 -> json형식으로 파싱
 app.use('/', express.static("./Frontend/public"))
 app.use(cookieParser())
+
+app.use(session({
+    secret:'MySecret123',
+    resave: false,
+    saveUninitialized:true}))
+
+const passport = require('passport')
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+const middleware = require('./Backend/config/passport/middleware')
+middleware.serializeUser()
+middleware.deserializeUser()
+const APILogin = require('./Backend/config/passport/passport')
+APILogin.naver();
+APILogin.kakao();
 
 app.listen(port, () => console.log(`${port}포트입니다.`));
 
@@ -26,7 +48,6 @@ mongoose.connect(config.mongoURI, {
       console.log(err);
     });
 
-const indexRouter = require('./Backend/routes/index');
-
 
 app.use("/", indexRouter);
+app.use("/login", loginRouter)
