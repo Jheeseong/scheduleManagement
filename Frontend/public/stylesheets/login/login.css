@@ -1,7 +1,52 @@
-.loginBtnDiv{
+.bg{
+    height: 100%;
+    background-color: rgba(102, 103, 171, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100%;
+    width: 50%;
+    height: 50%;
+    background-color: white;
 }
+.content > div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content__top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 30%;
+}
+.content__title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: bold;
+    color: #224;
+    font-size: 48px;
+}
+.content__subtitle{
+    font-size: 20px;
+    font-weight: bold;
+}
+.content__body{
+    height: 70%;
+}
+

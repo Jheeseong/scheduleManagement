@@ -131,6 +131,9 @@ button:hover{
   display: flex;
   align-items: center;
 }
+.userDropDown{
+  cursor: pointer;
+}
 .colorDiv{
   width: 100px;
   height: 30px;
@@ -142,6 +145,10 @@ button:hover{
   align-items: center;
   right: 20px;
   bottom: 20px;
+  cursor: pointer;
+}
+.colorDiv:hover{
+  opacity: .5;
 }
 .colorBtn{
   color: white;
@@ -151,6 +158,7 @@ button:hover{
   top: 28%;
   background-color: inherit;
   border-radius: 10px;
+  transition: all 0.5s;
 }
 #subMenu ul{
   display: flex;
