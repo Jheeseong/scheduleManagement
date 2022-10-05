@@ -9,12 +9,15 @@
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/login/login.css">
+    <link rel="stylesheet" href="/stylesheets/Schedule/CreateEditSchedule.css">
     <script defer src="/javascripts/navbar.js"></script>
+    <script defer src="/javascripts/Schedule/CreateEditSchedule.js"></script>
 </head>
 <body>
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
     <div class="sampleDiv">
+        <button onclick="openModal()">추가</button>
         <div>카테고리 영역(생성, 삭제, 수정)</div>
         <div>공유받은 일정 영역(공유 받은 일정 카테고리 하위에 사용자 아이디로 항목 표시, 3단 트리구조 공유함 > 사용자이름 > 카테고리명)</div>
         <div>일정 목록 모달(+일정 생성 및 편집 모달)</div>
@@ -23,3 +26,4 @@
 </div>
 </body>
 </html>
+<%- include('./ScheduleModal.ejs')%>

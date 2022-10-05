@@ -18,15 +18,30 @@ const APILogin = {
                             name: profile.displayName,
                             email: profile.emails[0].value,
                             userId: profile.id,
+                            image: profile._json.profile_image,
                             provider: 'naver',
                             token: accessToken
                         });
                         user.save(function(err) {
                             if (err) console.log(err);
-                            console.log(user)
                             return done(err, user);
                         });
                     } else {
+                        User.findByIdAndUpdate(user._id, {
+                            $set: {
+                                name: profile.displayName,
+                                email: profile.emails[0].value,
+                                userId: profile.id,
+                                image: profile._json.profile_image,
+                                provider: 'naver',
+                                token: accessToken
+                            }
+                            }, function (err, user) {
+                            if (err) {
+                                window.alert("오류 발생")
+                                console.log(err);
+                            }
+                        });
                         return done(err, user);
                     }
                 });
@@ -42,21 +57,35 @@ const APILogin = {
                 User.findOne({
                     'userId': profile.id
                 }, function(err, user) {
-                    console.log(profile._json.kakao_account.email)
                     if (!user) {
                         user = new User({
                             name: profile.displayName,
                             email: profile._json && profile._json.kakao_account.email,
                             userId: profile.id,
+                            image: profile._json.properties.thumbnail_image,
                             provider: 'kakao',
                             token: accessToken
                         });
                         user.save(function(err) {
                             if (err) console.log(err);
-                            console.log(user)
                             return done(err, user);
                         });
                     } else {
+                        User.findByIdAndUpdate(user._id,{
+                            $set: {
+                                name: profile.displayName,
+                                email: profile._json && profile._json.kakao_account.email,
+                                userId: profile.id,
+                                image: profile._json.properties.thumbnail_image,
+                                provider: 'kakao',
+                                token: accessToken
+                            }
+                            }, function (err, user) {
+                                if (err) {
+                                    window.alert("오류 발생")
+                                    console.log(err);
+                                }
+                            })
                         return done(err, user);
                     }
                 });

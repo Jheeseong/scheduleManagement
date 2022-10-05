@@ -26,10 +26,10 @@ const passport = require('passport')
 app.use(passport.initialize())
 app.use(passport.session())
 
-const middleware = require('./Backend/config/passport/middleware')
+const middleware = require('./Backend/config/passport/Middleware')
 middleware.serializeUser()
 middleware.deserializeUser()
-const APILogin = require('./Backend/config/passport/passport')
+const APILogin = require('./Backend/config/passport/Passport')
 APILogin.naver();
 APILogin.kakao();
 

@@ -20,7 +20,7 @@ module.exports = {
         if(!req.isAuthenticated()){
             return next();
         } else {
-            res.redirect('/login');
+            res.redirect('/home');
         }
     },
     checkLogIn: (req, res, next) => {
