@@ -3,14 +3,15 @@ document.getElementsByClassName('wrapper')[0].addEventListener('mousedown', clos
 document.getElementById('mainMenu').addEventListener('mousedown', closeSub);
 document.getElementById('subMenu').addEventListener('mousedown', closeSub);
 
+
 //서브메뉴 닫는 함수
 function closeSub(event){
-    console.log(event.target)
     let targetUser = event.currentTarget.querySelector('.fa-chevron-down')
     let targetColor = event.currentTarget.querySelector('.fa-paint-roller')
+    let targetColorDiv = event.currentTarget.querySelector('.colorDiv')
     let targetSubDiv = event.currentTarget.querySelectorAll('.subDiv')
-
-    if(event.target == targetUser || event.target == targetColor){
+    console.log(event.target);
+    if(event.target == targetUser || event.target == targetColor || event.target == targetColorDiv){
         return;
     }
     for(let i = 0; i < targetSubDiv.length; i++){
@@ -21,9 +22,6 @@ function closeSub(event){
 
     document.getElementsByClassName('userSub')[0].style.display = 'none';
     document.getElementsByClassName('bgSub')[0].style.display = 'none';
-}
-function menuColor() {
-    document.getElementsByClassName('navbar')[0].style.backgroundColor = '#000000';
 }
 
 function userSub() {
@@ -38,6 +36,15 @@ function userSub() {
     }
 }
 
+/* 메뉴색 지정 버튼 나타내기 이벤트리스너 */
+document.getElementById('mainMenu').addEventListener('mouseover', function () {
+    document.getElementsByClassName('colorDiv')[0].style.display = 'flex';
+})
+/* 메뉴색 지정 버튼 감추기 이벤트리스너 */
+document.getElementById('mainMenu').addEventListener('mouseleave', function () {
+    document.getElementsByClassName('colorDiv')[0].style.display = 'none';
+})
+
 function bgSub() {
     document.getElementsByClassName('userSub')[0].style.display = 'none';
 
@@ -48,4 +55,11 @@ function bgSub() {
     else{
         bgSub.style.display = 'flex';
     }
+}
+
+let colorElement = document.getElementsByClassName('colorElement');
+for(let i = 0; i < colorElement.length; i++){
+    colorElement[i].addEventListener('click', function () {
+        document.getElementsByClassName('navbar')[0].style.backgroundColor = colorElement[i].getAttribute('value');
+    })
 }

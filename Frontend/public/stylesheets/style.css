@@ -13,24 +13,28 @@
 /* layout */
 html{
   width: 100vw;
+  max-width: 100%;
   height: 100vh;
   background-color: rgb(243, 243, 243);
 }
 body{
+  width: 100%;
   height: 100%;
   margin: 0;
 }
+
 .wrapper{
+  width: 100%;
   height: 92%; /* navbar height == 8% */
 }
-.sampleDiv{
+.wrapper__form{
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.sampleDiv > div{
+.wrapper__form > div{
   padding: 10px;
 }
 
@@ -61,12 +65,40 @@ button:hover{
 
 /* navbar */
 .navbar{
+  position: relative;
   display: flex;
-  width: 100vw;
-  height: 8%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 28%;
   background-color: #526CE1;
 }
-.navbar > ul{
+.infoBox{
+  width: 540px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.infoBox__top{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+ border-top-right-radius: 25px;
+ border-top-left-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.infoBox__bottom{
+  width: 100%;
+  height: 40%;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.navbar > div > div > ul{
   width: 100%;
   height: 100%;
   display: flex;
@@ -74,7 +106,7 @@ button:hover{
   align-items: center;
   margin: 0;
   padding: 0;
-  color: white;
+  color: #222222;
   list-style: none;
 }
 
@@ -84,33 +116,39 @@ button:hover{
   text-align: center;
 }
 
-.navbar ul li:last-child{
-  position: absolute;
-  right: 1%;
-  width: 100px;
-  padding: 0;
-}
-.navbar ul li:nth-child(4){
-  width: 150px;
-  position: absolute;
-  right: 5%;
-}
 .navbar a{
-  color: white;
+  color: #222222;
   text-decoration: none;
 }
 .navbar a:visited{
-  color: white;
+  color: #222222;
 }
 
 .userInfo{
+  font-size: 24px;
+  font-weight: bold;
+  color: #222222;
   display: flex;
   align-items: center;
 }
-
+.colorDiv{
+  width: 100px;
+  height: 30px;
+  background-color: #a8a8a8;
+  border-radius: 4px;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  right: 20px;
+  bottom: 20px;
+}
+.colorBtn{
+  color: white;
+}
 #subMenu{
   position: absolute;
-  top: 5%;
+  top: 28%;
   background-color: inherit;
   border-radius: 10px;
 }
@@ -135,37 +173,40 @@ button:hover{
 #subMenu li > div:not(.colorRow, .colorHead){
   width: 100%;
 }
-#subMenu li > div:hover:not(.colorRow){
+#subMenu li > div:hover:not(.colorRow, .colorHead){
   background-color: #8e8e8e;
   opacity: 0.5;
 }
 #subMenu ul li:first-child{
-  width: 120px;
+  width: 150px;
+  height: 25px;
   display: none;
   position: absolute;
-  top: 10px;
-  right: calc(10% + 30px);
+  top: -100px;
+  right: calc(50% - 75px);
 }
 #subMenu ul li:last-child{
   width: 250px;
-  height: 400px;
+  height: 350px;
   display: none;
   position: absolute;
   top: 10px;
   right: 1%;
+  padding: 5px;
 }
 .colorHead{
   font-size: 14px;
   font-weight: bold;
   width: 200px;
   height: 30px;
-  padding-top: 15px;
   text-align: left;
   padding-left: 20px;
+  cursor: default;
 }
 .colorRow{
   display: flex;
   justify-content: center;
+  cursor: default;
 }
 .colorRow div{
   margin: 10px 15px 10px 15px;
@@ -175,5 +216,6 @@ button:hover{
   background-color: darkslateblue;
 }
 .colorRow div:hover{
+  cursor: pointer;
   opacity: 0.5;
 }
