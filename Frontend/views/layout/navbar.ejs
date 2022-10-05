@@ -1,4 +1,7 @@
-<div class="navbar">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<div class="navbar" id="mainMenu">
     <ul>
         <li><a href="/home">대쉬보드</a></li>
         <li><a href="/calendar">캘린더</a></li>
@@ -8,5 +11,53 @@
         <li>프로필 사진</li>
         <li><a href="/logout">로그아웃</a></li>
         <li>메뉴색 변경</li>
+        <li class="userInfo">
+            <div style="width: 30px; height: 30px; border-radius: 100px; background-color: tomato" ;></div>
+            <div style="margin-left: 10px; margin-right: 10px">배도훈</div>
+            <div><i onclick="userSub();" class="fa-solid fa-chevron-down"></i></div>
+        </li>
+        <li><i onclick="bgSub();" class="fa-solid fa-paint-roller"></i></li>
+    </ul>
+</div>
+<div class="navbar" id="subMenu">
+    <ul>
+        <li class="userSub">
+            <div id="test1">1</div>
+            <div>2</div>
+            <div onclick="location.href='/login'">로그아웃</div>
+        </li>
+        <li class="bgSub">
+            <div class="colorHead">메뉴 색상 선택</div>
+            <div class="colorRow">
+                <div> </div>
+                <div> </div>
+                <div> </div>
+            </div>
+            <div class="colorRow">
+                <div> </div>
+                <div> </div>
+                <div> </div>
+            </div>
+            <div class="colorRow">
+                <div> </div>
+                <div> </div>
+                <div> </div>
+            </div>
+            <div class="colorRow">
+                <div> </div>
+                <div> </div>
+                <div> </div>
+            </div>
+            <div class="colorRow">
+                <div> </div>
+                <div> </div>
+                <div> </div>
+            </div>
+            <div class="colorRow">
+                <div> </div>
+                <div> </div>
+                <div> </div>
+            </div>
+        </li>
     </ul>
 </div>
