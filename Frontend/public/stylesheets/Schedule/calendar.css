@@ -1,0 +1,125 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 66%;
+}
+.category__form{
+    width: 20%;
+    height: 100%;
+    padding: 0 20px;
+    background-color: tomato;
+}
+.wrapper__form{
+    width: 80%;
+    background-color: darksalmon;
+}
+.form__subtitle{
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.modal_schedule {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+.modal_schedule--edit {
+    background-color: inherit;
+}
+.modal_schedule.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal_schedule_body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 400px;
+    height: 450px;
+    padding: 30px 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    transition: all 0.5s ease-in-out;
+}
+.modal_schedule > div:nth-child(2){
+    display: none;
+}
+.modal_schedule > div:nth-child(2).show{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.modal_schedule_body_top{
+    font-size: 24px;
+    font-weight: bold;
+    height: 10%;
+}
+.modal_schedule_body_mid{
+    width:100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.modal_schedule_body input{
+    border: 1px solid rgb(213, 213, 213);
+    border-radius: 6px;
+    width: 220px;
+    height: 30px;
+}
+
+.modal_schedule_body_mid input[type='checkbox']{
+    width: 15px;
+    height: 15px;
+}
+.modal_schedule_body_mid > div{
+    width: 100%;
+    padding: 10px 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal_schedule_body_mid > div:last-child{
+    margin-top: 25px;
+}
+.modal_schedule_body_mid > div > label{
+    width: 30%;
+    position: absolute;
+    left: 0px;
+}
+.modal_schedule_body_mid > div:first-child > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal_schedule_body_mid input[type="datetime-local"], #startDate, #endDate{
+    width: 100px;
+    margin: 0 9px;
+}
+.modal_schedule--edit .modal_schedule_body:last-child > div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.modal_schedule_body:last-child > div > input{
+    width: 75%;
+}
+.addrInput::placeholder{
+    color: #cccccc;
+}
+
+

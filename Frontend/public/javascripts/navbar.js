@@ -10,7 +10,6 @@ function closeSub(event){
     let targetColor = event.currentTarget.querySelector('.fa-paint-roller')
     let targetColorDiv = event.currentTarget.querySelector('.colorDiv')
     let targetSubDiv = event.currentTarget.querySelectorAll('.subDiv')
-    console.log(event.target);
     if(event.target == targetUser || event.target == targetColor || event.target == targetColorDiv){
         return;
     }
@@ -34,6 +33,7 @@ function userSub() {
     else{
         userSub.style.display = 'flex';
     }
+
 }
 
 /* 메뉴색 지정 버튼 나타내기 이벤트리스너 */
@@ -60,6 +60,22 @@ function bgSub() {
 let colorElement = document.getElementsByClassName('colorElement');
 for(let i = 0; i < colorElement.length; i++){
     colorElement[i].addEventListener('click', function () {
-        document.getElementsByClassName('navbar')[0].style.backgroundColor = colorElement[i].getAttribute('value');
-    })
+        let selectedColor = colorElement[i].getAttribute('value');
+        document.getElementsByClassName('navbar')[0].style.backgroundColor = selectedColor;
+
+        $.ajax({
+            type:'post',
+            url:'/user/menuColor',
+            data: {
+                menuColor : selectedColor
+            },
+            dataType:'json',
+            success : function(data){
+                alert("send data !");
+            },
+            error : function(err) {
+                alert("failed : " + err);
+            }
+        });
+    });
 }

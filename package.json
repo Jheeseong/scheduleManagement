@@ -17,6 +17,7 @@
     "global": "^4.4.0",
     "helmet": "^6.0.0",
     "http-errors": "~1.6.3",
+    "jquery": "^3.6.1",
     "mongoose": "^6.6.3",
     "morgan": "~1.9.1",
     "passport": "^0.6.0",

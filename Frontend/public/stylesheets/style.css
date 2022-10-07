@@ -40,27 +40,31 @@ body{
 
 /* button */
 button{
-  background-color: #0D6EFD;
+  background-color: #0098fe;
   color: white;
   border: none;
   border-radius: 6px;
   padding: 10px;
-  font-size: 18px;
   margin: 10px;
-  transition: all 0.5s;
+  transition: all 0.3s;
+}
+.btn-empty{
+  background-color: inherit;
+  color: #6D6F6D;
+  border: 1px solid #a8a8a8;
+}
+.btn-gray{
+   background-color: #ECECEF;
+   color: #a8a8a8;
+   border: 1px solid #a8a8a8;
+ }
+.btn-red{
+  background-color: #EA4335;
+  color: white;
 }
 button:hover{
   cursor: pointer;
-  opacity: 0.5;
-}
-.naverLogin{
-  background-color: #19CE60;
-  font-weight: bold;
-}
-.kakaoLogin{
-  background-color: #FAE100;
-  color: #3C1F19;
-  font-weight: bold;
+  opacity: 0.7;
 }
 
 /* navbar */
@@ -156,6 +160,7 @@ button:hover{
 #subMenu{
   position: absolute;
   top: 28%;
+  height: 0px;
   background-color: inherit;
   border-radius: 10px;
   transition: all 0.5s;
@@ -190,8 +195,8 @@ button:hover{
   height: 25px;
   display: none;
   position: absolute;
-  top: -100px;
-  right: calc(50% - 75px);
+  top: -160px;
+  right: calc(50% - 210px);
 }
 #subMenu ul li:last-child{
   width: 250px;
