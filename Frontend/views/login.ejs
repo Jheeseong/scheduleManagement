@@ -5,19 +5,40 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@900&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/login/login.css">
-    <script defer src="/javascripts/navbar.js"></script>
 </head>
 <body>
-<h1>로그인</h1>
-<div class="wrapper">
-    <div class="loginBtnDiv">
-        <button class="naverLogin">
-            <a href="/login/auth/naver">네이버 로그인</button>
-        <button class="kakaoLogin">
-            <a href="/login/auth/kakao"> 카카오 로그인</button>
+<div class="bg">
+    <div class="wrapper">
+        <div class="content">
+            <div class="content__top">
+                <div class="content__title">
+                    <div>👋</div>
+                    <div>Hello</div>
+                </div>
+                <div> </div>
+                <div class="content__subtitle">Choose a login platform and use all our services</div>
+            </div>
+            <div class="content__body">
+                <button class="naverLogin" onclick="location.href='/login/auth/naver'">
+                    <div>
+                        <img src="/img/naverLogo.png" alt="img" class="platformLogo">
+                    </div>
+                    <div>
+                        Login with Naver
+                    </div>
+                </button>
+                <button class="kakaoLogin" onclick="location.href='/login/auth/kakao'">
+                    <img src="/img/kakaoLogo.png" class="platformLogo">
+                    Login with Kakao
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 </body>

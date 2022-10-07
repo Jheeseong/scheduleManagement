@@ -25,6 +25,9 @@ const userSchema = mongoose.Schema({
     },
     provider: {
         type: String
+    },
+    menuColor: {
+        type: String
     }
 })
 

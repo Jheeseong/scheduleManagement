@@ -1,7 +1,69 @@
-.loginBtnDiv{
+
+.bg{
+    height: 100%;
+    background-color: rgba(102, 103, 171, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100%;
+    width: 40%;
+    height: 40%;
+    background-color: white;
+}
+.content > div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content__top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 40%;
+}
+.content__title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: bold;
+    color: #224;
+    font-size: 3em;
+}
+.content__subtitle{
+    font-size: 1em;
+    font-weight: bold;
+}
+.content__body{
+    height: 60%;
+}
+.naverLogin, .kakaoLogin{
+    padding: 2% 4%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.naverLogin{
+    background-color: #19CE60;
+}
+.kakaoLogin{
+    background-color: #FAE100;
+    color: #3C1F19;
+}
+.platformLogo{
+    width: 30px;
+    height: 30px;
 }

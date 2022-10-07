@@ -8,18 +8,24 @@
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/login/login.css">
-    <link rel="stylesheet" href="/stylesheets/Schedule/CreateEditSchedule.css">
+    <link rel="stylesheet" href="/stylesheets/Schedule/calendar.css">
     <script defer src="/javascripts/navbar.js"></script>
     <script defer src="/javascripts/Schedule/CreateEditSchedule.js"></script>
 </head>
 <body>
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
-    <div class="wrapper__form">
-        <div><strong>카테고리 영역(생성, 삭제, 수정)</strong></div>
+    <div class="category__form">
+        <div class="form__subtitle">카테고리</div>
+        <div>공유함 > 사용자이름 > 카테고리명</div>
+        <button onclick="openListModal()">일정 목록</button>
+        <div>생성, 삭제, 수정</div>
         <div>공유받은 일정 영역(공유 받은 일정 카테고리 하위에 사용자 아이디로 항목 표시, 3단 트리구조 공유함 > 사용자이름 > 카테고리명)</div>
         <div>일정 목록 모달(+일정 생성 및 편집 모달)</div>
         <div>카테고리 생성 및 편집 모달(+사용자 선택 모달)</div>
+    </div>
+    <div class="wrapper__form">
+
         <div><strong>캘린더 영역</strong></div>
         <div>월 단위 캘린더</div>
         <div>월 이동 버튼</div>
@@ -30,6 +36,9 @@
         <button onclick="openModal()">일정추가</button>
     </div>
 </div>
+<div class="modalDiv">
+<%- include('./ScheduleList.ejs')%>
+<%- include('./ScheduleEdit.ejs')%>
+</div>
 </body>
 </html>
-<%- include('./ScheduleModal.ejs')%>
