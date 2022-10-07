@@ -8,7 +8,8 @@
     width: 20%;
     height: 100%;
     padding: 0 20px;
-    background-color: tomato;
+    background-color: white;
+    color: #575757;
 }
 .wrapper__form{
     width: 80%;
@@ -18,6 +19,61 @@
     padding: 15px 0;
     font-size: 18px;
     font-weight: bold;
+}
+.subtitle--category{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #cccccc;
+    padding: 20px 0 17px 0;
+}
+.categoryAdd{
+    font-size: 12px;
+}
+.categoryTab{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.categoryTab > div{
+    padding: 5px 0;
+    width: 33%;
+    border: 1px solid #a8a8a8;
+    text-align: center;
+}
+.categoryTab > div:first-child{
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-collapse: collapse;
+}
+/*.categoryTab > div:nth-child(2){
+    border-left: 0;
+    border-right: 0;
+}*/
+.categoryTab > div:last-child{
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-collapse: collapse;
+}
+.categoryAdd{
+    text-align: right;
+}
+.categoryList{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 10px;
+    overflow: scroll;
+}
+.categoryRow{
+    width: calc(100% - 40px);
+    padding: 15px 20px;
+}
+.categoryRow:hover{
+background-color: #E1F8F0;
 }
 .modal_schedule {
     position: fixed;
@@ -29,9 +85,9 @@
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
 }
-.modal_schedule--edit {
+/*.modal_schedule--edit {
     background-color: inherit;
-}
+}*/
 .modal_schedule.show {
     display: flex;
     justify-content: center;

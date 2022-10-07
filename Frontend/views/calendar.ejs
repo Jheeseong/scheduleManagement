@@ -16,9 +16,41 @@
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
     <div class="category__form">
-        <div class="form__subtitle">카테고리</div>
-        <div>공유함 > 사용자이름 > 카테고리명</div>
-        <button onclick="openListModal()">일정 목록</button>
+        <div class="form__subtitle subtitle--category">
+            <div>
+                카테고리
+            </div>
+            <div class="categoryAdd">
+                <i class="fa-solid fa-plus"></i>
+                추가
+            </div>
+        </div>
+        <div class="categoryTab">
+            <!--<div>전체</div>-->
+            <div>My</div>
+            <div>공유함</div>
+        </div>
+        <div class="categoryList">
+            <div class="categoryRow" onclick="openListModal()">
+               카테고리1
+            </div>
+            <div class="categoryRow" onclick="openListModal()">
+               카테고리2
+            </div>
+            <div class="categoryRow" onclick="openListModal()">
+               카테고리3
+            </div>
+            <div class="categoryRow" onclick="openListModal()">
+               카테고리4
+            </div>
+            <div class="categoryRow" onclick="openListModal()">
+               카테고리5
+            </div>
+        </div>
+
+
+
+
         <div>생성, 삭제, 수정</div>
         <div>공유받은 일정 영역(공유 받은 일정 카테고리 하위에 사용자 아이디로 항목 표시, 3단 트리구조 공유함 > 사용자이름 > 카테고리명)</div>
         <div>일정 목록 모달(+일정 생성 및 편집 모달)</div>
