@@ -7,8 +7,6 @@ const config = require('./Backend/config/MongoDB/key');
 const bodyParser = require("body-parser"); //body-parser 사용
 const session = require('express-session')
 
-const indexRouter = require('./Backend/routes/index');
-const loginRouter = require('./Backend/routes/login')
 const {User} = require("./Backend/models/User");
 
 app.use(bodyParser.urlencoded({ extended: true })); //application/x-www-form-urlencoded 로 된 데이터를 분석해서 가져올 수 있게 한다
@@ -48,6 +46,10 @@ mongoose.connect(config.mongoURI, {
       console.log(err);
     });
 
+const indexRouter = require('./Backend/routes/index');
+const loginRouter = require('./Backend/routes/login')
+const scheduleRouter = require('./Backend/routes/Schedule')
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter)
+app.use("/schedule", scheduleRouter)
