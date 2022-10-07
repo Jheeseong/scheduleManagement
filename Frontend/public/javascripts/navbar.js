@@ -70,11 +70,11 @@ for(let i = 0; i < colorElement.length; i++){
                 menuColor : selectedColor
             },
             dataType:'json',
-            success : function(data){
-                alert("send data !");
+            success : function(data) {
+                console.log("send data !");
             },
             error : function(err) {
-                alert("failed : " + err);
+                console.log("failed : " + err);
             }
         });
     });

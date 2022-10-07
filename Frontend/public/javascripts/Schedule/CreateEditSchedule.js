@@ -49,3 +49,30 @@ function addrToggle() {
         map.relayout();
     }
 }
+
+function saveSchedule(userId) {
+    const arrayTag = [];
+    const schedules = {
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value,
+        title: document.getElementById('scheduleName').value,
+        content: document.getElementById('scheduleContent').value,
+        priority: document.getElementById('schedulePriority').value,
+        address: document.getElementById('addrInput').value,
+        tagInfo: arrayTag,
+        userInfo : userId
+    }
+    $.ajax({
+        type: 'POST',
+        data: schedules,
+        url: 'schedule/create',
+        dataType: "json",
+
+        success: function (res) {
+
+        },
+        error: function (err) {
+
+        }
+    })
+}
