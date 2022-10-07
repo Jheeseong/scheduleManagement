@@ -29,6 +29,7 @@ function openListModal() {
 }
 
 function openEditModal() {
+    listModal.classList.remove('show');
     editModal.classList.add('show')
     if (editModal.classList.contains('show')) {
         body.style.overflow = 'hidden';
