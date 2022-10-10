@@ -12,7 +12,7 @@ const ScheduleController = {
                 content: req.body.content,
                 priority: req.body.priority,
                 address: req.body.address,
-                // userInfo: req.body.userInfo,
+                userInfo: req.user._id,
                 tagInfo: [],
             });
 
@@ -28,7 +28,7 @@ const ScheduleController = {
             }));
             res.json({scheduleSuccess: true, message: "일정등록이 되었습니다."});
         } catch (err) {
-            return res.status(400).json({scheduleSuccess: false, err})
+            return res.status(400).json({scheduleSuccess: false, message:"일정등록이 실패하였습니다.",err: err})
         }
     },
     updateSchedule: async (req, res) => {

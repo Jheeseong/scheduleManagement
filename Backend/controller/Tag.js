@@ -32,6 +32,17 @@ const TagController = {
         catch (err) {
             return {tagSuccess:false, err: err};
         }
+    },
+    findTag: async (req, res) => {
+        try {
+            let findTag = await Tag.find()
+                .exec();
+
+            res.json({tags: findTag})
+
+        }catch (err) {
+            res.json({message: "findTag err", err: err})
+        }
     }
 }
 
