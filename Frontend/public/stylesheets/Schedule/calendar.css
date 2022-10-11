@@ -27,9 +27,15 @@
     border-bottom: 1px solid #cccccc;
     padding: 20px 0 17px 0;
 }
-.categoryAdd{
+.categoryAdd, .scheduleAdd{
     font-size: 12px;
 }
+
+.scheduleAdd > div{
+    cursor: pointer;
+    display: inline-block;
+}
+
 .categoryTab{
     margin-top: 20px;
     display: flex;
@@ -41,6 +47,7 @@
     width: 33%;
     border: 1px solid #a8a8a8;
     text-align: center;
+    cursor: pointer;
 }
 .categoryTab > div:first-child{
     border-top-left-radius: 6px;
@@ -61,19 +68,46 @@
 }
 .categoryList{
     width: 100%;
-    display: flex;
+/*    display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: column;*/
     margin-top: 10px;
-    overflow: scroll;
+    max-height: 400px;
+    overflow: auto;
+}
+.sharedCategory{
+    display: none;
 }
 .categoryRow{
     width: calc(100% - 40px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 15px 20px;
 }
-.categoryRow:hover{
-background-color: #E1F8F0;
+.categoryEditDiv{
+    visibility: hidden;
+}
+.categoryRow:hover .categoryEditDiv{
+    visibility: visible;
+}
+.categoryRow:hover:not(.sharedCategory .categoryRow){
+    cursor: pointer;
+    background-color: #E1F8F0;
+}
+.categoryRow__user{
+    cursor: pointer;
+    width: calc(100% - 15px);
+}
+.categoryRow__user__category{
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+}
+.categoryRow__user__category:hover{
+    cursor: pointer;
+    background-color: #E1F8F0;
 }
 .modal_schedule {
     position: fixed;
@@ -84,6 +118,7 @@ background-color: #E1F8F0;
     display: none;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
+    color: #575757;
 }
 /*.modal_schedule--edit {
     background-color: inherit;
@@ -98,8 +133,8 @@ background-color: #E1F8F0;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 400px;
-    height: 450px;
+    width: 610px;
+    height: 605px;
     padding: 30px 40px;
     background-color: white;
     border-radius: 10px;
@@ -151,11 +186,23 @@ background-color: #E1F8F0;
     margin-top: 25px;
 }
 .modal_schedule_body_mid > div > label{
+    font-size: 14px;
+    font-weight: bold;
     width: 15%;
     position: absolute;
     left: 0px;
 }
-.modal_schedule_body_mid > div:first-child > div{
+/* 일정 목록 */
+.modal_schedule_body_mid > .scheduleAdd{
+     display: block;
+     text-align: right;
+ }
+.modal_schedule--list table{
+    width: 100%;
+    text-align: center;
+}
+
+.modal_schedule_body_mid > div:first-child > div:not(.scheduleAdd > div){
     display: flex;
     justify-content: center;
     align-items: center;
@@ -176,6 +223,9 @@ background-color: #E1F8F0;
 }
 .addrInput::placeholder{
     color: #cccccc;
+}
+.modal_schedule_body .scheduleTag{
+    height: 116px;
 }
 .autoTagList{
     position: absolute;

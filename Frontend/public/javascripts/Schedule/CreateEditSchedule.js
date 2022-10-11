@@ -111,7 +111,7 @@ function searchTag(event) {
     const tags = JSON.parse(localStorage.getItem('content'))
     const str = document.getElementById('scheduleTag').value;
     const tagList = document.querySelector('.tagList')
-    const tagListDiv = document.querySelector('.tagListDiv')
+    const scheduleTag = document.querySelector('.scheduleTag')
 
     console.log(tags)
     if (str.length) {
@@ -133,39 +133,66 @@ function searchTag(event) {
     for(let i = 0; i < autoTag.length; i++){
         autoTag[i].addEventListener('click', function () {
             let selectedTag = autoTag[i].getAttribute('value');
-            tagListDiv.innerHTML += '<div class ="autoTagDiv">' +
+            scheduleTag.innerHTML += '<div class ="autoTagDiv ' + selectedTag + '"  onclick="deleteTag(\'' + selectedTag + '\')">' +
                 '<span class="tagValue" id="tagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
-                '<img class="deleteTagValue" src="/img/cancel.png">' +
+                '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
                 '</div>'
             tagList.innerHTML=''
             document.getElementById('scheduleTag').value = null
-            tagMotion()
+            tagMotion();
         })
     }
 
     if (event.keyCode == 13) {
-        tagListDiv.innerHTML += '<div class = "autoTagDiv">' +
+        scheduleTag.innerHTML += '<div class = "autoTagDiv ' + str + '" onclick="deleteTag(\'' + str + '\')">' +
             '<span class="tagValue" id="tagValue" value="' + str +'">' + str + '</span>' +
-            '<img class="deleteTagValue" src="/img/cancel.png">' +
+            '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
             '</div>'
         tagList.innerHTML=''
-        document.getElementById('scheduleTag').value = null
+        /*document.getElementById('scheduleTag').value = null*/
+        tagMotion();
     }
-    tagMotion()
+}
+function tagMotion() {
+    let autoTagDiv = document.getElementsByClassName('autoTagDiv')
 
-    function tagMotion() {
-        const autoTagDiv = document.getElementsByClassName('autoTagDiv')
+    for (let i = 0; i < autoTagDiv.length; i++) {
+        document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseover', function () {
+            console.log(i);
+            document.getElementsByClassName('deleteTagValue')[i].style.display = 'flex';
+        })
+        document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseleave', function () {
+            document.getElementsByClassName('deleteTagValue')[i].style.display = 'none';
+        })
+    }
+}
 
-        for (let i = 0; i < autoTagDiv.length; i++) {
-            document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseover', function () {
-                document.getElementsByClassName('deleteTagValue')[i].style.display = 'flex';
-            })
-            document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseleave', function () {
-                document.getElementsByClassName('deleteTagValue')[i].style.display = 'none';
-            })
-            document.getElementsByClassName('deleteTagValue')[i].addEventListener('click', function () {
-                autoTagDiv[i].remove();
-            })
-        }
+function deleteTag(selectedTag){
+    console.log(selectedTag);
+    /*document.getElementsByClassName('aaa')[0].remove();*/
+    document.querySelector(`.autoTagDiv.${selectedTag}`).remove();
+}
+
+/* 카테고리 영역 내 공유함 탭 클릭 시 */
+function sharedCategory(){
+    document.getElementsByClassName('myCategory')[0].style.display = 'none';
+    document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
+}
+
+/* 카테고리 영역 내 my 탭 클릭 시 */
+function myCategory(){
+    document.getElementsByClassName('sharedCategory')[0].style.display = 'none';
+    document.getElementsByClassName('myCategory')[0].style.display = 'block';
+}
+
+/* 공유함에서 사용자 클릭 시 */
+function sharedCategoryList(i){
+    let categoryList = document.getElementsByClassName('categoryRow__user__categoryList')[i];
+    console.log(categoryList.style.display);
+    if(categoryList.style.display == 'none'){
+        categoryList.style.display = 'block';
+    }
+    else if(categoryList.style.display == 'block'){
+        categoryList.style.display = 'none';
     }
 }
