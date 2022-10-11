@@ -150,8 +150,9 @@ function searchTag(event) {
             '</div>'
         tagList.innerHTML=''
         document.getElementById('scheduleTag').value = null
+        tagMotion()
     }
-    tagMotion()
+
 
     function tagMotion() {
         const autoTagDiv = document.getElementsByClassName('autoTagDiv')

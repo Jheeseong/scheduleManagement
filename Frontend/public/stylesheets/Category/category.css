@@ -1,0 +1,61 @@
+.modal_category {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+.modal_category.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal_category_body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 400px;
+    height: 450px;
+    padding: 30px 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    transition: all 0.5s ease-in-out;
+}
+.modal_category > div:nth-child(2){
+    display: none;
+}
+.modal_category > div:nth-child(2).show{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.modal_category_body_top{
+    font-size: 24px;
+    font-weight: bold;
+    height: 10%;
+}
+.modal_category_body_mid{
+    width:100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.modal_category_body input{
+    border: 1px solid rgb(213, 213, 213);
+    border-radius: 6px;
+    width: 220px;
+    height: 30px;
+}
+
+.modal_category_body_mid input[type='checkbox']{
+    width: 15px;
+    height: 15px;
+}

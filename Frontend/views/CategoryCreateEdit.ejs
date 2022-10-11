@@ -1,0 +1,44 @@
+<div class="modal_category modal_category--createEdit">
+    <div class="modal_category_body">
+        <div class="modal_category_body_top">일정 목록</div>
+        <div class="modal_category_body_mid">
+            <div>
+                <label>제목</label>
+                <div>
+                    <input type="text" id="categoryName" class="categoryName">
+                </div>
+            </div>
+            <div>
+                <div class="tagListDiv"></div>
+                <div class="tagList"></div>
+                <label>태그</label>
+                <input type="input" id="categoryTag" class="categoryTag" onkeyup="">
+            </div>
+            <div>
+                <label>공유 유저</label>
+                <input onclick="addUserToggle()" type="checkbox" id="userCheckbox" class="userCheckbox">
+                <div>공유 유저 여부</div>
+            </div>
+        </div>
+        <div class="categoryBtnDiv">
+            <button class="btn-empty" onclick="closeCategoryModal(this)">
+                닫기
+            </button>
+            <button>
+                저장
+            </button>
+        </div>
+    </div>
+    <div class="modal_category_body">
+        <div class="Adduser_top">
+            <div>
+                <span>담당자</span>
+                <span>0</span>
+            </div>
+            <div>
+                <button>공유 유저 추가</button>
+            </div>
+        </div>
+        <div class="Adduser_mid"></div>
+    </div>
+</div>

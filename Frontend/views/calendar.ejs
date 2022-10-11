@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/login/login.css">
     <link rel="stylesheet" href="/stylesheets/Schedule/calendar.css">
+    <link rel="stylesheet" href="/stylesheets/Category/category.css">
     <script defer src="/javascripts/navbar.js"></script>
     <script defer src="/javascripts/Schedule/CreateEditSchedule.js"></script>
+    <script defer src="/javascripts/Category/CreateEditCategory.js"></script>
     <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
@@ -22,7 +24,7 @@
             <div>
                 카테고리
             </div>
-            <div class="categoryAdd">
+            <div class="categoryAdd" onclick="openCategoryModal()">
                 <i class="fa-solid fa-plus"></i>
                 추가
             </div>
@@ -70,8 +72,9 @@
     </div>
 </div>
 <div class="modalDiv">
-<%- include('./ScheduleList.ejs')%>
-<%- include('./ScheduleEdit.ejs')%>
+    <%- include('./ScheduleList.ejs')%>
+    <%- include('./ScheduleEdit.ejs')%>
+    <%- include('./CategoryCreateEdit.ejs')%>
 </div>
 </body>
 </html>

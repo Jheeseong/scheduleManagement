@@ -1,5 +1,4 @@
 const { Schedule } = require('../models/Schedule')
-const { Tag } = require('../models/Tag')
 const TagController = require('../controller/Tag')
 
 const ScheduleController = {
@@ -72,11 +71,11 @@ const ScheduleController = {
         try {
             console.log(req.params.id)
             await Schedule.deleteOne({_id: req.params.id});
-            res.json({scheduleDelete: true, message: "일정삭제를 완료하였습니다."})
+            res.json({scheduleDelete: true, message: "일정 삭제를 완료하였습니다."})
         } catch (err) {
-            return res.status(400).json({scheduleDelete: false, err: err})
+            return res.status(400).json({scheduleDelete: false, message: "일정 삭제를 실패하였습니다.", err: err})
         }
     }
 }
 
-module.exports = ScheduleController
+module.exports = ScheduleController;

@@ -57,6 +57,7 @@
     border-collapse: collapse;
 }
 .categoryAdd{
+    cursor: pointer;
     text-align: right;
 }
 .categoryList{
