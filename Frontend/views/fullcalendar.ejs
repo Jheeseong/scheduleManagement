@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/common@5.11.3/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.11.3/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.11.3/main.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/common@5.11.3/main.min.js"></script>
+<script defer>
+    let calendar;
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            selectable: true,
+            dateClick: function(info) {
+                alert('clicked ' + info.dateStr);
+            },
+            select: function(info) {
+                alert('selected ' + info.startStr + ' to ' + info.endStr);
+            },
+            initialDate: '2022-08-07',
+            headerToolbar: {
+                left: 'prevYear,prev,next,nextYear today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: [
+                {
+                    title: 'All Day Event',
+                    start: '2022-08-01'
+                },
+                {
+                    title: 'Long Event',
+                    start: '2022-08-07',
+                    end: '2022-08-10'
+                },
+                {
+                    groupId: '999',
+                    title: 'Repeating Event',
+                    start: '2022-08-09T16:00:00'
+                },
+                {
+                    groupId: '999',
+                    title: 'Repeating Event',
+                    start: '2022-08-16T16:00:00'
+                },
+                {
+                    title: 'Conference',
+                    start: '2022-08-11',
+                    end: '2022-08-13'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2022-08-12T10:30:00',
+                    end: '2022-08-12T12:30:00'
+                },
+                {
+                    title: 'Lunch',
+                    start: '2022-08-12T12:00:00'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2022-08-12T14:30:00'
+                },
+                {
+                    title: 'Birthday Party',
+                    start: '2022-08-13T07:00:00'
+                },
+                {
+                    title: 'Click for Google',
+                    url: 'http://google.com/',
+                    start: '2022-08-28'
+                }
+            ]
+        });
+
+        calendar.render();
+    });
+</script>
+<body>
+    <div class="fc-toolbar">
+        <button onclick="openListModal()">1</button>
+    </div>
+    <div id='calendar' class="full_calendar fc"></div>
+</body>

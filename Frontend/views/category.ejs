@@ -1,43 +1,40 @@
-<div class="category__form">
-    <div class="form__subtitle subtitle--category">
-        <div>
-            카테고리
-        </div>
-        <div class="categoryAdd" onclick="openCategoryModal()">
-            <i class="fa-solid fa-plus"></i>
-            추가
+<div class="form__subtitle subtitle--category">
+    <div>
+        카테고리
+    </div>
+    <div class="categoryAdd" onclick="openCategoryModal()">
+        <i class="fa-solid fa-plus"></i>
+        추가
+    </div>
+</div>
+<div class="categoryTab">
+    <!--<div>전체</div>-->
+    <div onclick="myCategory()">My</div>
+    <div onclick="sharedCategory()">공유함</div>
+</div>
+<!-- my카테고리 -->
+<div class="categoryList myCategory">
+<% for(let i = 0; i < 10; i++){%>
+    <div class="categoryRow">
+        <div>카테고리<%= i %></div>
+        <div class="categoryEditDiv">
+            <i class="fa-solid fa-pen"></i> <i class="fa-solid fa-trash"></i>
         </div>
     </div>
-    <div class="categoryTab">
-        <!--<div>전체</div>-->
-        <div onclick="myCategory()">My</div>
-        <div onclick="sharedCategory()">공유함</div>
-    </div>
-    <!-- my카테고리 -->
-    <div class="categoryList myCategory">
+<% } %>
+</div>
+<!-- 공유함 -->
+<div class="categoryList sharedCategory">
     <% for(let i = 0; i < 10; i++){%>
         <div class="categoryRow">
-            <div>카테고리<%= i %></div>
-            <div class="categoryEditDiv">
-                <i class="fa-solid fa-pen"></i> <i class="fa-solid fa-trash"></i>
+            <div class="categoryRow__user">
+                <div class="categoryRow__user__name" onclick="sharedCategoryList(<%= i %>)">사용자<%= i %></div>
+                <div class="categoryRow__user__categoryList" style="display: none">
+                    <% for(let j = 0; j < 5; j++){ %>
+                        <div class="categoryRow__user__category">사용자<%= i %>의 카테고리<%= j %></div>
+                    <% }%>
+                </div>
             </div>
         </div>
     <% } %>
-    </div>
-    <!-- 공유함 -->
-    <div class="categoryList sharedCategory">
-        <% for(let i = 0; i < 10; i++){%>
-            <div class="categoryRow">
-                <div class="categoryRow__user">
-                    <div class="categoryRow__user__name" onclick="sharedCategoryList(<%= i %>)">사용자<%= i %></div>
-                    <div class="categoryRow__user__categoryList" style="display: none">
-                        <% for(let j = 0; j < 5; j++){ %>
-                            <div class="categoryRow__user__category">사용자<%= i %>의 카테고리<%= j %></div>
-                        <% }%>
-                    </div>
-                </div>
-            </div>
-        <% } %>
-    </div>
-    <div>카테고리 생성 및 편집 모달(+사용자 선택 모달)</div>
 </div>

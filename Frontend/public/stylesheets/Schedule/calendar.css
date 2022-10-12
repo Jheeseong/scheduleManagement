@@ -2,18 +2,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 66%;
+    height: 72%;
 }
-.category__form{
+.category--form{
     width: 20%;
     height: 100%;
     padding: 0 20px;
     background-color: white;
     color: #575757;
+    box-shadow: 1px 1px 5px 1px #8e8e8e;
 }
-.wrapper__form{
+.calendar--form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 80%;
-    background-color: darksalmon;
+    height: 100%;
+    padding: 0 20px;
+    background-color: white;
+    color: #575757;
+    box-shadow: 1px 1px 5px 1px #8e8e8e;
+}
+#calendar{
+    width: 800px;
 }
 .form__subtitle{
     padding: 15px 0;
@@ -34,6 +45,7 @@
 .scheduleAdd > div{
     cursor: pointer;
     display: inline-block;
+    margin-right: 5%;
 }
 
 .categoryTab{
@@ -54,10 +66,6 @@
     border-bottom-left-radius: 6px;
     border-collapse: collapse;
 }
-/*.categoryTab > div:nth-child(2){
-    border-left: 0;
-    border-right: 0;
-}*/
 .categoryTab > div:last-child{
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -69,12 +77,7 @@
 }
 .categoryList{
     width: 100%;
-/*    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;*/
     margin-top: 10px;
-    max-height: 400px;
     overflow: auto;
 }
 .sharedCategory{
@@ -164,11 +167,23 @@
     align-items: center;
     flex-direction: column;
 }
-.modal_schedule_body input{
+.modal_schedule_body input:not(.scheduleTag), .tagDiv{
     border: 1px solid rgb(213, 213, 213);
     border-radius: 6px;
     width: 220px;
     height: 30px;
+    padding: 5px 16px;
+}
+#schedulePriority{
+    padding: 0;
+}
+.scheduleTag{
+    width: 150px;
+    border: none;
+    margin-top: 5px;
+}
+.scheduleTag:focus{
+    outline: none;
 }
 
 .modal_schedule_body_mid input[type='checkbox']{
@@ -211,6 +226,7 @@
 .modal_schedule_body_mid input[type="datetime-local"], #startDate, #endDate{
     width: 100px;
     margin: 0 9px;
+    padding: 5px 8px;
 }
 .modal_schedule--edit .modal_schedule_body:last-child > div{
     display: flex;
@@ -225,33 +241,56 @@
 .addrInput::placeholder{
     color: #cccccc;
 }
-.modal_schedule_body .scheduleTag{
+.tagDiv{
     height: 116px;
+    padding: 16px;
+    flex-wrap: wrap;
+}
+.tagListDiv{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
 }
 .autoTagList{
+    display: flex;
     position: absolute;
-    width: 246px;
+    bottom: 145px;
+    width: 254px;
     max-height: 346px;
     overflow: auto;
     background-color: white;
     border: solid 0.5px #a8a8a8;
     padding: 12px;
     box-sizing: border-box;
+    flex-wrap: wrap;
     z-index: 9999
+}
+.autoTagDiv{
+    display: inline;
+    margin: 8px 15px 8px 0;
 }
 .autoTag, .tagValue{
     cursor: pointer;
     list-style:none;
-    margin-bottom: 8px;
     color: #a8a8a8;
     align-items: center;
     font-size: 15px;
     border-radius: 4px;
     background-color: #f5f5f5;
-    padding: 0px 4px 0 4px;
-    flex-wrap: wrap;
+    padding: 0px 4px;
     height: fit-content;
     width: fit-content;
+}
+.autoTagDiv{
+    position: relative;
+}
+.autoTagDiv i{
+    background-color: white;
+    position: absolute;
+    right: -12px;
+    bottom: 4px;
+    font-size: 14px;
 }
 .deleteTagValue{
     display: none;
