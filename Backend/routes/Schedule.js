@@ -11,6 +11,8 @@ router.post('/update/:id',checkLogIn, scheduleController.updateSchedule);
 
 router.post('/delete/:id',checkLogIn, scheduleController.deleteSchedule);
 
+router.post('/find/:id', scheduleController.findScheduleById);
+
 router.post('/tagsearch',checkLogIn, tagController.findTag)
 
 module.exports = router;

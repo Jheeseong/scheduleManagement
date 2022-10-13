@@ -67,9 +67,19 @@ const ScheduleController = {
             return res.status(400).json({scheduleUpdate: false, err: err})
         }
     },
+    findScheduleById: async (req, res) => {
+        try {
+            let findSchedule = await Schedule.findOne({_id: req.params.id})
+                .exec();
+            console.log(findSchedule)
+            res.json({schedule: findSchedule, findScheduleSuccess: true})
+        } catch (err) {
+            console.log(err)
+            res.json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
+        }
+    },
     deleteSchedule: async (req, res) => {
         try {
-            console.log(req.params.id)
             await Schedule.deleteOne({_id: req.params.id});
             res.json({scheduleDelete: true, message: "일정 삭제를 완료하였습니다."})
         } catch (err) {
