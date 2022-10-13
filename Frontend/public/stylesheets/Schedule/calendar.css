@@ -24,7 +24,8 @@
     box-shadow: 1px 1px 5px 1px #8e8e8e;
 }
 #calendar{
-    width: 50%;
+    width: 800px;
+    min-width: 700px;
 }
 .form__subtitle{
     padding: 15px 0;

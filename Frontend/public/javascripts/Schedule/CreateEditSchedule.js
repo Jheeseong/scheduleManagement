@@ -8,10 +8,14 @@ listModal.addEventListener('mousedown', closeModal)
 editModal.addEventListener('mousedown', closeModal)
 
 /* 모달창 닫는 함수 */
-function closeModal(event){
+function closeModal(event, modal){
     if(event.currentTarget == event.target){
-        listModal.classList.remove('show');
-        editModal.classList.remove('show');
+        if(modal == 'list'){
+            listModal.classList.remove('show');
+        }
+        else if(modal == 'edit'){
+            editModal.classList.remove('show');
+        }
         localStorage.clear()
 
         /* 체크박스 및 카카오맵 모달 해제 */
@@ -46,7 +50,7 @@ function openEditModal() {
 
         }
     })
-    listModal.classList.remove('show');
+    mapModal.classList.remove('show');
     editModal.classList.add('show')
     if (editModal.classList.contains('show')) {
         body.style.overflow = 'hidden';
