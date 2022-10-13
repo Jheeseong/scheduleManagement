@@ -26,6 +26,7 @@
 #calendar{
     width: 800px;
     min-width: 700px;
+    height: 90%;
 }
 .form__subtitle{
     padding: 15px 0;
@@ -78,8 +79,9 @@
 }
 .categoryList{
     width: 100%;
+    height: 70%;
     margin-top: 10px;
-    overflow: auto;
+    overflow: auto
 }
 .sharedCategory{
     display: none;
@@ -211,9 +213,9 @@
 }
 /* 일정 목록 */
 .modal_schedule_body_mid > .scheduleAdd{
-     display: block;
-     text-align: right;
- }
+    display: block;
+    text-align: right;
+}
 .modal_schedule--list table{
     width: 100%;
     text-align: center;
@@ -306,6 +308,5 @@
     vertical-align: sub;
     margin-left: 4px;
 }
-
 
 
