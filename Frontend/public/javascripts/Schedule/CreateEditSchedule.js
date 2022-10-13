@@ -111,19 +111,24 @@ function searchTag(event) {
     const tags = JSON.parse(localStorage.getItem('content'))
     const str = document.getElementById('scheduleTag').value;
     const tagList = document.querySelector('.tagList')
-    const scheduleTag = document.querySelector('.scheduleTag')
+    const tagListDiv = document.querySelector('.tagListDiv')
 
     console.log(tags)
     if (str.length) {
         tagList.innerHTML =
             '<ul id="autoTagListUl" class="autoTagList"></ul>';
         const autoTagList = document.querySelector('.autoTagList');
+        let bool = false;
         tags.map((res) => {
             if (res.indexOf(str) > -1) {
                 autoTagList.innerHTML +=
                     '<li class="autoTag" value="'+ res +'">' + res + '</li>'
+                    bool = true;
             }
         });
+        if(bool == false){
+            tagList.innerHTML = '';
+        }
     } else {
         tagList.innerHTML = '';
     }
@@ -133,23 +138,23 @@ function searchTag(event) {
     for(let i = 0; i < autoTag.length; i++){
         autoTag[i].addEventListener('click', function () {
             let selectedTag = autoTag[i].getAttribute('value');
-            scheduleTag.innerHTML += '<div class ="autoTagDiv ' + selectedTag + '"  onclick="deleteTag(\'' + selectedTag + '\')">' +
+            tagListDiv.innerHTML += '<div class ="autoTagDiv ' + selectedTag + '"  onclick="deleteTag(\'' + selectedTag + '\')">' +
                 '<span class="tagValue" id="tagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
                 '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
                 '</div>'
-            tagList.innerHTML=''
+            tagList.innerHTML= ''
             document.getElementById('scheduleTag').value = null
             tagMotion();
         })
     }
 
     if (event.keyCode == 13) {
-        scheduleTag.innerHTML += '<div class = "autoTagDiv ' + str + '" onclick="deleteTag(\'' + str + '\')">' +
+        tagListDiv.innerHTML += '<div class = "autoTagDiv ' + str + '" onclick="deleteTag(\'' + str + '\')">' +
             '<span class="tagValue" id="tagValue" value="' + str +'">' + str + '</span>' +
             '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
             '</div>'
-        tagList.innerHTML=''
-        /*document.getElementById('scheduleTag').value = null*/
+        tagList.innerHTML = ''
+        document.getElementById('scheduleTag').value = null
         tagMotion();
     }
 }

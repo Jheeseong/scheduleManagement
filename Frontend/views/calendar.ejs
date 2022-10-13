@@ -14,22 +14,17 @@
     <script defer src="/javascripts/Schedule/CreateEditSchedule.js"></script>
     <script defer src="/javascripts/Category/CreateEditCategory.js"></script>
     <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
-
 </head>
 <body>
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
-    <%- include ('category.ejs') %>
-    <div class="wrapper__form">
-        <button onclick="openListModal()">일자 클릭</button>
-        <div><strong>캘린더 영역</strong></div>
-        <div>월 단위 캘린더</div>
-        <div>월 이동 버튼</div>
-        <div>년 이동 버튼</div>
-        <div>현재 표시되고 있는 년, 월 표시 영역</div>
-        <div>오늘 일자 표시</div>
-        <div>캘린더에 일자 표시</div>
+    <div class="category--form">
+        <%- include ('category.ejs') %>
     </div>
+    <!--<div class="calendar&#45;&#45;form">
+        <%- include ('fullcalendar.ejs') %>
+    </div>-->
+        <%- include ('mobiscroll-javascript-eventcalendar.ejs') %>
 </div>
 <div class="modalDiv">
     <%- include('./ScheduleList.ejs')%>

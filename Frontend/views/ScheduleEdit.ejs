@@ -24,10 +24,14 @@
                 <span id="value1">3</span>
             </div>
             <div>
-                <div class="tagListDiv"></div>
                 <div class="tagList"></div>
                 <label>태그</label>
-                <input type="input" id="scheduleTag" class="scheduleTag" onkeyup="searchTag(window.event)">
+                <div class="tagDiv">
+                    <div class="tagCover">
+                        <div class="tagListDiv"></div>
+                        <input type="input" id="scheduleTag" class="scheduleTag" onkeyup="searchTag(window.event)" placeholder="태그 입력" maxlength="20" autocomplete="off">
+                    </div>
+                </div>
             </div>
             <div>
                 <label>주소</label>
