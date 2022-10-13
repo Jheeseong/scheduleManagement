@@ -1,6 +1,6 @@
 <div class="modal_category modal_category--createEdit">
     <div class="modal_category_body">
-        <div class="modal_category_body_top">일정 목록</div>
+        <div class="modal_category_body_top">카테고리 생성</div>
         <div class="modal_category_body_mid">
             <div>
                 <label>제목</label>
@@ -30,15 +30,30 @@
         </div>
     </div>
     <div class="modal_category_body">
-        <div class="Adduser_top">
+        <div class="modal_category_body_Adduser_top">
             <div>
                 <span>담당자</span>
                 <span>0</span>
             </div>
             <div>
-                <button>공유 유저 추가</button>
+                <button onclick="openAddUserModal()">공유 유저 추가</button>
+                <div class="modal_adduser_body" style="top: 80px; right: 10%;">
+                    <div class="modal_adduser_body_top">
+                        <div class="modal_adduser_body_close">
+                            <i class="fa-solid fa-x" onclick="closeAddUserModal()" style="cursor: pointer"></i>
+                        </div>
+                        <div class="modal_adduser_search">
+                            <input type="text" class="searchUser" id="searchUser" onkeyup="searchAddUser()" placeholder="이름 혹은 이메일로 검색하세요">
+                        </div>
+                        <div class="modal_adduser_button" onclick="getCheckboxAddUser()">확인</div>
+                    </div>
+                    <div class="modal_adduser_body_mid">
+                        <div class="modal_adduser_userList"></div>
+                    </div>
+                    <div class="modal_adduser_body_bottom"></div>
+                </div>
             </div>
         </div>
-        <div class="Adduser_mid"></div>
+        <div class="modal_category_body_Adduser_mid"></div>
     </div>
 </div>

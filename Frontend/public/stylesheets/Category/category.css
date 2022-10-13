@@ -31,6 +31,7 @@
 }
 .modal_category > div:nth-child(2).show{
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -54,8 +55,95 @@
     width: 220px;
     height: 30px;
 }
+.modal_category_body_mid > div{
+    width: 100%;
+    padding: 10px 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal_category_body_mid > div:last-child{
+    margin-top: 25px;
+}
+.modal_category_body_mid > div > label{
+    font-size: 14px;
+    font-weight: bold;
+    width: 15%;
+    position: absolute;
+    left: 0px;
+}
 
 .modal_category_body_mid input[type='checkbox']{
     width: 15px;
     height: 15px;
+}
+.modal_adduser_body {
+    display: none;
+}
+.modal_adduser_body.show {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 350px;
+    box-shadow: 0 0 15px 0 rgb(0 0 0 / 15%);
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    z-index: 2000;
+}
+.modal_category_body_Adduser_mid{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.modal_category_body_Adduser_top{
+    display: flex;
+    width: 100%;
+    height: 10%;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal_adduser_body_close{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 11px;
+    padding-right: 11px;
+}
+.userImage{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.addUserDiv{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 3px 2px;
+}
+.modal_adduser_search{
+    padding: 10px 0 10px 10px;
+}
+.modal_adduser_search > input {
+    width: 80%;
+    height: 100%;
+}
+.addUserDiv > div > input[type='checkbox']{
+    width: 15px;
+    height: 15px;
+}
+.modal_adduser_body_top{
+    padding: 10px 15px;
+}
+.modal_adduser_body_mid{
+    padding: 0 20px 0 20px;
+}
+.addUserDiv > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
