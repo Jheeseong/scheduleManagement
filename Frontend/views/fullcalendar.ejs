@@ -1,11 +1,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/common@5.11.3/main.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.min.css">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.11.3/main.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.11.3/main.global.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/common@5.11.3/main.min.js"></script>
 <script defer>
     let calendar;
     document.addEventListener('DOMContentLoaded', function() {
@@ -14,13 +11,17 @@
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             selectable: true,
-            dateClick: function(info) {
-                alert('clicked ' + info.dateStr);
+            dateClick: function(){
+                openListModal();
             },
-            select: function(info) {
-                alert('selected ' + info.startStr + ' to ' + info.endStr);
-            },
-            initialDate: '2022-08-07',
+            /*select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+                 var title = prompt('Event Title:');
+                 if (title){
+                     calendar.addEvent({title: title, start: arg.start, end: arg.end, allDay: arg.allDay})
+                 }
+                 calendar.unselect();
+            },*/
+            initialDate: '2022-08-07', //지우면 오늘 날짜로 시작
             headerToolbar: {
                 left: 'prevYear,prev,next,nextYear today',
                 center: 'title',
