@@ -16,6 +16,10 @@ function closeModal(event, modal){
         else if(modal == 'edit'){
             editModal.classList.remove('show');
         }
+        else{
+            listModal.classList.remove('show');
+            editModal.classList.remove('show');
+        }
         localStorage.clear()
 
         /* 체크박스 및 카카오맵 모달 해제 */
@@ -25,6 +29,33 @@ function closeModal(event, modal){
 }
 
 function openListModal() {
+    eventList = calendar.currentData.calendarOptions.events;
+    console.log(eventList)
+    for(let i = 0; i < eventList.length; i++){
+        $.ajax({
+            type: 'POST',
+            url: 'schedule/find/' + userId,
+            dataType: "json",
+            success: function (res) {
+                const schedule = res.schedule;
+            },
+            error: function (err) {
+
+            }
+        })
+    }
+
+    for(let i = 0; i < schedule.length; i++){
+        str += '<tr>';
+        str += '<td>배도훈</td>';
+        str += '<td>밥 먹기</td>';
+        str += '<td>집</td>';
+        str += '<td>2022-10-11 ~ 2022-10-11</td>';
+        str += '<td>#뭐먹지</td>';
+        str += '<td><button onclick="" class="btn-red">삭제</button></td>';
+        str += '</tr>';
+    }
+
     listModal.classList.add('show')
     if (listModal.classList.contains('show')) {
         body.style.overflow = 'hidden';
@@ -204,4 +235,18 @@ function sharedCategoryList(i){
     else if(categoryList.style.display == 'block'){
         categoryList.style.display = 'none';
     }
+}
+
+/* 캘린더에 일정 바인딩 */
+function readEvents(){
+    let eventData = {
+        title: '취침',
+        start: '2022-08-15',
+        end: '2022-08-15',
+        id: '123123'
+    }
+    calendar.currentData.calendarOptions.events.push(eventData);
+    console.log(calendar.currentData.calendarOptions.events);
+
+    calendar.refresh;
 }

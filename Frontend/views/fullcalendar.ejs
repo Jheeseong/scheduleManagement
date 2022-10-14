@@ -5,14 +5,23 @@
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.global.min.js"></script>
 <script defer>
     let calendar;
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
-
         calendar = new FullCalendar.Calendar(calendarEl, {
+            timeZone: 'Asia/Seoul',
             initialView: 'dayGridMonth',
             selectable: true,
-            dateClick: function(){
-                openListModal();
+            dateClick: function (info) {
+                let eventList = calendar.getEvents();
+                for(let i = 0; i < eventList.length; i++){
+                    if(new Date(eventList[i].start).getDate() <= new Date(info.dateStr).getDate() && new Date(info.dateStr).getDate() <= new Date(eventList[i].end).getDate()){
+                        console.log('title: ' + JSON.stringify(eventList[i].title))
+                        console.log('start: ' + JSON.stringify(eventList[i].start))
+                        console.log('end: ' + JSON.stringify(eventList[i].start))
+                    }
+                }
+                console.log('picked: ' + JSON.stringify(info.dateStr))
+                /*console.log('eventList: ' + JSON.stringify(calendar.getEvents()));*/
             },
             /*select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
                  var title = prompt('Event Title:');
@@ -27,63 +36,84 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
+            eventClick: function (info) {
+                console.log(info.event.id)
+                let eventData = {
+                    title: '취침',
+                    start: '2022-08-15',
+                    end: '2022-08-15',
+                    id: '123123'
+                }
+                calendar.currentData.calendarOptions.events.push(eventData);
+                console.log(calendar.currentData.calendarOptions.events);
+            },
             events: [
                 {
                     title: 'All Day Event',
-                    start: '2022-08-01'
+                    start: '2022-08-01',
+                    end: '2022-08-01',
+                    id: '배도훈'
                 },
                 {
                     title: 'Long Event',
                     start: '2022-08-07',
-                    end: '2022-08-10'
+                    end: '2022-08-09'
                 },
                 {
                     groupId: '999',
                     title: 'Repeating Event',
-                    start: '2022-08-09T16:00:00'
+                    start: '2022-08-09T16:00:00',
+                    end: '2022-08-09T17:00:00'
                 },
                 {
                     groupId: '999',
                     title: 'Repeating Event',
-                    start: '2022-08-16T16:00:00'
+                    start: '2022-08-16T16:00:00',
+                    end: '2022-08-16T16:00:00'
                 },
                 {
                     title: 'Conference',
                     start: '2022-08-11',
-                    end: '2022-08-13'
+                    end: '2022-08-13',
+                    id: '배도훈'
                 },
                 {
                     title: 'Meeting',
                     start: '2022-08-12T10:30:00',
-                    end: '2022-08-12T12:30:00'
+                    end: '2022-08-12T12:30:00',
+                    color: 'red'
                 },
                 {
                     title: 'Lunch',
-                    start: '2022-08-12T12:00:00'
+                    start: '2022-08-12T12:00:00',
+                    end: '2022-08-12T12:00:00'
                 },
                 {
                     title: 'Meeting',
-                    start: '2022-08-12T14:30:00'
+                    start: '2022-08-12T14:30:00',
+                    end: '2022-08-12T14:30:00'
                 },
                 {
                     title: 'Birthday Party',
-                    start: '2022-08-13T07:00:00'
+                    start: '2022-08-13T07:00:00',
+                    end: '2022-08-13T07:00:00'
                 },
                 {
                     title: 'Click for Google',
                     url: 'http://google.com/',
-                    start: '2022-08-28'
+                    start: '2022-08-28',
+                    end: '2022-08-28'
                 }
             ]
         });
-
         calendar.render();
     });
 </script>
 <body>
-    <div class="fc-toolbar">
-        <button onclick="openListModal()">123</button>
-    </div>
-
+<div class="fc-toolbar">
+    <button onclick="openListModal()">123</button>
+</div>
+<div class="fullCalendarDiv">
     <div id='calendar' class="full_calendar fc"></div>
+</div>
 </body>

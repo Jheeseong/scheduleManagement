@@ -216,7 +216,10 @@
     display: block;
     text-align: right;
 }
-.modal_schedule--list table{
+.scheduleTableDiv{
+    overflow: auto;
+}
+.scheduleTable{
     width: 100%;
     text-align: center;
 }
