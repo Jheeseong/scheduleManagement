@@ -9,4 +9,6 @@ router.post('/update/:id', checkLogIn, categoryController.updateCategory)
 
 router.post('/delete/:id', checkLogIn, categoryController.deleteCategory)
 
+router.post('/myCategory', checkLogIn, categoryController.findMyCategory)
+
 module.exports = router;

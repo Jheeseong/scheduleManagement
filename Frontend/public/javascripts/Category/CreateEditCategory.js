@@ -26,7 +26,6 @@ function openCategoryModal() {
             res.tags.map((result) => {
                 tagList.push(result.content)
             })
-            console.log(tagList)
             localStorage.setItem('content', JSON.stringify(tagList))
         },
         error: function (err) {
@@ -80,7 +79,7 @@ function openAddUserModal() {
                 res.user.map((result) => {
                     addUserList.innerHTML += '<div class ="addUserDiv ' + result.name +'">' +
                         '<div>' +
-                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
+                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result._id + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
                         '<img class ="userImage" src="' + result.image + '">' +
                         '<span class = "userName">' + result.name + '</span>' +
                         '</div>' +
@@ -96,6 +95,42 @@ function openAddUserModal() {
             }
         })
     }
+}
+function saveCategory() {
+    const categoryTagValue = document.getElementsByClassName('AddUserTagValue')
+    const arrayCategoryTag = [];
+
+    for (let i = 0; i < categoryTagValue.length; i++) {
+        arrayCategoryTag.push(categoryTagValue[i].getAttribute('value'))
+    }
+
+    const categoryUserValue = document.getElementsByClassName('addUserDiv')
+    const arrayCategoryUser = [];
+
+    for (let i = 0; i < categoryUserValue.length; i++) {
+        arrayCategoryUser.push(categoryUserValue[i].getAttribute('value'))
+    }
+    const categories = {
+        title: document.getElementById('categoryName').value,
+        tagName: arrayCategoryTag,
+        userName: arrayCategoryUser
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: categories,
+        url: 'category/create',
+        dataType: "json",
+
+        success: function (res) {
+            window.alert(res.message);
+            window.location.reload(true);
+        },
+        error: function (err) {
+            window.alert("카테고리 등록을 실패하였습니다!!!")
+            console.log(err)
+        },
+    })
 }
 /*공유 유저를 찾는 함수*/
 function searchAddUser() {
@@ -118,7 +153,7 @@ function searchAddUser() {
                 res.user.map((result) => {
                     addUserList.innerHTML += '<div class ="addUserDiv ' + result.name + '">' +
                         '<div>' +
-                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
+                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result._id + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
                         '<img class ="userImage" src="' + result.image + '">' +
                         '<span class = "userName">' + result.name + '</span>' +
                         '</div>' +
@@ -142,7 +177,7 @@ function searchAddUser() {
                 res.user.map((result) => {
                     addUserList.innerHTML += '<div class ="addUserDiv ' + result.name +'">' +
                         '<div>' +
-                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
+                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result._id + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
                         '<img class ="userImage" src="' + result.image + '">' +
                         '<span class = "userName">' + result.name + '</span>' +
                         '</div>' +
@@ -168,23 +203,22 @@ function getCheckboxAddUser()  {
     const selectedEls =
         document.querySelectorAll(query);
     AdduserMid.innerHTML = "";
-
+    closeAddUserModal()
     selectedEls.forEach((el) => {
         $.ajax({
             type: 'POST',
-            url: 'user/find/' + el.value,
+            url: 'user/findById/' + el.value,
             dataType: "json",
             success: function (res) {
-                res.user.map((result) => {
-                    AdduserMid.innerHTML += '<div class ="addUserDiv ' + result.name + '" value = "'+ result.name + '">' +
-                        '<div>' +
-                        '<img class ="userImage" src="' + result.image + '">' +
-                        '<span class = "userName">' + result.name + '</span>' +
-                        '</div>' +
-                        '<span class = "userEmail">' + (result.email==undefined ? "" : result.email) + '</span>' +
-                        '</div>'
-                })
-                closeAddUserModal()
+                console.log(res)
+                AdduserMid.innerHTML += '<div class ="addUserDiv ' + res.user.name + '" value = "'+ res.user._id + '">' +
+                    '<div>' +
+                    '<img class ="userImage" src="' + res.user.image + '">' +
+                    '<span class = "userName">' + res.user.name + '</span>' +
+                    '</div>' +
+                    '<span class = "userEmail">' + (res.user.email==undefined ? "" : res.user.email) + '</span>' +
+                    '</div>'
+
             },
             error: function (err) {
                 if (err) {
@@ -202,7 +236,6 @@ function AddUserSearchTag() {
     const tagList = document.querySelector('.AddUserTagList')
     const tagListDiv = document.querySelector('.AddUserTagListDiv')
 
-    console.log(tags)
     if (str.length) {
         tagList.innerHTML =
             '<ul id="AddUserAutoTagListUl" class="AddUserAutoTagList"></ul>';
@@ -242,7 +275,6 @@ function AddUserTagMotion() {
 
     for (let i = 0; i < autoTagDiv.length; i++) {
         document.getElementsByClassName('AddUserAutoTagDiv')[i].addEventListener('mouseover', function () {
-            console.log(i);
             document.getElementsByClassName('AddUserDeleteTagValue')[i].style.display = 'flex';
         })
         document.getElementsByClassName('AddUserAutoTagDiv')[i].addEventListener('mouseleave', function () {
@@ -252,7 +284,6 @@ function AddUserTagMotion() {
 }
 
 function AddUserDeleteTag(selectedTag){
-    console.log(selectedTag);
     /*document.getElementsByClassName('aaa')[0].remove();*/
     document.querySelector(`.AddUserAutoTagDiv.${selectedTag}`).remove();
 }

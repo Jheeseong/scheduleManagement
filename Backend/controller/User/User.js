@@ -20,6 +20,17 @@ const UserController = {
             console.log(err)
             res.json({finduser: false, err: err})
         }
+    },
+    findUserById: async (req, res) => {
+        try {
+            const id = req.params.id;
+            let user = await User.findOne({_id: id})
+                .exec();
+            res.json({user: user, finduser: true})
+        } catch (err) {
+            console.log(err)
+            res.json({finduser: false, err: err})
+        }
     }
 }
 

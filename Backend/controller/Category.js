@@ -1,19 +1,20 @@
 const { Category } = require('../models/Category')
 const { Schedule } = require("../models/Schedule");
-const { Tag } = require("../models/Tag")
-const { User } = require("../models/User")
+const TagController = require('../controller/Tag')
 
 const CategoryController = {
     saveCategory: async (req, res) => {
         try {
-            await Promise.all(req.body.tagInfo.map(async (result) => {
-
+            const findTag = [];
+            await Promise.all(req.body.tagName.map(async (result) => {
+                findTag.push(await TagController.findTagByContent(result))
             }))
 
             const category = new Category({
                 title: req.body.title,
-                tagInfo: req.body.tagInfo,
-                userInfo: req.body.userInfo
+                creator: req.user._id,
+                tagInfo: findTag,
+                userInfo: req.body.userName
             })
 
             await category.save();
@@ -51,6 +52,15 @@ const CategoryController = {
       } catch (err) {
           return res.status(400).json({categoryDelete: false, message: "카테고리 삭제를 실패하였습니다.", err: err})
       }
+    },
+    findMyCategory: async (req,res) => {
+        try {
+            let myCategories = await Category.find({creator: req.user._id})
+                .exec();
+            res.json({categories: myCategories, categoryFind: true, message: "카테고리를 찾았습니다."})
+        } catch (err) {
+            return res.status(400).json({categoryFind: false, message: "카테고리를 찾지 못하였습니다.", err: err})
+        }
     }
 }
 

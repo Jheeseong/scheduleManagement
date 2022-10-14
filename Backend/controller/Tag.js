@@ -1,5 +1,6 @@
 const { Tag } = require('../models/Tag')
 const { Schedule } = require('../models/Schedule')
+const {throws} = require("assert");
 
 const TagController = {
     saveTag: async (result,scheduleId) => {
@@ -42,6 +43,15 @@ const TagController = {
 
         }catch (err) {
             res.json({message: "findTag err", err: err})
+        }
+    },
+    findTagByContent: async (result) => {
+        try {
+            let tags = await Tag.findOne({content: result})
+                .exec();
+            return tags;
+        } catch (err) {
+            throw new Error(err)
         }
     }
 }

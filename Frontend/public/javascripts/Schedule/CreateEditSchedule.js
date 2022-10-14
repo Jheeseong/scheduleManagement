@@ -30,7 +30,6 @@ function closeModal(event, modal){
 
 function openListModal() {
     eventList = calendar.currentData.calendarOptions.events;
-    console.log(eventList)
     for(let i = 0; i < eventList.length; i++){
         $.ajax({
             type: 'POST',
@@ -74,7 +73,6 @@ function openEditModal() {
             res.tags.map((result) => {
                 tagList.push(result.content)
             })
-            console.log(tagList)
             localStorage.setItem('content', JSON.stringify(tagList))
         },
         error: function (err) {
@@ -149,7 +147,6 @@ function searchTag(event) {
     const tagList = document.querySelector('.tagList')
     const tagListDiv = document.querySelector('.tagListDiv')
 
-    console.log(tags)
     if (str.length) {
         tagList.innerHTML =
             '<ul id="autoTagListUl" class="autoTagList"></ul>';
@@ -199,7 +196,6 @@ function tagMotion() {
 
     for (let i = 0; i < autoTagDiv.length; i++) {
         document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseover', function () {
-            console.log(i);
             document.getElementsByClassName('deleteTagValue')[i].style.display = 'flex';
         })
         document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseleave', function () {
@@ -209,7 +205,6 @@ function tagMotion() {
 }
 
 function deleteTag(selectedTag){
-    console.log(selectedTag);
     /*document.getElementsByClassName('aaa')[0].remove();*/
     document.querySelector(`.autoTagDiv.${selectedTag}`).remove();
 }
@@ -229,7 +224,6 @@ function myCategory(){
 /* 공유함에서 사용자 클릭 시 */
 function sharedCategoryList(i){
     let categoryList = document.getElementsByClassName('categoryRow__user__categoryList')[i];
-    console.log(categoryList.style.display);
     if(categoryList.style.display == 'none'){
         categoryList.style.display = 'block';
     }

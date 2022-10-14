@@ -74,18 +74,17 @@ const ScheduleController = {
             res.json({schedule: findSchedule, findScheduleSuccess: true})
         } catch (err) {
             console.log(err)
-            res.json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
+            res.status(400).json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
         }
     },
     findScheduleByUserInfo: async (req, res) => {
         try {
             let findSchedules = await Schedule.find({userInfo: req.user._id})
                 .exec();
-            console.log(findSchedules)
             res.render('calendar', {schedule: findSchedules, user: req.user});
         } catch (err) {
             console.log(err)
-            res.json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
+            res.status(400).json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
         }
     },
     deleteSchedule: async (req, res) => {
