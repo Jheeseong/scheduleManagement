@@ -28,33 +28,20 @@ function closeModal(event, modal){
     }
 }
 
-function openListModal() {
-    eventList = calendar.currentData.calendarOptions.events;
-    console.log(eventList)
-    for(let i = 0; i < eventList.length; i++){
-        $.ajax({
-            type: 'POST',
-            url: 'schedule/find/' + userId,
-            dataType: "json",
-            success: function (res) {
-                const schedule = res.schedule;
-            },
-            error: function (err) {
-
-            }
-        })
-    }
-
-    for(let i = 0; i < schedule.length; i++){
+function openListModal(selectedEventList) {
+    let tbodyTag = document.getElementById('scheduleTbody');
+    let str = '';
+    for(let i = 0; i < selectedEventList.length; i++){
         str += '<tr>';
-        str += '<td>배도훈</td>';
-        str += '<td>밥 먹기</td>';
-        str += '<td>집</td>';
-        str += '<td>2022-10-11 ~ 2022-10-11</td>';
-        str += '<td>#뭐먹지</td>';
+        str += '<td>생성자</td>';
+        str += '<td>' + selectedEventList[i].title + '</td>';
+        str += '<td>' + selectedEventList[i].address + '</td>';
+        str += '<td>' + selectedEventList[i].start + ' ~ ' + selectedEventList[i].end + '</td>';
+        str += '<td>tags</td>';
         str += '<td><button onclick="" class="btn-red">삭제</button></td>';
         str += '</tr>';
     }
+    tbodyTag.innerHTML = str;
 
     listModal.classList.add('show')
     if (listModal.classList.contains('show')) {
@@ -249,5 +236,5 @@ function readEvents(){
     calendar.currentData.calendarOptions.events.push(eventData);
     console.log(calendar.currentData.calendarOptions.events);
 
-    calendar.refresh;
+    calendar.refetchEvents();
 }
