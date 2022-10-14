@@ -6,22 +6,53 @@
 <script defer>
     let calendar;
     document.addEventListener('DOMContentLoaded', function () {
+
+        let eventList = [];
+        let eventData = {}
+        $.ajax({
+            type: 'POST',
+            url: 'schedule/findByUser',
+            dataType: "json",
+            async: false,
+            success: function (res) {
+                const schedule = res.schedule;
+                console.log(schedule);
+                for (let i = 0; i < schedule.length; i++) {
+                    eventData.title = schedule[i].title;
+                    eventData.start = schedule[i].startDate;
+                    eventData.end = schedule[i].endDate;
+                    eventData.id = schedule[i]._id;
+                    eventData.address = schedule[i].address;
+                    eventList.push(eventData);
+                    eventData = {}
+                }
+
+            },
+            error: function (err) {
+
+            }
+        })
+        console.log('evnetList : ' + JSON.stringify(eventList));
         var calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
             timeZone: 'Asia/Seoul',
             initialView: 'dayGridMonth',
-            selectable: true,
+            selectable: false,
 
             dateClick: function (info) {
-                let eventList = calendar.getEvents();
-                for(let i = 0; i < eventList.length; i++){
-                    if(new Date(eventList[i].start).getDate() <= new Date(info.dateStr).getDate() && new Date(info.dateStr).getDate() <= new Date(eventList[i].end).getDate()){
+                let selectedEventList = [];
+
+                for (let i = 0; i < eventList.length; i++) {
+                    if (new Date(eventList[i].start).getDate().toString().split('T') <= new Date(info.dateStr).getDate().toString().split('T') && new Date(info.dateStr).getDate().toString().split('T') <= new Date(eventList[i].end).getDate().toString().split('T')) {
                         console.log('title: ' + JSON.stringify(eventList[i].title))
                         console.log('start: ' + JSON.stringify(eventList[i].start))
-                        console.log('end: ' + JSON.stringify(eventList[i].start))
+                        console.log('end: ' + JSON.stringify(eventList[i].end))
+                        console.log('id: ' + JSON.stringify(eventList[i].id))
+                        selectedEventList.push(eventList[i]);
                     }
                 }
-                console.log('picked: ' + JSON.stringify(info.dateStr))
+                openListModal(selectedEventList);
+                /*console.log('picked: ' + JSON.stringify(info.dateStr))*/
                 /*console.log('eventList: ' + JSON.stringify(calendar.getEvents()));*/
             },
             /*select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
@@ -31,7 +62,7 @@
                  }
                  calendar.unselect();
             },*/
-            initialDate: '2022-08-07', //지우면 오늘 날짜로 시작
+            //지우면 오늘 날짜로 시작
             headerToolbar: {
                 left: 'prevYear,prev,next,nextYear today',
                 center: 'title',
@@ -45,75 +76,15 @@
                     end: '2022-08-15',
                     id: '123123'
                 }
-                calendar.currentData.calendarOptions.events.push(eventData);
+                /*calendar.currentData.calendarOptions.events.push(eventData);*/
                 console.log(calendar.currentData.calendarOptions.events);
             },
-            events: [
-                {
-                    title: 'All Day Event',
-                    start: '2022-08-01',
-                    end: '2022-08-01',
-                    id: '배도훈'
-                },
-                {
-                    title: 'Long Event',
-                    start: '2022-08-07',
-                    end: '2022-08-09'
-                },
-                {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2022-08-09T16:00:00',
-                    end: '2022-08-09T17:00:00'
-                },
-                {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2022-08-16T16:00:00',
-                    end: '2022-08-16T16:00:00'
-                },
-                {
-                    title: 'Conference',
-                    start: '2022-08-11',
-                    end: '2022-08-13',
-                    id: '배도훈'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2022-08-12T10:30:00',
-                    end: '2022-08-12T12:30:00',
-                    color: 'red'
-                },
-                {
-                    title: 'Lunch',
-                    start: '2022-08-12T12:00:00',
-                    end: '2022-08-12T12:00:00'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2022-08-12T14:30:00',
-                    end: '2022-08-12T14:30:00'
-                },
-                {
-                    title: 'Birthday Party',
-                    start: '2022-08-13T07:00:00',
-                    end: '2022-08-13T07:00:00'
-                },
-                {
-                    title: 'Click for Google',
-                    url: 'http://google.com/',
-                    start: '2022-08-28',
-                    end: '2022-08-28'
-                }
-            ]
+            events: eventList,
         });
         calendar.render();
     });
 </script>
 <body>
-<div class="fc-toolbar">
-    <button onclick="openListModal()">123</button>
-</div>
 <div class="fullCalendarDiv">
     <div id='calendar' class="full_calendar fc"></div>
 </div>
