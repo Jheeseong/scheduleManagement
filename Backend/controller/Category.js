@@ -1,9 +1,15 @@
 const { Category } = require('../models/Category')
-const {Schedule} = require("../models/Schedule");
+const { Schedule } = require("../models/Schedule");
+const { Tag } = require("../models/Tag")
+const { User } = require("../models/User")
 
 const CategoryController = {
     saveCategory: async (req, res) => {
         try {
+            await Promise.all(req.body.tagInfo.map(async (result) => {
+
+            }))
+
             const category = new Category({
                 title: req.body.title,
                 tagInfo: req.body.tagInfo,

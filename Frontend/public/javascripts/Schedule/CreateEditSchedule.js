@@ -47,7 +47,8 @@ function openEditModal() {
             localStorage.setItem('content', JSON.stringify(tagList))
         },
         error: function (err) {
-
+            window.alert("태그 정보를 불러오지 못하였습니다.")
+            console.log(err)
         }
     })
     mapModal.classList.remove('show');

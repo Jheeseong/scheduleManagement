@@ -9,10 +9,14 @@
                 </div>
             </div>
             <div>
-                <div class="tagListDiv"></div>
-                <div class="tagList"></div>
+                <div class="AddUserTagList"></div>
                 <label>태그</label>
-                <input type="input" id="categoryTag" class="categoryTag" onkeyup="">
+                <div class="AddUserTagDiv">
+                    <div class="AddUserTagCover">
+                        <div class="AddUserTagListDiv"></div>
+                        <input type="input" id="categoryTag" class="categoryTag" onkeyup="AddUserSearchTag()" placeholder="태그 입력" maxlength="20" autocomplete="off">
+                    </div>
+                </div>
             </div>
             <div>
                 <label>공유 유저</label>

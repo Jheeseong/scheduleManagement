@@ -49,7 +49,7 @@
     align-items: center;
     flex-direction: column;
 }
-.modal_category_body input{
+.modal_category_body input:not(.categoryTag), .AddUserTagDiv{
     border: 1px solid rgb(213, 213, 213);
     border-radius: 6px;
     width: 220px;
@@ -146,4 +146,73 @@
     display: flex;
     align-items: center;
     gap: 5px;
+}
+.categoryTag{
+    width: 150px;
+    border: none;
+    margin-top: 5px;
+}
+.AddUserTagDiv{
+    height: 116px;
+    padding: 16px;
+    flex-wrap: wrap;
+}
+.AddUserTagListDiv{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.AddUserAutoTagList{
+    display: flex;
+    position: absolute;
+    bottom: 145px;
+    width: 254px;
+    max-height: 346px;
+    overflow: auto;
+    background-color: white;
+    border: solid 0.5px #a8a8a8;
+    padding: 12px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    z-index: 9999
+}
+.AddUserAutoTagDiv{
+    display: inline;
+    margin: 8px 15px 8px 0;
+}
+.AddUserAutoTag, .AddUserTagValue{
+    cursor: pointer;
+    list-style:none;
+    color: #a8a8a8;
+    align-items: center;
+    font-size: 15px;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    padding: 0px 4px;
+    height: fit-content;
+    width: fit-content;
+}
+.AddUserAutoTagDiv{
+    position: relative;
+}
+.AddUserAutoTagDiv i{
+    background-color: white;
+    position: absolute;
+    right: -12px;
+    bottom: 4px;
+    font-size: 14px;
+}
+.AddUserDeleteTagValue{
+    display: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    background-color: #a8a8a8;
+    background-size: 4px;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    vertical-align: sub;
+    margin-left: 4px;
 }

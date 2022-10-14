@@ -16,6 +16,24 @@ function closeCategoryModal(event){
 }
 
 function openCategoryModal() {
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/tagsearch',
+        dataType: "json",
+        success: function (res) {
+            console.log(res)
+            const tagList = [];
+            res.tags.map((result) => {
+                tagList.push(result.content)
+            })
+            console.log(tagList)
+            localStorage.setItem('content', JSON.stringify(tagList))
+        },
+        error: function (err) {
+            window.alert("태그 정보를 불러오지 못하였습니다.")
+            console.log(err)
+        }
+    })
     categoryModal.classList.add('show')
     if (categoryModal.classList.contains('show')) {
         body.style.overflow = 'hidden';
@@ -47,17 +65,22 @@ function openAddUserModal() {
         addUserList.innerHTML = "";
         AdduserModal.classList.remove('show');
     } else {
+        const addUserDiv = document.getElementsByClassName('addUserDiv')
+        const applyAddUser = [];
+
+        for (let i = 0; i < addUserDiv.length; i++) {
+            applyAddUser.push(addUserDiv[i].getAttribute('value'))
+        }
         AdduserModal.classList.add('show');
         $.ajax({
             type: 'POST',
             url: 'user/findAll',
             dataType: "json",
             success: function (res) {
-                console.log(res)
                 res.user.map((result) => {
                     addUserList.innerHTML += '<div class ="addUserDiv ' + result.name +'">' +
                         '<div>' +
-                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '">' +
+                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
                         '<img class ="userImage" src="' + result.image + '">' +
                         '<span class = "userName">' + result.name + '</span>' +
                         '</div>' +
@@ -74,10 +97,17 @@ function openAddUserModal() {
         })
     }
 }
-
+/*공유 유저를 찾는 함수*/
 function searchAddUser() {
     const addUserList = document.querySelector('.modal_adduser_userList');
     const inputAddUser = document.getElementById('searchUser').value;
+    const addUserDiv = document.getElementsByClassName('addUserDiv')
+    const applyAddUser = [];
+
+    for (let i = 0; i < addUserDiv.length; i++) {
+        applyAddUser.push(addUserDiv[i].getAttribute('value'))
+    }
+
     if (inputAddUser.length) {
         $.ajax({
             type: 'POST',
@@ -88,7 +118,7 @@ function searchAddUser() {
                 res.user.map((result) => {
                     addUserList.innerHTML += '<div class ="addUserDiv ' + result.name + '">' +
                         '<div>' +
-                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '">' +
+                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
                         '<img class ="userImage" src="' + result.image + '">' +
                         '<span class = "userName">' + result.name + '</span>' +
                         '</div>' +
@@ -99,30 +129,6 @@ function searchAddUser() {
             error: function (err) {
                 if (err) {
                     window.alert("유저 정보를 불러오지 못하였습니다.")
-                    $.ajax({
-                        type: 'POST',
-                        url: 'user/findAll',
-                        dataType: "json",
-                        success: function (res) {
-                            console.log(res)
-                            res.user.map((result) => {
-                                addUserList.innerHTML += '<div class ="addUserDiv ' + result.name +'">' +
-                                    '<div>' +
-                                    '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '">' +
-                                    '<img class ="userImage" src="' + result.image + '">' +
-                                    '<span class = "userName">' + result.name + '</span>' +
-                                    '</div>' +
-                                    '<span class = "userEmail">' + (result.email==undefined ? "" : result.email) + '</span>' +
-                                    '</div>'
-                            })
-                        },
-                        error: function (err) {
-                            if (err) {
-                                window.alert("유저 정보를 불러오지 못하였습니다.")
-                                console.log(err)
-                            }
-                        }
-                    })
                 }
             }
         });
@@ -136,7 +142,7 @@ function searchAddUser() {
                 res.user.map((result) => {
                     addUserList.innerHTML += '<div class ="addUserDiv ' + result.name +'">' +
                         '<div>' +
-                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '">' +
+                        '<input type="checkbox" class="adduserCheckbox" id="adduserCheckbox" value="' + result.name + '"' + (applyAddUser.includes(result.name) ? "checked" : "") +'>' +
                         '<img class ="userImage" src="' + result.image + '">' +
                         '<span class = "userName">' + result.name + '</span>' +
                         '</div>' +
@@ -154,7 +160,7 @@ function searchAddUser() {
     }
 
 }
-
+/*체크한 유저를 카테고리등록 모달창으로 이동해주는 함수*/
 function getCheckboxAddUser()  {
     const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');
     // 선택된 목록 가져오기
@@ -170,7 +176,7 @@ function getCheckboxAddUser()  {
             dataType: "json",
             success: function (res) {
                 res.user.map((result) => {
-                    AdduserMid.innerHTML += '<div class ="addUserDiv ' + result.name + '">' +
+                    AdduserMid.innerHTML += '<div class ="addUserDiv ' + result.name + '" value = "'+ result.name + '">' +
                         '<div>' +
                         '<img class ="userImage" src="' + result.image + '">' +
                         '<span class = "userName">' + result.name + '</span>' +
@@ -178,6 +184,7 @@ function getCheckboxAddUser()  {
                         '<span class = "userEmail">' + (result.email==undefined ? "" : result.email) + '</span>' +
                         '</div>'
                 })
+                closeAddUserModal()
             },
             error: function (err) {
                 if (err) {
@@ -187,5 +194,66 @@ function getCheckboxAddUser()  {
             }
         });
     });
+}
+
+function AddUserSearchTag() {
+    const tags = JSON.parse(localStorage.getItem('content'))
+    const str = document.getElementById('categoryTag').value;
+    const tagList = document.querySelector('.AddUserTagList')
+    const tagListDiv = document.querySelector('.AddUserTagListDiv')
+
+    console.log(tags)
+    if (str.length) {
+        tagList.innerHTML =
+            '<ul id="AddUserAutoTagListUl" class="AddUserAutoTagList"></ul>';
+        const autoTagList = document.querySelector('.AddUserAutoTagList');
+        let bool = false;
+        tags.map((res) => {
+            if (res.indexOf(str) > -1) {
+                autoTagList.innerHTML +=
+                    '<li class="AddUserAutoTag" value="'+ res +'">' + res + '</li>'
+                bool = true;
+            }
+        });
+        if(bool == false){
+            tagList.innerHTML = '';
+        }
+    } else {
+        tagList.innerHTML = '';
+    }
+
+    const autoTag = document.getElementsByClassName('AddUserAutoTag');
+
+    for(let i = 0; i < autoTag.length; i++){
+        autoTag[i].addEventListener('click', function () {
+            let selectedTag = autoTag[i].getAttribute('value');
+            tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + selectedTag + '"  onclick="AddUserDeleteTag(\'' + selectedTag + '\')">' +
+                '<span class="AddUserTagValue" id="AddUserTagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
+                '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue" style="display: none"></i>' +
+                '</div>'
+            tagList.innerHTML= ''
+            document.getElementById('categoryTag').value = null
+            AddUserTagMotion();
+        })
+    }
+}
+function AddUserTagMotion() {
+    let autoTagDiv = document.getElementsByClassName('AddUserAutoTagDiv')
+
+    for (let i = 0; i < autoTagDiv.length; i++) {
+        document.getElementsByClassName('AddUserAutoTagDiv')[i].addEventListener('mouseover', function () {
+            console.log(i);
+            document.getElementsByClassName('AddUserDeleteTagValue')[i].style.display = 'flex';
+        })
+        document.getElementsByClassName('AddUserAutoTagDiv')[i].addEventListener('mouseleave', function () {
+            document.getElementsByClassName('AddUserDeleteTagValue')[i].style.display = 'none';
+        })
+    }
+}
+
+function AddUserDeleteTag(selectedTag){
+    console.log(selectedTag);
+    /*document.getElementsByClassName('aaa')[0].remove();*/
+    document.querySelector(`.AddUserAutoTagDiv.${selectedTag}`).remove();
 }
 
