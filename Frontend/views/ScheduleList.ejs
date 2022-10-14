@@ -8,10 +8,11 @@
                     일정 추가
                 </div>
             </div>
-            <table>
-                <colgroup>
-                </colgroup>
-                <thead>
+            <div class="scheduleTableDiv">
+                <table class="scheduleTable">
+                    <colgroup>
+                    </colgroup>
+                    <thead>
                     <tr>
                         <th>생성자</th>
                         <th>일정명</th>
@@ -20,49 +21,27 @@
                         <th>태그</th>
                         <th>삭제</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>배도훈</td>
-                        <td>밥 먹기</td>
-                        <td>집</td>
-                        <td>2022-10-11 ~ 2022-10-11</td>
-                        <td>#뭐먹지</td>
-                        <td><button onclick="" class="btn-red">삭제</button></td>
-                    </tr>
-                    <tr>
-                        <td>배도훈</td>
-                        <td>밥 먹기</td>
-                        <td>집</td>
-                        <td>2022-10-11 ~ 2022-10-11</td>
-                        <td>#뭐먹지</td>
-                        <td><button onclick="" class="btn-red">삭제</button></td>
-                    </tr><tr>
-                        <td>배도훈</td>
-                        <td>밥 먹기</td>
-                        <td>집</td>
-                        <td>2022-10-11 ~ 2022-10-11</td>
-                        <td>#뭐먹지</td>
-                        <td><button onclick="" class="btn-red">삭제</button></td>
-                    </tr>
-                    <tr>
-                        <td>배도훈</td>
-                        <td>밥 먹기</td>
-                        <td>집</td>
-                        <td>2022-10-11 ~ 2022-10-11</td>
-                        <td>#뭐먹지</td>
-                        <td><button onclick="" class="btn-red">삭제</button></td>
-                    </tr>
-
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="scheduleTbody">
+                    <% for (let i = 0; i < 10; i++){ %>
+                        <tr>
+                            <td>배도훈</td>
+                            <td>밥 먹기</td>
+                            <td>집</td>
+                            <td>2022-10-11 ~ 2022-10-11</td>
+                            <td>#뭐먹지</td>
+                            <td>
+                                <button onclick="" class="btn-red">삭제</button>
+                            </td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="scheduleBtnDiv">
             <button class="btn-empty" onclick="closeModal(this, 'list')">
                 닫기
-            </button>
-            <button>
-                저장
             </button>
         </div>
     </div>
