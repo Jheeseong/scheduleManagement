@@ -197,29 +197,6 @@ function deleteTag(selectedTag){
     document.querySelector(`.autoTagDiv.${selectedTag}`).remove();
 }
 
-/* 카테고리 영역 내 공유함 탭 클릭 시 */
-function sharedCategory(){
-    document.getElementsByClassName('myCategory')[0].style.display = 'none';
-    document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
-}
-
-/* 카테고리 영역 내 my 탭 클릭 시 */
-function myCategory(){
-    document.getElementsByClassName('sharedCategory')[0].style.display = 'none';
-    document.getElementsByClassName('myCategory')[0].style.display = 'block';
-}
-
-/* 공유함에서 사용자 클릭 시 */
-function sharedCategoryList(i){
-    let categoryList = document.getElementsByClassName('categoryRow__user__categoryList')[i];
-    if(categoryList.style.display == 'none'){
-        categoryList.style.display = 'block';
-    }
-    else if(categoryList.style.display == 'block'){
-        categoryList.style.display = 'none';
-    }
-}
-
 /* 캘린더에 일정 바인딩 */
 function readEvents(){
     let eventData = {

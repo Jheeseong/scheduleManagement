@@ -9,23 +9,15 @@
 </div>
 <div class="categoryTab">
     <!--<div>전체</div>-->
-    <div onclick="myCategory()">My</div>
+    <div onclick="MyCategory()">My</div>
     <div onclick="sharedCategory()">공유함</div>
 </div>
 <!-- my카테고리 -->
 <div class="categoryList myCategory">
-<% for(let i = 0; i < 15; i++){%>
-    <div class="categoryRow" onclick="readEvents()">
-        <div>카테고리<%= i %></div>
-        <div class="categoryEditDiv">
-            <i class="fa-solid fa-pen"></i> <i class="fa-solid fa-trash"></i>
-        </div>
-    </div>
-<% } %>
 </div>
 <!-- 공유함 -->
 <div class="categoryList sharedCategory">
-    <% for(let i = 0; i < 15; i++){%>
+    <!--<% for(let i = 0; i < 15; i++){%>
         <div class="categoryRow">
             <div class="categoryRow__user">
                 <div class="categoryRow__user__name" onclick="sharedCategoryList(<%= i %>)">사용자<%= i %></div>
@@ -36,5 +28,5 @@
                 </div>
             </div>
         </div>
-    <% } %>
+    <% } %>-->
 </div>

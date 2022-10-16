@@ -14,6 +14,7 @@ module.exports = {
                 .catch(err => done(err))
         });
     },
+    //로그인 한 상태로 로그인 페이지 접근 시 홈으로 이동
     isLoggedIn: (req, res, next) => {
         if(!req.isAuthenticated()){
             return next();
@@ -21,6 +22,7 @@ module.exports = {
             res.redirect('/home');
         }
     },
+    //로그인 하지 않은 상태로 페이지 접근 시 로그인 페이지 이동
     checkLogIn: (req, res, next) => {
         if (req.isAuthenticated()) {
             return next();

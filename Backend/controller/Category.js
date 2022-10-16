@@ -1,5 +1,4 @@
 const { Category } = require('../models/Category')
-const { Schedule } = require("../models/Schedule");
 const TagController = require('../controller/Tag')
 
 const CategoryController = {
@@ -29,12 +28,18 @@ const CategoryController = {
           let findCategory = Category.findOne({_id: req.params.id})
               .exec();
             if (findCategory) {
-                await Schedule.updateOne({_id: req.params.id},
+                const findTag = [];
+                await Promise.all(req.body.tagName.map(async (result) => {
+                    findTag.push(await TagController.findTagByContent(result))
+
+                }))
+                await Category.updateOne({_id: req.params.id},
                     {
                         $set: {
                             title: req.body.title,
-                            tagInfo: req.body.tagInfo,
-                            userInfo: req.body.userInfo
+                            creator: req.user._id,
+                            tagInfo: findTag,
+                            userInfo: req.body.userName
                         }
                     });
                 res.json({categoryUpdate: true, message: "카테고리편집이 되었습니다."});
@@ -53,6 +58,17 @@ const CategoryController = {
           return res.status(400).json({categoryDelete: false, message: "카테고리 삭제를 실패하였습니다.", err: err})
       }
     },
+    findCategoryById: async (req, res) => {
+      try {
+          let findCategory = await Category.findOne({_id: req.params.id})
+              .populate("tagInfo")
+              .populate("userInfo")
+              .exec();
+          res.json({category: findCategory, categoryFind: true, message: "카테고리를 찾았습니다."})
+      } catch (err) {
+          return res.status(400).json({categoryFind: false, message: "카테고리를 찾지 못하였습니다."})
+      }
+    },
     findMyCategory: async (req,res) => {
         try {
             let myCategories = await Category.find({creator: req.user._id})
@@ -60,6 +76,21 @@ const CategoryController = {
             res.json({categories: myCategories, categoryFind: true, message: "카테고리를 찾았습니다."})
         } catch (err) {
             return res.status(400).json({categoryFind: false, message: "카테고리를 찾지 못하였습니다.", err: err})
+        }
+    },
+    findShareCategory: async (req, res) => {
+        try {
+            let shareCategories = await Category.find({userInfo: req.user._id})
+                .populate("creator")
+                .populate({
+                    path: "tagInfo",
+                    populate: {path: "scheduleInfo"},
+                })
+                .exec();
+            res.json({categories: shareCategories, categoryFind: true, message: "카테고리를 찾았습니다." })
+        } catch (err) {
+            console.log(err)
+            return res.status(400).json({categoryFind: false, message: "카테고리를 찾기 못하였습니다.", err: err})
         }
     }
 }

@@ -81,7 +81,6 @@ const ScheduleController = {
         try {
             let findSchedules = await Schedule.find({userInfo: req.user._id})
                 .exec();
-            console.log(findSchedules)
             res.json({schedule: findSchedules, findScheduleSuccess: true, message: '일정을 찾았습니다.'})
         } catch (err) {
             console.log(err)
