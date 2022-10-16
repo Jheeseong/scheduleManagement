@@ -5,7 +5,7 @@ const checkLogIn = require('../config/passport/Middleware').checkLogIn
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { user: req.user });
+  res.render('login', { user: req.user });
 });
 
 router.get('/home', checkLogIn, function(req, res, next) {
