@@ -5,10 +5,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.global.min.js"></script>
 <script defer>
     let calendar;
+    let eventList = [];
+    let eventData = {};
     document.addEventListener('DOMContentLoaded', function () {
 
-        let eventList = [];
-        let eventData = {}
         $.ajax({
             type: 'POST',
             url: 'schedule/findByUser',
@@ -16,13 +16,14 @@
             async: false,
             success: function (res) {
                 const schedule = res.schedule;
-                console.log(schedule);
+                console.log('schedule : ' + JSON.stringify(schedule));
                 for (let i = 0; i < schedule.length; i++) {
                     eventData.title = schedule[i].title;
-                    eventData.start = schedule[i].startDate;
-                    eventData.end = schedule[i].endDate;
+                    eventData.start = schedule[i].startDate.split('Z')[0];
+                    eventData.end = schedule[i].endDate.split('Z')[0];
                     eventData.id = schedule[i]._id;
                     eventData.address = schedule[i].address;
+                    eventData.tags = schedule[i].tagInfo;
                     eventList.push(eventData);
                     eventData = {}
                 }
@@ -44,14 +45,13 @@
 
                 for (let i = 0; i < eventList.length; i++) {
                     if (new Date(eventList[i].start).getDate().toString().split('T') <= new Date(info.dateStr).getDate().toString().split('T') && new Date(info.dateStr).getDate().toString().split('T') <= new Date(eventList[i].end).getDate().toString().split('T')) {
-                        console.log('title: ' + JSON.stringify(eventList[i].title))
-                        console.log('start: ' + JSON.stringify(eventList[i].start))
-                        console.log('end: ' + JSON.stringify(eventList[i].end))
-                        console.log('id: ' + JSON.stringify(eventList[i].id))
+                        /*console.log('start: ' + JSON.stringify(eventList[i].start))
+                        console.log('end: ' + JSON.stringify(eventList[i].end))*/
                         selectedEventList.push(eventList[i]);
                     }
                 }
                 openListModal(selectedEventList);
+                /*console.log('0 : ' + selectedEventList[0].start)*/
                 /*console.log('picked: ' + JSON.stringify(info.dateStr))*/
                 /*console.log('eventList: ' + JSON.stringify(calendar.getEvents()));*/
             },
