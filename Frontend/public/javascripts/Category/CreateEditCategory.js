@@ -6,17 +6,28 @@ const AdduserModal = document.querySelector('.modal_adduser_body')
 categoryModal.addEventListener('mousedown', closeCategoryModal)
 
 function closeCategoryModal(event){
+    const tagListDiv = document.querySelector('.AddUserTagListDiv');
+    const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');
+
     if(event.currentTarget == event.target){
         categoryModal.classList.remove('show');
         localStorage.clear()
         /* 체크박스 및 공유 유저 모달 해제 */
         document.getElementById('userCheckbox').checked = false;
+        document.getElementById('categoryName').value = "";
+        tagListDiv.innerHTML = '';
+        AdduserMid.innerHTML = '';
         userModal.classList.remove('show');
     }
 }
 
 /*카테고리 생성 모달창*/
 function openCategoryModal() {
+    const categoryBtn = document.querySelector('.categoryBtnDiv');
+
+    categoryBtn.innerHTML =
+        '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
+        `<button onclick='saveCategory()'>저장</button>`
     $.ajax({
         type: 'POST',
         url: 'schedule/tagsearch',
@@ -68,8 +79,6 @@ function openUpdateCategoryModal(id) {
         url: 'category/findById/' + id,
         dataType: "json",
         success: function (res) {
-            tagListDiv.innerHTML = ''
-            AdduserMid.innerHTML = ''
             document.getElementById('categoryName').value = res.category.title;
             res.category.tagInfo.map((result) => {
                 tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + result.content + '"  onclick="AddUserDeleteTag(\'' + result.content + '\')">' +
@@ -90,6 +99,7 @@ function openUpdateCategoryModal(id) {
                 '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
                 `<button onclick='categoryUpdate("${id}")'>편집</button>`
 
+            AddUserTagMotion();
         },
         error: function (err) {
             window.alert("카테고리 모달창을 불러오는 도중 오류가 생겨 다시 시도해주세요!")

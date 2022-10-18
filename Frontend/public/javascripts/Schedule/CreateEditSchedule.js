@@ -128,6 +128,25 @@ function saveSchedule() {
             }
         })
 }
+function ScheduleTagOnfocus() {
+    const tags = JSON.parse(localStorage.getItem('content'))
+    const tagList = document.querySelector('.tagList')
+
+    tagList.innerHTML =
+        '<ul id="autoTagListUl" class="autoTagList"></ul>';
+    const autoTagList = document.querySelector('.autoTagList');
+
+    tags.map((res) => {
+        autoTagList.innerHTML +=
+            '<li class="autoTag" value="'+ res +'">' + res + '</li>'
+
+    })
+}
+
+function ScheduleTagOnblur() {
+    const tagList = document.querySelector('.tagList')
+    tagList.innerHTML = '';
+}
 
 function searchTag(event) {
     const tags = JSON.parse(localStorage.getItem('content'))
@@ -151,7 +170,15 @@ function searchTag(event) {
             tagList.innerHTML = '';
         }
     } else {
-        tagList.innerHTML = '';
+        tagList.innerHTML =
+            '<ul id="autoTagListUl" class="autoTagList"></ul>';
+        const autoTagList = document.querySelector('.autoTagList');
+
+        tags.map((res) => {
+            autoTagList.innerHTML +=
+                '<li class="autoTag" value="'+ res +'">' + res + '</li>'
+
+        })
     }
 
     const autoTag = document.getElementsByClassName('autoTag');
@@ -195,6 +222,7 @@ function tagMotion() {
 function deleteTag(selectedTag){
     /*document.getElementsByClassName('aaa')[0].remove();*/
     document.querySelector(`.autoTagDiv.${selectedTag}`).remove();
+    tagMotion();
 }
 
 /* 캘린더에 일정 바인딩 */

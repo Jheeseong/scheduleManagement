@@ -8,7 +8,7 @@ const tagController = require('../controller/Tag')
 
 router.post('/create',checkLogIn, scheduleController.saveSchedule);
 
-router.post('/update/:id',checkLogIn, scheduleController.updateSchedule);
+router.post('/update/:id', scheduleController.updateSchedule);
 
 router.post('/delete/:id',checkLogIn, scheduleController.deleteSchedule);
 

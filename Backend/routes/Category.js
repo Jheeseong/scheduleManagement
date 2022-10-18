@@ -15,4 +15,6 @@ router.post('/shareCategory', checkLogIn, categoryController.findShareCategory)
 
 router.post('/findById/:id', checkLogIn, categoryController.findCategoryById)
 
+router.post('/myCategory/mySchedule', checkLogIn, categoryController.findMyCategoryByCreator)
+
 module.exports = router;

@@ -29,7 +29,9 @@
                 <div class="tagDiv">
                     <div class="tagCover">
                         <div class="tagListDiv"></div>
-                        <input type="input" id="scheduleTag" class="scheduleTag" onkeyup="searchTag(window.event)" placeholder="태그 입력" maxlength="20" autocomplete="off">
+                        <input type="input" id="scheduleTag" class="scheduleTag"
+                               onfocus="ScheduleTagOnfocus()" autofocus="false" onblur="ScheduleTagOnblur()"
+                               onkeyup="searchTag(window.event)" placeholder="태그 입력" maxlength="20" autocomplete="off">
                     </div>
                 </div>
             </div>

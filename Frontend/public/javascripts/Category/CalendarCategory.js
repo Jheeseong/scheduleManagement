@@ -13,7 +13,7 @@ function findMyCategory() {
             myCategory.innerHTML = ''
             res.categories.map((result) => {
                 myCategory.innerHTML +=
-                    '<div class="categoryRow" onclick="readEvents()">' +
+                    `<div class="categoryRow" onclick='myCategoryMySchedule("${result._id}", "${result.creator}")'>` +
                     '<div>'+ result.title +'</div>' +
                     '<div class ="categoryEditDiv">' +
                     `<i class="fa-solid fa-pen" onclick='openUpdateCategoryModal("${result._id}")'></i> <i class="fa-solid fa-trash" onclick='categoryDelete("${result._id}")'></i>` +
@@ -58,14 +58,14 @@ function findShareCategory() {
                         '<div class="categoryRow__user">' +
                         '<div class="categoryRow__user__name" onclick="sharedCategoryList(\''+ result.creator.name +'\')">' + result.creator.name + '</div>' +
                         '<div class="categoryRow__user__categoryList ' + result.creator.name +'" style="display: none">' +
-                        '<div class="categoryRow__user__category">' + result.title + '</div>' +
+                        `<div class="categoryRow__user__category" onclick=\'myCategoryMySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>` +
                         '</div>' +
                         '</div>' +
                         '</div>';
                 } else {
                     const sharedCategoryList = document.querySelector(`.categoryRow__user__categoryList.${result.creator.name}`)
                     sharedCategoryList.innerHTML +=
-                        '<div class="categoryRow__user__category">'+ result.title +'</div>'
+                        `<div class="categoryRow__user__category" onclick=\'myCategoryMySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>`
                 }
             })
         },
@@ -86,4 +86,21 @@ function sharedCategoryList(creator){
     else if(categoryList.style.display == 'block'){
         categoryList.style.display = 'none';
     }
+}
+
+/*카테고리 일정 글릭 시 해당 태그가 포함된 일정을 불러오는 기능*/
+function myCategoryMySchedule(id, creator) {
+    $.ajax({
+        type: 'POST',
+        url: 'category/myCategory/mySchedule',
+        data: {id: id, creator: creator},
+        dataType: "json",
+
+        success: function (res) {
+            console.log(res)
+        },
+        err: function (err) {
+            console.log(err)
+        }
+    })
 }

@@ -90,7 +90,33 @@ const CategoryController = {
             res.json({categories: shareCategories, categoryFind: true, message: "카테고리를 찾았습니다." })
         } catch (err) {
             console.log(err)
-            return res.status(400).json({categoryFind: false, message: "카테고리를 찾기 못하였습니다.", err: err})
+            return res.status(400).json({categoryFind: false, message: "카테고리를 찾지 못하였습니다.", err: err})
+        }
+    },
+    findMyCategoryByCreator: async (req,res) => {
+        try {
+            let mySchedule = await Category.findOne({_id: req.body.id})
+                .populate({
+                    path: "tagInfo",
+                    populate: {path: "scheduleInfo",
+                                match: {userInfo: req.body.creator}}
+                })
+                .exec();
+
+            let schedules = []
+            mySchedule.tagInfo.map((res) => {
+                res.scheduleInfo.map((result) => {
+                    if (!schedules.includes(result)) {
+                        schedules.push(result)
+                    }
+                })
+            })
+
+            console.log(schedules);
+            res.json({schedules: schedules, scheduleFind: true, message: "일정을 찾았습니다."})
+        } catch (err) {
+            console.log(err)
+            return res.status(400).json({scheduleFind: false, message: "스케줄을 찾지 못하였습니다.", err: err})
         }
     }
 }

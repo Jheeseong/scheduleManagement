@@ -35,6 +35,7 @@ const ScheduleController = {
             const findSchedule = await Schedule.findOne({_id: req.params.id})
                 .exec();
             if (findSchedule) {
+                console.log(findSchedule.tagInfo)
                 await TagController.disconnectSchedule(findSchedule.tagInfo, findSchedule._id);
 
                 const promiseTag = await Promise.all(req.body.tagInfo.map(async (result) => {
