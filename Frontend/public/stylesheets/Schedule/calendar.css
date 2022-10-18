@@ -12,6 +12,11 @@
     color: #575757;
     box-shadow: 1px 1px 5px 1px #8e8e8e;
 }
+.fullCalendarDiv{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
 .calendar--form{
     display: flex;
     justify-content: center;
@@ -107,9 +112,12 @@
     cursor: pointer;
     width: calc(100% - 15px);
 }
+.categoryRow__user__name{
+    padding: 10px 0;
+}
 .categoryRow__user__category{
     width: 100%;
-    padding: 10px;
+    padding: 10px 0 10px 24px;
     font-size: 14px;
 }
 .categoryRow__user__category:hover{
@@ -222,6 +230,11 @@
 .scheduleTable{
     width: 100%;
     text-align: center;
+    border-collapse: collapse;
+}
+#scheduleTbody tr:hover{
+    background-color: #8e8e8e;
+    cursor: pointer;
 }
 
 .modal_schedule_body_mid > div:first-child > div:not(.scheduleAdd > div){

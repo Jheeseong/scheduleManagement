@@ -34,6 +34,7 @@ const ScheduleController = {
         try {
             const findSchedule = await Schedule.findOne({_id: req.params.id})
                 .exec();
+            console.log(findSchedule);
             if (findSchedule) {
                 await TagController.disconnectSchedule(findSchedule.tagInfo, findSchedule._id);
 
@@ -70,7 +71,9 @@ const ScheduleController = {
     findScheduleById: async (req, res) => {
         try {
             let findSchedule = await Schedule.findOne({_id: req.params.id})
+                .populate('tagInfo')
                 .exec();
+            console.log('find : ' + findSchedule)
             res.json({schedule: findSchedule, findScheduleSuccess: true})
         } catch (err) {
             console.log(err)
