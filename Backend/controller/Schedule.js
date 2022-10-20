@@ -98,6 +98,14 @@ const ScheduleController = {
         } catch (err) {
             return res.status(400).json({scheduleDelete: false, message: "일정 삭제를 실패하였습니다.", err: err})
         }
+    },
+    findScheduleCnt: async (req, res) => {
+        try {
+            let scheduleCnt = await Schedule.find().count().exec();
+            res.json({scheduleCnt: scheduleCnt, findScheduleSuccess: true, message: "총 일정 개수는 ." + scheduleCnt + "개입니다."})
+        } catch (err) {
+            return res.status(400).json({findScheduleSuccess: false, message: "총 일정 개수를 찾을 수 없습니다.", err: err})
+        }
     }
 }
 

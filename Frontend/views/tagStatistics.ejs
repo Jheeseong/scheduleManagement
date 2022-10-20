@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/login/login.css">
     <script defer src="/javascripts/navbar.js"></script>
+    <script defer src="/javascripts/TagStatistics/tagStatistics.js"></script>
 </head>
 <body>
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
     <div class="wrapper__form">
+        <button onclick="findScheduleCnt()">일정개수</button>
         <div>총 일정 개수 표시 영역</div>
         <div>태그별 사용 횟수</div>
         <div>태그별 그래프</div>
