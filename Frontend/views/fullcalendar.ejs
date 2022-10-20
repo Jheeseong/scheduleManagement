@@ -27,13 +27,16 @@
                     eventList.push(eventData);
                     eventData = {}
                 }
-
             },
             error: function (err) {
 
             }
         })
         console.log('evnetList : ' + JSON.stringify(eventList));
+        applyCalendar(eventList)
+        calendar.render();
+    });
+    function applyCalendar(eventList) {
         var calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
             timeZone: 'Asia/Seoul',
@@ -81,8 +84,7 @@
             },
             events: eventList,
         });
-        calendar.render();
-    });
+    }
 </script>
 <body>
 <div class="fullCalendarDiv">

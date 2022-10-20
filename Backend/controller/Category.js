@@ -118,6 +118,40 @@ const CategoryController = {
             console.log(err)
             return res.status(400).json({scheduleFind: false, message: "스케줄을 찾지 못하였습니다.", err: err})
         }
+    },
+    findAllCategory: async (req, res) => {
+        try {
+            let categories = await Category.find({userInfo: req.user._id})
+                .select('-_id creator')
+                .distinct('creator')
+                .exec();
+            console.log(categories)
+
+
+            let allCategory = await Category.find({userInfo: req.user._id})
+                .populate({
+                    path: "tagInfo",
+                    populate: {path: "scheduleInfo",
+                                match: {userInfo: categories}}
+                })
+                .exec();
+
+            console.log(allCategory)
+            let schedules = [];
+
+            allCategory.map((firstRes) => {
+                firstRes.tagInfo.map((secondRes) => {
+                    secondRes.scheduleInfo.map((result) => {
+                        if (!schedules.includes(result)) {
+                            schedules.push(result);
+                        }
+                    })
+                })
+            })
+            res.json({schedules: schedules, scheduleFind: true, message: "일정을 찾았습니다."})
+        } catch (err) {
+            console.log(err)
+        }
     }
 }
 

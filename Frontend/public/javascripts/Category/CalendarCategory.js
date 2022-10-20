@@ -13,7 +13,7 @@ function findMyCategory() {
             myCategory.innerHTML = ''
             res.categories.map((result) => {
                 myCategory.innerHTML +=
-                    `<div class="categoryRow" onclick='myCategoryMySchedule("${result._id}", "${result.creator}")'>` +
+                    `<div class="categoryRow" onclick='applySchedule("${result._id}", "${result.creator}")'>` +
                     '<div>'+ result.title +'</div>' +
                     '<div class ="categoryEditDiv">' +
                     `<i class="fa-solid fa-pen" onclick='openUpdateCategoryModal("${result._id}")'></i> <i class="fa-solid fa-trash" onclick='categoryDelete("${result._id}")'></i>` +
@@ -39,6 +39,20 @@ function sharedCategory(){
     document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
 }
 
+function allCategory(){
+    $.ajax({
+        type: 'POST',
+        url: 'category/findAllCategory',
+        dataType: "json",
+        success: function (res) {
+            console.log(res)
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
+
 function findShareCategory() {
     document.getElementsByClassName('myCategory')[0].style.display = 'none';
     document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
@@ -58,14 +72,14 @@ function findShareCategory() {
                         '<div class="categoryRow__user">' +
                         '<div class="categoryRow__user__name" onclick="sharedCategoryList(\''+ result.creator.name +'\')">' + result.creator.name + '</div>' +
                         '<div class="categoryRow__user__categoryList ' + result.creator.name +'" style="display: none">' +
-                        `<div class="categoryRow__user__category" onclick=\'myCategoryMySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>` +
+                        `<div class="categoryRow__user__category" onclick=\'applySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>` +
                         '</div>' +
                         '</div>' +
                         '</div>';
                 } else {
                     const sharedCategoryList = document.querySelector(`.categoryRow__user__categoryList.${result.creator.name}`)
                     sharedCategoryList.innerHTML +=
-                        `<div class="categoryRow__user__category" onclick=\'myCategoryMySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>`
+                        `<div class="categoryRow__user__category" onclick=\'applySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>`
                 }
             })
         },
@@ -89,18 +103,36 @@ function sharedCategoryList(creator){
 }
 
 /*카테고리 일정 글릭 시 해당 태그가 포함된 일정을 불러오는 기능*/
-function myCategoryMySchedule(id, creator) {
+function applySchedule(id, creator) {
     $.ajax({
         type: 'POST',
         url: 'category/myCategory/mySchedule',
         data: {id: id, creator: creator},
         dataType: "json",
-
+        async: false,
         success: function (res) {
             console.log(res)
+            const schedules = res.schedules;
+            eventList = [];
+            /*console.log('schedule : ' + JSON.stringify(schedules));*/
+            schedules.map((result) => {
+                console.log(result)
+                eventData.title = result.title;
+                eventData.start = result.startDate.split('Z')[0];
+                eventData.end = result.endDate.split('Z')[0];
+                eventData.id = result._id;
+                eventData.address = result.address
+                eventData.tags = result.tagInfo;
+                eventList.push(eventData);
+                eventData = {}
+            })
         },
-        err: function (err) {
+        error: function (err) {
             console.log(err)
         }
     })
+    calendar.removeAllEvents()
+    console.log(eventList)
+    applyCalendar(eventList)
+    calendar.render();
 }

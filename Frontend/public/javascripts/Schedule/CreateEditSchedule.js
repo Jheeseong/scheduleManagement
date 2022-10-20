@@ -121,7 +121,6 @@ function openEditModal(scheduleId) {
                         '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
                         '</div>'
                 })
-                searchAddr();
                 tagMotion();
 
             },
@@ -250,6 +249,7 @@ function addrToggle() {
     addrChecked = document.getElementById('addrCheckbox').checked;
     if(addrChecked){
         mapModal.classList.add('show');
+        searchAddr();
     }
     else{
         mapModal.classList.remove('show');
@@ -391,6 +391,7 @@ function tagMotion() {
 function deleteTag(selectedTag){
     /*document.getElementsByClassName('aaa')[0].remove();*/
     document.querySelector(`.autoTagDiv.tag${selectedTag}`).remove();
+    tagMotion()
 }
 
 /* 캘린더에 일정 바인딩 */
