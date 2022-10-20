@@ -18,4 +18,6 @@ router.post('/tagsearch',checkLogIn, tagController.findTag);
 
 router.post('/findByUser', checkLogIn, scheduleController.findScheduleByUserInfo);
 
+router.post('/findCnt', checkLogIn, scheduleController.findScheduleCnt);
+
 module.exports = router;
