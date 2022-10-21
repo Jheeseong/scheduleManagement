@@ -49,7 +49,7 @@ function openListModal(selectedEventList) {
     let tbodyTag = document.getElementById('scheduleTbody');
     let str = '';
     for(let i = 0; i < selectedEventList.length; i++){
-        str += '<tr onclick="openEditModal(\'' + selectedEventList[i].id + '\')">';
+        str += '<tr onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">';
         str += '<td>' + selectedEventList[i].title + '</td>';
         str += '<td>' + selectedEventList[i].start.substring(0, 10) + ' ' + selectedEventList[i].start.substring(11, 16) + '</td>';
         str += '<td>' + selectedEventList[i].end.substring(0, 10) + ' ' + selectedEventList[i].end.substring(11, 16) + '</td>';
@@ -65,6 +65,25 @@ function openListModal(selectedEventList) {
     }
 }
 
+function openDetailModal(scheduleId){
+        openEditModal(scheduleId);
+
+        /* 타이틀 변경 */
+        document.getElementsByClassName('modal_schedule_body_top')[0].innerText = '일정 상세';
+
+        /* 모든 input태그 disabled 처리 */
+        const inputTags = document.getElementsByTagName('input')
+        for(let i = 0; i < inputTags.length; i++){
+            inputTags[i].style.border = 'none';
+            inputTags[i].setAttribute('disabled', 'disabled');
+            console.log(inputTags[i])
+        }
+        /* 태그 입력란 display = 'none' */
+        document.getElementsByClassName('scheduleTag')[0].style.display = 'none';
+
+        /*document.getElementsByClassName('autoTagDiv')[0].setAttribute('onclick', 'alert(123)');*/
+        console.log(document.getElementsByClassName('autoTagDiv')[0]) // undefined 뜸
+}
 function openEditModal(scheduleId) {
     if(scheduleId){
         /* 희성이코드 */
@@ -118,10 +137,10 @@ function openEditModal(scheduleId) {
                 res.schedule.tagInfo.map((result) => {
                     tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '"  onclick="deleteTag(\'' + result.content + '\')">' +
                         '<span class="tagValue" id="tagValue" value="' + result.content +'">' + result.content + '</span>' +
-                        '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
+                        '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
                         '</div>'
                 })
-                tagMotion();
+                /*tagMotion();*/
 
             },
             error: function (err) {
@@ -160,7 +179,8 @@ function openEditModal(scheduleId) {
     }else{
         body.style.overflow = 'auto';
     }
-    tagMotion();
+    /*tagMotion();*/
+
 
 }
 /* 시차 세팅 */
@@ -267,8 +287,8 @@ function saveSchedule() {
         arrayTag.push(tagValue[i].getAttribute('value'))
     }
     const schedules = {
-            startDate: document.getElementById('startDate').value,
-            endDate: document.getElementById('endDate').value,
+            startDate: setTime(document.getElementById('startDate').value),
+            endDate: setTime(document.getElementById('endDate').value),
             title: document.getElementById('scheduleName').value,
             content: document.getElementById('scheduleContent').value,
             priority: document.getElementById('schedulePriority').value,
@@ -297,24 +317,17 @@ function saveSchedule() {
             }
         })
 }
-function ScheduleTagOnfocus() {
-    const tags = JSON.parse(localStorage.getItem('content'))
-    const tagList = document.querySelector('.tagList')
 
-    tagList.innerHTML =
-        '<ul id="autoTagListUl" class="autoTagList"></ul>';
-    const autoTagList = document.querySelector('.autoTagList');
-
-    tags.map((res) => {
-        autoTagList.innerHTML +=
-            '<li class="autoTag" value="'+ res +'">' + res + '</li>'
-
-    })
-}
-
+/* 태그 input onblur 시 */
 function ScheduleTagOnblur() {
-    const tagList = document.querySelector('.tagList')
-    tagList.innerHTML = '';
+    /* mouseup의 타겟이  */
+    window.onmouseup = function(e){
+        let targetClass = e.target.classList[0]
+        if(targetClass != 'autoTag' && targetClass != 'scheduleTag' && targetClass != 'autoTagList'){
+            const tagList = document.querySelector('.tagList')
+            tagList.innerHTML = '';
+        }
+    }
 }
 
 function searchTag(event) {
@@ -357,25 +370,25 @@ function searchTag(event) {
             let selectedTag = autoTag[i].getAttribute('value');
             tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + selectedTag + '"  onclick="deleteTag(\'' + selectedTag + '\')">' +
                 '<span class="tagValue" id="tagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
-                '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
+                '<i class="fa-regular fa-circle-xmark deleteTagValue"</i>' +
                 '</div>'
             tagList.innerHTML= ''
             document.getElementById('scheduleTag').value = null
-            tagMotion();
+            /*tagMotion();*/
         })
     }
     /* 엔터로 태그 선택 또는 등록 */
     if (event.keyCode == 13) {
         tagListDiv.innerHTML += '<div class = "autoTagDiv ' + 'tag' + str + '" onclick="deleteTag(\'' + str + '\')">' +
             '<span class="tagValue" id="tagValue" value="' + str +'">' + str + '</span>' +
-            '<i class="fa-regular fa-circle-xmark deleteTagValue" style="display: none"></i>' +
+            '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
             '</div>'
         tagList.innerHTML = ''
         document.getElementById('scheduleTag').value = null
-        tagMotion();
+        /*tagMotion();*/
     }
 }
-function tagMotion() {
+/*function tagMotion() {
     let autoTagDiv = document.getElementsByClassName('autoTagDiv')
 
     for (let i = 0; i < autoTagDiv.length; i++) {
@@ -386,12 +399,12 @@ function tagMotion() {
             document.getElementsByClassName('deleteTagValue')[i].style.display = 'none';
         })
     }
-}
+}*/
 
 function deleteTag(selectedTag){
     /*document.getElementsByClassName('aaa')[0].remove();*/
     document.querySelector(`.autoTagDiv.tag${selectedTag}`).remove();
-    tagMotion()
+    /*tagMotion()*/
 }
 
 /* 캘린더에 일정 바인딩 */
@@ -403,7 +416,7 @@ function readEvents(){
         id: '123123'
     }
     calendar.currentData.calendarOptions.events.push(eventData);
-    console.log(calendar.currentData.calendarOptions.events);
+    /*console.log(calendar.currentData.calendarOptions.events);*/
 
     calendar.refetchEvents();
 }

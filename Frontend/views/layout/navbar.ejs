@@ -30,8 +30,18 @@
 </div>
 <div class="navbar" id="subMenu">
     <ul>
-        <li class="userSub subDiv">
-            <div class="subDiv" onclick="location.href='/login/logout'"><i class="fa-solid fa-arrow-right-from-bracket"></i> 로그아웃</div>
+        <li class="userSub">
+            <div class="subDiv userSub__logout" onclick="location.href='/login/logout'">
+                <div class="iconDiv" style="display: flex; align-items: center;">
+                    <% if(user.provider == 'naver'){ %>
+                        <img src="/img/naverLogout.png" alt="img" class="platformLogo" style="width: 20px; height: 15px">
+                    <% } %>
+                    <% if(user.provider == 'kakao'){ %>
+                        <img src="/img/kakaoLogo.png" alt="img" class="platformLogo">
+                    <% } %>
+                </div>
+                    로그아웃 <!--<i class="fa-solid fa-arrow-right-from-bracket"></i>-->
+            </div>
         </li>
         <li class="bgSub">
             <div class="colorHead subDiv">메뉴 색상 선택</div>
