@@ -39,20 +39,6 @@ function sharedCategory(){
     document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
 }
 
-function allCategory(){
-    $.ajax({
-        type: 'POST',
-        url: 'category/findAllCategory',
-        dataType: "json",
-        success: function (res) {
-            console.log(res)
-        },
-        error: function (err) {
-            console.log(err)
-        }
-    })
-}
-
 function findShareCategory() {
     document.getElementsByClassName('myCategory')[0].style.display = 'none';
     document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
@@ -91,6 +77,7 @@ function findShareCategory() {
     })
 }
 
+
 /* 공유함에서 사용자 클릭 시 */
 function sharedCategoryList(creator){
     let categoryList = document.querySelector(`.categoryRow__user__categoryList.${creator}`);
@@ -115,6 +102,37 @@ function applySchedule(id, creator) {
             const schedules = res.schedules;
             eventList = [];
             /*console.log('schedule : ' + JSON.stringify(schedules));*/
+            schedules.map((result) => {
+                console.log(result)
+                eventData.title = result.title;
+                eventData.start = result.startDate.split('Z')[0];
+                eventData.end = result.endDate.split('Z')[0];
+                eventData.id = result._id;
+                eventData.address = result.address
+                eventData.tags = result.tagInfo;
+                eventList.push(eventData);
+                eventData = {}
+            })
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+    calendar.removeAllEvents()
+    console.log(eventList)
+    applyCalendar(eventList)
+    calendar.render();
+}
+
+function allCategory(){
+    $.ajax({
+        type: 'POST',
+        url: 'category/findAllCategory',
+        dataType: "json",
+        async: false,
+        success: function (res) {
+            const schedules = res.schedules;
+            eventList = [];
             schedules.map((result) => {
                 console.log(result)
                 eventData.title = result.title;

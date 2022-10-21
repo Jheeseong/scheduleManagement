@@ -23,8 +23,10 @@ function closeCategoryModal(event){
 
 /*카테고리 생성 모달창*/
 function openCategoryModal() {
+    const categoryTop = document.querySelector('.modal_category_body_top')
     const categoryBtn = document.querySelector('.categoryBtnDiv');
 
+    categoryTop.innerText = '카태고리 생성'
     categoryBtn.innerHTML =
         '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
         `<button onclick='saveCategory()'>저장</button>`
@@ -57,6 +59,7 @@ function openUpdateCategoryModal(id) {
     const tagListDiv = document.querySelector('.AddUserTagListDiv');
     const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');
     const categoryBtn = document.querySelector('.categoryBtnDiv');
+    const categoryTop = document.querySelector('.modal_category_body_top')
 
     $.ajax({
         type: 'POST',
@@ -79,6 +82,7 @@ function openUpdateCategoryModal(id) {
         url: 'category/findById/' + id,
         dataType: "json",
         success: function (res) {
+            categoryTop.innerText = '카테고리 편집';
             document.getElementById('categoryName').value = res.category.title;
             res.category.tagInfo.map((result) => {
                 tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + result.content + '"  onclick="AddUserDeleteTag(\'' + result.content + '\')">' +
@@ -86,6 +90,10 @@ function openUpdateCategoryModal(id) {
                     '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue" style="display: none"></i>' +
                     '</div>'
             })
+            if (res.category.userInfo.length !== 0) {
+                document.getElementById('userCheckbox').checked = true;
+                userModal.classList.add('show');
+            }
             res.category.userInfo.map((result) => {
                 AdduserMid.innerHTML += '<div class ="addUserDiv ' + result.name + '" value = "'+ result._id + '">' +
                     '<div>' +
@@ -94,7 +102,7 @@ function openUpdateCategoryModal(id) {
                     '</div>' +
                     '<span class = "userEmail">' + (result.email===undefined ? "" : result.email) + '</span>' +
                     '</div>'
-            })
+            });
             categoryBtn.innerHTML =
                 '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
                 `<button onclick='categoryUpdate("${id}")'>편집</button>`
@@ -129,17 +137,21 @@ function addUserToggle() {
 function saveCategory() {
     const categoryTagValue = document.getElementsByClassName('AddUserTagValue')
     const arrayCategoryTag = [];
+    let userChecked = document.getElementById('userCheckbox').checked;
 
     for (let i = 0; i < categoryTagValue.length; i++) {
         arrayCategoryTag.push(categoryTagValue[i].getAttribute('value'))
     }
-
     const categoryUserValue = document.getElementsByClassName('addUserDiv')
+
     const arrayCategoryUser = [];
 
-    for (let i = 0; i < categoryUserValue.length; i++) {
-        arrayCategoryUser.push(categoryUserValue[i].getAttribute('value'))
+    if (userChecked) {
+        for (let i = 0; i < categoryUserValue.length; i++) {
+            arrayCategoryUser.push(categoryUserValue[i].getAttribute('value'))
+        }
     }
+
 
     const categories = {
         title: document.getElementById('categoryName').value,
@@ -168,6 +180,7 @@ function saveCategory() {
 function categoryUpdate(id) {
     const categoryTagValue = document.getElementsByClassName('AddUserTagValue')
     const arrayCategoryTag = [];
+    let userChecked = document.getElementById('userCheckbox').checked;
 
     for (let i = 0; i < categoryTagValue.length; i++) {
         arrayCategoryTag.push(categoryTagValue[i].getAttribute('value'))
@@ -176,15 +189,17 @@ function categoryUpdate(id) {
     const categoryUserValue = document.getElementsByClassName('addUserDiv')
     const arrayCategoryUser = [];
 
-    for (let i = 0; i < categoryUserValue.length; i++) {
-        arrayCategoryUser.push(categoryUserValue[i].getAttribute('value'))
+    if (userChecked) {
+        for (let i = 0; i < categoryUserValue.length; i++) {
+            arrayCategoryUser.push(categoryUserValue[i].getAttribute('value'));
+        }
     }
 
     const categories = {
         title: document.getElementById('categoryName').value,
         tagName: arrayCategoryTag,
         userName: arrayCategoryUser
-    }
+    };
     console.log(categories)
 
     $.ajax({

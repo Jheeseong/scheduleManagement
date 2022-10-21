@@ -3,8 +3,9 @@ const { User } = require("../../models/User");
 const UserController = {
     findAllUser: async (req, res) => {
         try {
-            let users = await User.find()
+            let users = await User.find({_id: { $ne: req.user._id}})
                 .exec();
+            console.log(users)
             res.json({user: users, finduser: true})
         } catch (err) {
             res.json({finduser: false, err: err})

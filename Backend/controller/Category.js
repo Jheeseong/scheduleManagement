@@ -8,6 +8,7 @@ const CategoryController = {
             await Promise.all(req.body.tagName.map(async (result) => {
                 findTag.push(await TagController.findTagByContent(result))
             }))
+            console.log(req.body.userName)
 
             const category = new Category({
                 title: req.body.title,
@@ -33,13 +34,20 @@ const CategoryController = {
                     findTag.push(await TagController.findTagByContent(result))
 
                 }))
+                let shareUserName;
+                if (req.body.userName === undefined) {
+                    shareUserName = [];
+                } else {
+                    shareUserName = req.body.userName;
+                }
+
                 await Category.updateOne({_id: req.params.id},
                     {
                         $set: {
                             title: req.body.title,
                             creator: req.user._id,
                             tagInfo: findTag,
-                            userInfo: req.body.userName
+                            userInfo: shareUserName
                         }
                     });
                 res.json({categoryUpdate: true, message: "카테고리편집이 되었습니다."});
@@ -112,7 +120,6 @@ const CategoryController = {
                 })
             })
 
-            console.log(schedules);
             res.json({schedules: schedules, scheduleFind: true, message: "일정을 찾았습니다."})
         } catch (err) {
             console.log(err)
@@ -122,13 +129,34 @@ const CategoryController = {
     findAllCategory: async (req, res) => {
         try {
             let categories = await Category.find({userInfo: req.user._id})
-                .select('-_id creator')
-                .distinct('creator')
+                .select('creator')
+                /*.distinct('creator')*/
                 .exec();
             console.log(categories)
 
+            let schedules = []
 
-            let allCategory = await Category.find({userInfo: req.user._id})
+            await Promise.all(categories.map(async (res) => {
+                let findCategory = await Category.findOne({_id: res._id})
+                    .populate({
+                        path: "tagInfo",
+                        populate: { path: "scheduleInfo",
+                            match: {userInfo: res.creator}}
+                    })
+                    .exec();
+
+                    findCategory.tagInfo.map((res) => {
+                        res.scheduleInfo.map((result) => {
+                            if (!schedules.includes(result)) {
+                                schedules.push(result);
+                            }
+                        })
+                    })
+            }))
+
+            console.log(schedules)
+
+            /*let allCategory = await Category.find({userInfo: req.user._id})
                 .populate({
                     path: "tagInfo",
                     populate: {path: "scheduleInfo",
@@ -147,7 +175,7 @@ const CategoryController = {
                         }
                     })
                 })
-            })
+            })*/
             res.json({schedules: schedules, scheduleFind: true, message: "일정을 찾았습니다."})
         } catch (err) {
             console.log(err)
