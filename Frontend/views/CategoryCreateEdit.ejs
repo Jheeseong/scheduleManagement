@@ -15,8 +15,8 @@
                     <div class="AddUserTagCover">
                         <div class="AddUserTagListDiv"></div>
                         <input type="input" id="categoryTag" class="categoryTag"
-                                onkeyup="AddUserSearchTag()"
-                               placeholder="태그 입력" maxlength="20" autocomplete="off">
+                               onfocus="AddUserSearchTag()" autofocus="false" onblur="AddUserTagOnblur()"
+                                onkeyup="AddUserSearchTag()" placeholder="태그 입력" maxlength="20" autocomplete="off">
                     </div>
                 </div>
             </div>

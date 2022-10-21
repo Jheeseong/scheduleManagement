@@ -139,22 +139,15 @@ function getCheckboxAddUser()  {
         });
     });
 }
-function AddUserTagOnfocus() {
-    const tags = JSON.parse(localStorage.getItem('content'))
-    const tagList = document.querySelector('.AddUserTagList')
 
-    tagList.innerHTML =
-        '<ul id="AddUserAutoTagListUl" class="AddUserAutoTagList"></ul>';
-    const autoTagList = document.querySelector('.AddUserAutoTagList');
-
-    tags.map((res) => {
-        autoTagList.innerHTML +=
-            '<li class="AddUserAutoTag" value="'+ res +'">' + res + '</li>'
-    })
-}
 function AddUserTagOnblur() {
-    const tagList = document.querySelector('.AddUserTagList')
-    tagList.innerHTML = '';
+    window.onmouseup = function(e){
+        let targetClass = e.target.classList[0]
+        if(targetClass != 'AddUserAutoTag' && targetClass != 'categoryTag' && targetClass != 'AddUserAutoTagList'){
+            const tagList = document.querySelector('.AddUserTagList')
+            tagList.innerHTML = '';
+        }
+    }
 }
 /*태그 인풋 입력 시 포함 태그 정보들 표시하는 기능*/
 function AddUserSearchTag() {
@@ -194,17 +187,17 @@ function AddUserSearchTag() {
     for(let i = 0; i < autoTag.length; i++){
         autoTag[i].addEventListener('click', function () {
             let selectedTag = autoTag[i].getAttribute('value');
-            tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv' + selectedTag + '"  onclick="AddUserDeleteTag(\'' + selectedTag + '\')">' +
+            tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + selectedTag + '"  onclick="AddUserDeleteTag(\'' + selectedTag + '\')">' +
                 '<span class="AddUserTagValue" id="AddUserTagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
-                '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue" style="display: none"></i>' +
+                '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
                 '</div>'
             tagList.innerHTML= ''
             document.getElementById('categoryTag').value = null
-            AddUserTagMotion();
+            /*AddUserTagMotion();*/
         })
     }
 }
-function AddUserTagMotion() {
+/*function AddUserTagMotion() {
     let autoTagDiv = document.getElementsByClassName('AddUserAutoTagDiv')
 
     for (let i = 0; i < autoTagDiv.length; i++) {
@@ -215,10 +208,10 @@ function AddUserTagMotion() {
             document.getElementsByClassName('AddUserDeleteTagValue')[i].style.display = 'none';
         })
     }
-}
+}*/
 
 function AddUserDeleteTag(selectedTag){
     /*document.getElementsByClassName('aaa')[0].remove();*/
-    document.querySelector(`.AddUserAutoTagDiv.${selectedTag}`).remove();
-    AddUserTagMotion();
+    document.querySelector(`.AddUserAutoTagDiv.tag${selectedTag}`).remove();
+    /*AddUserTagMotion();*/
 }

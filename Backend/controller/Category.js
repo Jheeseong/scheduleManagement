@@ -128,15 +128,16 @@ const CategoryController = {
     },
     findAllCategory: async (req, res) => {
         try {
-            let categories = await Category.find({userInfo: req.user._id})
+            let categories = await Category.find({$or: [{userInfo: req.user._id}, {creator: req.user._id}]})
                 .select('creator')
                 /*.distinct('creator')*/
                 .exec();
-            console.log(categories)
 
             let schedules = []
 
             await Promise.all(categories.map(async (res) => {
+                /*let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
+                res.color = colorCode*/
                 let findCategory = await Category.findOne({_id: res._id})
                     .populate({
                         path: "tagInfo",
@@ -144,18 +145,19 @@ const CategoryController = {
                             match: {userInfo: res.creator}}
                     })
                     .exec();
-
+                let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
                     findCategory.tagInfo.map((res) => {
                         res.scheduleInfo.map((result) => {
                             if (!schedules.includes(result)) {
-                                schedules.push(result);
+                                let schedule = result
+                                schedule.color = colorCode
+                                schedules.push(schedule);
                             }
                         })
                     })
             }))
 
             console.log(schedules)
-
             /*let allCategory = await Category.find({userInfo: req.user._id})
                 .populate({
                     path: "tagInfo",

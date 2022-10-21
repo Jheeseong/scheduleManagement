@@ -370,7 +370,7 @@ function searchTag(event) {
             let selectedTag = autoTag[i].getAttribute('value');
             tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + selectedTag + '"  onclick="deleteTag(\'' + selectedTag + '\')">' +
                 '<span class="tagValue" id="tagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
-                '<i class="fa-regular fa-circle-xmark deleteTagValue"</i>' +
+                '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
                 '</div>'
             tagList.innerHTML= ''
             document.getElementById('scheduleTag').value = null

@@ -26,7 +26,7 @@ function openCategoryModal() {
     const categoryTop = document.querySelector('.modal_category_body_top')
     const categoryBtn = document.querySelector('.categoryBtnDiv');
 
-    categoryTop.innerText = '카태고리 생성'
+    categoryTop.innerText = '카테고리 생성'
     categoryBtn.innerHTML =
         '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
         `<button onclick='saveCategory()'>저장</button>`
@@ -85,9 +85,9 @@ function openUpdateCategoryModal(id) {
             categoryTop.innerText = '카테고리 편집';
             document.getElementById('categoryName').value = res.category.title;
             res.category.tagInfo.map((result) => {
-                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + result.content + '"  onclick="AddUserDeleteTag(\'' + result.content + '\')">' +
+                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + result.content + '"  onclick="AddUserDeleteTag(\'' + result.content + '\')">' +
                     '<span class="AddUserTagValue" id="AddUserTagValue" value="' + result.content +'">' + result.content + '</span>' +
-                    '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue" style="display: none"></i>' +
+                    '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
                     '</div>'
             })
             if (res.category.userInfo.length !== 0) {

@@ -152,6 +152,9 @@
     border: none;
     margin-top: 5px;
 }
+.categoryTag:focus{
+    outline: none;
+}
 .AddUserTagDiv{
     height: 116px;
     padding: 16px;
@@ -197,6 +200,7 @@
     position: relative;
 }
 .AddUserAutoTagDiv i{
+    display: none;
     background-color: white;
     position: absolute;
     right: -12px;
@@ -204,9 +208,6 @@
     font-size: 14px;
 }
 .AddUserDeleteTagValue{
-    display: none;
-    background-position: center;
-    background-repeat: no-repeat;
     border-radius: 50%;
     background-color: #a8a8a8;
     background-size: 4px;
@@ -215,4 +216,7 @@
     cursor: pointer;
     vertical-align: sub;
     margin-left: 4px;
+}
+.AddUserTagListDiv .AddUserAutoTagDiv:hover > .AddUserDeleteTagValue{
+    display: flex;
 }

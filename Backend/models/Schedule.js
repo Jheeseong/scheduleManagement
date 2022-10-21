@@ -21,7 +21,10 @@ const ScheduleSchema = mongoose.Schema({
         type: String
     },
     tagInfo:[{type: mongoose.Schema.Types.ObjectId, ref:"Tag"}],
-    userInfo: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
+    userInfo: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
+    color: {
+        type: String
+    }
 })
 
 ScheduleSchema.pre('deleteOne', { document: false, query: true}, async function(next) {

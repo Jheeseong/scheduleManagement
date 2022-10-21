@@ -139,8 +139,9 @@ function allCategory(){
                 eventData.start = result.startDate.split('Z')[0];
                 eventData.end = result.endDate.split('Z')[0];
                 eventData.id = result._id;
-                eventData.address = result.address
+                eventData.address = result.address;
                 eventData.tags = result.tagInfo;
+                eventData.color = result.color;
                 eventList.push(eventData);
                 eventData = {}
             })
