@@ -9,8 +9,11 @@ function closeSub(event){
     let targetUser = event.currentTarget.querySelector('.fa-chevron-down')
     let targetColor = event.currentTarget.querySelector('.fa-paint-roller')
     let targetColorDiv = event.currentTarget.querySelector('.colorDiv')
+    let targetIconDiv = event.currentTarget.querySelector('.iconDiv')
+    let targetPlatformLogo = event.currentTarget.querySelector('.platformLogo')
     let targetSubDiv = event.currentTarget.querySelectorAll('.subDiv')
-    if(event.target == targetUser || event.target == targetColor || event.target == targetColorDiv){
+
+    if(event.target == targetUser || event.target == targetColor || event.target == targetColorDiv || event.target == targetIconDiv || event.target == targetPlatformLogo){
         return;
     }
     for(let i = 0; i < targetSubDiv.length; i++){
