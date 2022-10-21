@@ -289,6 +289,7 @@
     display: inline;
     margin: 8px 15px 8px 0;
 }
+
 .autoTag, .tagValue{
     cursor: pointer;
     list-style:none;
@@ -305,16 +306,15 @@
     position: relative;
 }
 .autoTagDiv i{
+    display: none;
     background-color: white;
     position: absolute;
     right: -12px;
     bottom: 4px;
     font-size: 14px;
 }
-.deleteTagValue{
-    display: none;
-    background-position: center;
-    background-repeat: no-repeat;
+
+.deleteTagValue {
     border-radius: 50%;
     background-color: #a8a8a8;
     background-size: 4px;
@@ -324,5 +324,7 @@
     vertical-align: sub;
     margin-left: 4px;
 }
-
+.tagListDiv .autoTagDiv:hover > .deleteTagValue{
+    display: flex;
+}
 

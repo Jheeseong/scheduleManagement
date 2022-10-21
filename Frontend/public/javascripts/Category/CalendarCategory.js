@@ -98,12 +98,12 @@ function applySchedule(id, creator) {
         dataType: "json",
         async: false,
         success: function (res) {
-            console.log(res)
+            /*console.log(res)*/
             const schedules = res.schedules;
             eventList = [];
             /*console.log('schedule : ' + JSON.stringify(schedules));*/
             schedules.map((result) => {
-                console.log(result)
+                /*console.log(result)*/
                 eventData.title = result.title;
                 eventData.start = result.startDate.split('Z')[0];
                 eventData.end = result.endDate.split('Z')[0];
@@ -119,7 +119,7 @@ function applySchedule(id, creator) {
         }
     })
     calendar.removeAllEvents()
-    console.log(eventList)
+    /*console.log(eventList)*/
     applyCalendar(eventList)
     calendar.render();
 }

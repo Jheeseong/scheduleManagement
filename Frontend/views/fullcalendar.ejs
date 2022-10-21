@@ -16,7 +16,7 @@
             async: false,
             success: function (res) {
                 const schedule = res.schedule;
-                console.log('schedule : ' + JSON.stringify(schedule));
+                /*console.log('schedule : ' + JSON.stringify(schedule));*/
                 for (let i = 0; i < schedule.length; i++) {
                     eventData.title = schedule[i].title;
                     eventData.start = schedule[i].startDate.split('Z')[0];
@@ -32,7 +32,7 @@
 
             }
         })
-        console.log('evnetList : ' + JSON.stringify(eventList));
+        /*console.log('evnetList : ' + JSON.stringify(eventList));*/
         applyCalendar(eventList)
         calendar.render();
     });
@@ -72,7 +72,7 @@
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             eventClick: function (info) {
-                console.log(info.event.id)
+                /*console.log(info.event.id)*/
                 let eventData = {
                     title: '취침',
                     start: '2022-08-15',
@@ -80,7 +80,7 @@
                     id: '123123'
                 }
                 /*calendar.currentData.calendarOptions.events.push(eventData);*/
-                console.log(calendar.currentData.calendarOptions.events);
+                /*console.log(calendar.currentData.calendarOptions.events);*/
             },
             events: eventList,
         });
