@@ -122,7 +122,6 @@ function openDetailModal(scheduleId) {
     document.getElementsByClassName('schedulePriorityDiv')[0].innerHTML
         = '<label>우선순위</label>'
         + '<div id="schedulePriority" class="schedulePriority"></div>'
-        + '<span id="value1"></span>';
 
     /* 주소 사용 여부 */
     document.getElementsByClassName('addressDiv')[0].innerHTML
