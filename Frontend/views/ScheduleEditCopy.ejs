@@ -81,8 +81,8 @@ function searchAddr(){
     deleteMarker()
     var marker = new kakao.maps.Marker();
     marker.setMap(null)
-
-    let addr = document.getElementsByClassName('addrInput')[0].value;
+    let addr = '대구 수성구 달구벌대로 2575 헤븐트리 대구오피스';
+    addr = document.getElementsByClassName('addrInput')[0].value;
 // 키워드로 장소를 검색합니다
     ps.keywordSearch(addr, placesSearchCB);
 
