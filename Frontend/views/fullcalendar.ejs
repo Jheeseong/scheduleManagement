@@ -45,6 +45,7 @@
             selectable: false,
 
             dateClick: function (info) {
+                let infoDate = info.date.toISOString().slice(0, 16)
                 let selectedEventList = [];
 
                 for (let i = 0; i < eventList.length; i++) {
@@ -54,7 +55,7 @@
                         selectedEventList.push(eventList[i]);
                     }
                 }
-                openListModal(selectedEventList);
+                openListModal(selectedEventList, infoDate);
                 /*console.log('0 : ' + selectedEventList[0].start)*/
                 /*console.log('picked: ' + JSON.stringify(info.dateStr))*/
                 /*console.log('eventList: ' + JSON.stringify(calendar.getEvents()));*/

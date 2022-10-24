@@ -17,24 +17,23 @@ function closeModal(event, modal) {
             /* 타이틀 초기화 */
             document.getElementsByClassName('modal_schedule_body_top')[1].innerText = '';
             /* 내용  초기화 */
-            const inputTags = document.querySelectorAll('input')
+            const inputTags = document.querySelectorAll('input:not(input[type="hidden"])')
             for (let i = 0; i < inputTags.length; i++) {
                 inputTags[i].value = '';
             }
             document.getElementById('endDate').setAttribute('type', 'text');
-            document.getElementById('value1').innerHTML = '3';
             document.getElementsByClassName('tagListDiv')[0].innerHTML = '';
+            document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML = '';
         } else {
             listModal.classList.remove('show');
             editModal.classList.remove('show');
 
             /* 내용  초기화 */
-            const inputTags = document.querySelectorAll('input')
+            const inputTags = document.querySelectorAll('input:not(input[type="hidden"])')
             for (let i = 0; i < inputTags.length; i++) {
                 inputTags[i].value = '';
             }
             document.getElementById('endDate').setAttribute('type', 'text');
-            document.getElementById('value1').innerHTML = '';
             document.getElementsByClassName('tagListDiv')[0].innerHTML = '';
         }
         localStorage.clear()
@@ -45,7 +44,10 @@ function closeModal(event, modal) {
 
 }
 
-function openListModal(selectedEventList) {
+function openListModal(selectedEventList, infoDate) {
+    /* 일정 생성 시 오늘 날짜를 인자로  */
+    document.querySelector('.scheduleAdd__div').setAttribute('onclick', 'openCreateModal(\'' + infoDate + '\')')
+
     let tbodyTag = document.getElementById('scheduleTbody');
     let str = '';
     for (let i = 0; i < selectedEventList.length; i++) {
@@ -62,19 +64,6 @@ function openListModal(selectedEventList) {
         body.style.overflow = 'hidden';
     } else {
         body.style.overflow = 'auto';
-    }
-}
-
-function inputTagsDisabled() {
-    const inputTags = document.getElementsByTagName('input')
-    for (let i = 0; i < inputTags.length; i++) {
-        inputTags[i].style.border = 'none';
-        inputTags[i].setAttribute('disabled', 'disabled');
-    }
-    /* 태그 입력란 display = 'none' */
-    const scheduleTags = document.getElementsByClassName('autoTagDiv')
-    for (let i = 0; i < scheduleTags.length; i++) {
-        scheduleTags[i].setAttribute('onclick', '');
     }
 }
 
@@ -129,10 +118,8 @@ function openDetailModal(scheduleId) {
         + '<div id="scheduleAddr" class="scheduleAddr"></div>'
 
     /* 버튼 div */
-    document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML
-        = '<button class="btn-empty" onclick="closeModal(this, \'edit\')">닫기</button>'
-        + '<button class="saveBtn btn-red" onclick="deleteSchedule(\'' + scheduleId + '\')">삭제</button>'
-        + '<button class="saveBtn" onclick="openEditModal(\'' + scheduleId + '\')">편집</button>'
+    let scheduleBtnDiv = document.getElementsByClassName('scheduleBtnDiv')[1]
+    scheduleBtnDiv.innerHTML = '<button class="btn-empty" onclick="closeModal(this, \'edit\')">닫기</button>'
 
 
     $.ajax({
@@ -140,6 +127,15 @@ function openDetailModal(scheduleId) {
         url: 'schedule/find/' + scheduleId,
         dataType: "json",
         success: function (res) {
+            console.log('creator : ' + res.schedule.userInfo)
+            console.log('user : ' + document.getElementById('userElement').value)
+
+            if (res.schedule.userInfo == document.getElementById('userElement').value) {
+                scheduleBtnDiv.innerHTML
+                    += '<button class="saveBtn btn-red" onclick="deleteSchedule(\'' + scheduleId + '\')">삭제</button>'
+                    + '<button class="saveBtn" onclick="openEditModal(\'' + scheduleId + '\')">편집</button>'
+            }
+
 
             /* 시작일, 종료일 */
             document.getElementById('startDate').innerText = res.schedule.startDate.substring(0, 16);
@@ -158,16 +154,15 @@ function openDetailModal(scheduleId) {
             document.getElementById('scheduleTag').style.display = 'none';
 
             /* 주소 사용 여부 */
-            if(!res.schedule.address == ''){
+            if (!res.schedule.address == '') {
                 document.getElementById('scheduleAddr').innerText = res.schedule.address;
-            }
-            else{
+            } else {
                 document.getElementById('scheduleAddr').innerText = '주소 미등록'
             }
-            document.getElementById('value1').innerHTML = document.getElementById('schedulePriority').value;
 
             /* 희성이코드 */
             const tagListDiv = document.querySelector('.tagListDiv');
+            console.log('tag : ' + JSON.stringify(res.schedule));
             tagListDiv.innerHTML = '';
             res.schedule.tagInfo.map((result) => {
                 tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '">' +
@@ -190,18 +185,30 @@ function openDetailModal(scheduleId) {
     }
 }
 
-function openCreateModal() {
+function setMinMaxDate() {
+    let startDate = document.getElementById('startDate')
+    let endDate = document.getElementById('endDate')
+
+    startDate.setAttribute('max', endDate.value)
+    endDate.setAttribute('min', startDate.value)
+}
+
+function openCreateModal(infoDate) {
     /* 모달 타이틀 */
     document.getElementsByClassName('modal_schedule_body_top')[1].innerText = '일정 생성'
 
     /* 시작일, 종료일 */
     document.getElementsByClassName('dateDiv')[0].innerHTML
-        = '<input onfocus="(this.type=\'datetime-local\')" type="text" id="startDate" clsss="startDate date" placeholder="시작일 선택">'
-        + '<input onfocus="(this.type=\'datetime-local\')" type="input" id="endDate" clsss="endDate date" placeholder="종료일 선택">';
+        = '<input onfocus="(this.type=\'datetime-local\'), setMinMaxDate()" type="text" id="startDate" clsss="startDate date" placeholder="시작일 선택">'
+        + '<input onfocus="(this.type=\'datetime-local\'), setMinMaxDate()" type="input" id="endDate" clsss="endDate date" placeholder="종료일 선택">';
+
     /* 오늘 날짜 9시간 계산 및 분단위까지 표현 */
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
-    document.getElementById('startDate').type = 'datetime-local';
-    document.getElementById('startDate').value = date;
+    let startDate = document.getElementById('startDate');
+    let endDate = document.getElementById('endDate');
+    startDate.type = 'datetime-local';
+    startDate.value = infoDate;
+
 
     /* 일정제목 */
     document.getElementsByClassName('scheduleNameDiv')[0].innerHTML
@@ -217,7 +224,7 @@ function openCreateModal() {
     document.getElementsByClassName('schedulePriorityDiv')[0].innerHTML
         = '<label>우선순위</label>'
         + '<input type="range" id="schedulePriority" class="schedulePriority"\n' +
-          'min="0" max="5" step="1" value="3" oninput="document.getElementById(\'value1\').innerHTML=this.value;">'
+        'min="0" max="5" step="1" value="3" oninput="document.getElementById(\'value1\').innerHTML=this.value;">'
         + '<span id="value1">3</span>';
 
     /* 태그 검색하는 함수 */
@@ -239,7 +246,7 @@ function openCreateModal() {
 
     /* 지도 모달 */
     document.getElementsByClassName('scheduleAddrInputDiv')[0].innerHTML
-        = '<input class="addrInput" id="addrInput" type="text" placeholder="주소를 입력하세요">'
+        = '<input class="addrInput" id="addrInput" type="text" placeholder="주소를 입력하세요" onkeyup="enterSearchAddr()">'
         + '<button class="btn-gray" onclick="searchAddr()">검색</button>'
 
     mapModal.classList.remove('show');
@@ -252,65 +259,57 @@ function openCreateModal() {
 }
 
 function openEditModal(scheduleId) {
-        tagSearch();
-        openCreateModal()
+    tagSearch()
+    openCreateModal()
 
-        $.ajax({
-            type: 'POST',
-            url: 'schedule/find/' + scheduleId,
-            dataType: "json",
-            success: function (res) {
-                /* 모달 탑 */
-                document.getElementsByClassName('modal_schedule_body_top')[1].innerHTML = '일정 편집';
+    /* 모달 탑 */
+    document.getElementsByClassName('modal_schedule_body_top')[1].innerHTML = '일정 편집';
 
-                /* 버튼 변경 */
-                /*let saveBtn = document.getElementsByClassName('saveBtn')[0];
-                if(saveBtn){
-                    saveBtn.innerHTML = '완료';
-                }
-                else{
-                    document.getElementsByClassName('editBtn')[0].innerHTML = '완료';
-                }*/
+    /* 버튼 div */
+    document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML
+        = '<button class="btn-empty" onclick="openDetailModal(\'' + scheduleId + '\')">취소</button>'
+        + '<button class="saveBtn" onclick="editSchedule(\'' + scheduleId + '\')">완료</button>'
 
-                document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML
-                    = '<button class="btn-empty" onclick="closeModal(this, \'edit\')">닫기</button>'
-                    + '<button class="saveBtn" onclick="editSchedule(\'' + scheduleId + '\')">완료</button>'
-                /*document.getElementsByClassName('saveBtn')[0].setAttribute('onclick', 'editSchedule(\'' + scheduleId + '\')')*/
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/find/' + scheduleId,
+        dataType: "json",
+        success: function (res) {
 
-                /* 시작일, 종료일 */
-                document.getElementById('startDate').type = 'datetime-local';
-                document.getElementById('startDate').value = res.schedule.startDate.substring(0, 16);
-                document.getElementById('endDate').type = 'datetime-local';
-                document.getElementById('endDate').value = res.schedule.endDate.substring(0, 16);
+            /* 시작일, 종료일 */
+            document.getElementById('startDate').value = res.schedule.startDate.substring(0, 16);
+            document.getElementById('endDate').type = 'datetime-local';
+            document.getElementById('endDate').value = res.schedule.endDate.substring(0, 16);
 
-                /* 제목, 내용, 우선순위, 주소 */
-                document.getElementById('scheduleName').value = res.schedule.title;
-                document.getElementById('scheduleContent').value = res.schedule.content;
-                document.getElementById('schedulePriority').value = res.schedule.priority;
-                document.getElementById('addrInput').value = res.schedule.address;
-                document.getElementById('value1').innerHTML = document.getElementById('schedulePriority').value;
-                /* 희성이코드 */
-                const tagListDiv = document.querySelector('.tagListDiv');
-                tagListDiv.innerHTML = '';
-                console.log('tag : ' + JSON.stringify(res.schedule));
-                res.schedule.tagInfo.map((result) => {
-                    tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '"  onclick="deleteTag(\'' + result.content + '\')">' +
-                        '<span class="tagValue" id="tagValue" value="' + result.content + '">' + result.content + '</span>' +
-                        '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
-                        '</div>'
-                })
-                /* 주소 사용 여부 및 주소 데이터 유무 확인 */
-                if (document.getElementsByClassName('addrInput')[0].value) {
-                    document.getElementsByClassName('addrCheckbox')[0].disabled = false;
-                    document.getElementsByClassName('addrCheckbox')[0].checked = true;
-                    addrToggle()
-                }
-            },
-            error: function (err) {
-                window.alert("일정 정보를 불러오지 못하였습니다.")
-                console.log(err)
+            /* 제목, 내용, 우선순위, 주소 */
+            document.getElementById('scheduleName').value = res.schedule.title;
+            document.getElementById('scheduleContent').value = res.schedule.content;
+            document.getElementById('schedulePriority').value = res.schedule.priority;
+            document.getElementById('addrInput').value = res.schedule.address;
+            document.getElementById('value1').innerHTML = document.getElementById('schedulePriority').value;
+
+            /* 희성이코드 */
+            const tagListDiv = document.querySelector('.tagListDiv');
+            tagListDiv.innerHTML = '';
+            console.log('tag : ' + JSON.stringify(res.schedule));
+            res.schedule.tagInfo.map((result) => {
+                tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '"  onclick="deleteTag(\'' + result.content + '\')">' +
+                    '<span class="tagValue" id="tagValue" value="' + result.content + '">' + result.content + '</span>' +
+                    '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
+                    '</div>'
+            })
+            /* 주소 사용 여부 및 주소 데이터 유무 확인 */
+            if (document.getElementsByClassName('addrInput')[0].value) {
+                document.getElementsByClassName('addrCheckbox')[0].disabled = false;
+                document.getElementsByClassName('addrCheckbox')[0].checked = true;
+                addrToggle()
             }
-        })
+        },
+        error: function (err) {
+            window.alert("일정 정보를 불러오지 못하였습니다.")
+            console.log(err)
+        }
+    })
 
     tagSearch()
     mapModal.classList.remove('show');
@@ -321,7 +320,8 @@ function openEditModal(scheduleId) {
         body.style.overflow = 'auto';
     }
 }
-function setTime(date){
+
+function setTime(date) {
     let date1 = new Date(date + ':00');
     let newDate = new Date(date1.getTime() - new Date().getTimezoneOffset() * 120000).toISOString().slice(0, -8);
     return newDate;
@@ -343,7 +343,9 @@ function editSchedule(scheduleId) {
     console.log('1 : ' + startDate + ' - ' + endDate)
     startDate = setTime(startDate);
     endDate = setTime(endDate);
-
+    if (startDate > endDate) {
+        alert('일정 시작일과 종료일을 다시 확인해주세요.')
+    }
     /* 일정 편집 API 요청 */
     $.ajax({
         type: 'POST',
@@ -418,27 +420,44 @@ function saveSchedule() {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
-    $.ajax({
-        type: 'POST',
-        data: schedules,
-        url: 'schedule/create',
-        dataType: "json",
+    if (schedules.startDate > schedules.endDate) {
+        alert('시작일, 종료일을 다시 확인해주세요.')
+        return
+    } else if (!schedules.title) {
+        alert('일정 제목을 입력해주세요.')
+        return
+    } else if (!schedules.content) {
+        alert('일정 내용을 입력해주세요.')
+        return
+    } else if (!schedules.priority) {
+        alert('우선순위를 입력해주세요.')
+        return
+    } else if (schedules.tagInfo.length == 0) {
+        alert('태그를 입력해주세요.')
+        return
+    } else {
+        $.ajax({
+            type: 'POST',
+            data: schedules,
+            url: 'schedule/create',
+            dataType: "json",
 
-        success: function (res) {
-            if (res.scheduleSuccess === true) {
-                window.alert(res.message);
-            } else {
-                window.alert(res.message);
+            success: function (res) {
+                if (res.scheduleSuccess === true) {
+                    window.alert(res.message);
+                } else {
+                    window.alert(res.message);
+                }
+                window.location.reload(true);
+            },
+            error: function (err) {
+                if (err) {
+                    window.alert("일정등록을 실패하였습니다!!!!")
+                    console.log(err)
+                }
             }
-            window.location.reload(true);
-        },
-        error: function (err) {
-            if (err) {
-                window.alert("일정등록을 실패하였습니다!!!!")
-                console.log(err)
-            }
-        }
-    })
+        })
+    }
 }
 
 /* 태그 input onblur 시 */

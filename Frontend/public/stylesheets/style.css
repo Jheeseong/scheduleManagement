@@ -133,6 +133,7 @@ button:hover{
   font-weight: bold;
   color: #222222;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 .userDropDown{
@@ -196,8 +197,8 @@ button:hover{
   height: 25px;
   display: none;
   position: absolute;
-  top: -160px;
-  right: calc(50% - 210px);
+  top: -150px;
+  right: calc(50% - 240px);
 }
 #subMenu ul li:last-child{
   width: 250px;

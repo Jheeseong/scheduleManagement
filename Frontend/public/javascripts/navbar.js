@@ -6,16 +6,7 @@ document.getElementById('subMenu').addEventListener('mousedown', closeSub);
 
 //서브메뉴 닫는 함수
 function closeSub(event){
-    let targetUser = event.currentTarget.querySelector('.fa-chevron-down')
-    let targetColor = event.currentTarget.querySelector('.fa-paint-roller')
-    let targetColorDiv = event.currentTarget.querySelector('.colorDiv')
-    let targetIconDiv = event.currentTarget.querySelector('.iconDiv')
-    let targetPlatformLogo = event.currentTarget.querySelector('.platformLogo')
-    let targetSubDiv = event.currentTarget.querySelectorAll('.subDiv')
-
-    if(event.target == targetUser || event.target == targetColor || event.target == targetColorDiv || event.target == targetIconDiv || event.target == targetPlatformLogo){
-        return;
-    }
+    let targetSubDiv = event.currentTarget.querySelectorAll('.fa-chevron-down, .fa-paint-roller, .colorDiv, .iconDiv, .subDiv, .subDiv div, .subDiv i')
     for(let i = 0; i < targetSubDiv.length; i++){
         if(event.target == targetSubDiv[i]){
             return;
@@ -65,7 +56,6 @@ for(let i = 0; i < colorElement.length; i++){
     colorElement[i].addEventListener('click', function () {
         let selectedColor = colorElement[i].getAttribute('value');
         document.getElementsByClassName('navbar')[0].style.backgroundColor = selectedColor;
-
         $.ajax({
             type:'post',
             url:'/user/menuColor',
@@ -74,10 +64,11 @@ for(let i = 0; i < colorElement.length; i++){
             },
             dataType:'json',
             success : function(data) {
+                console.log(data)
                 console.log("send data !");
             },
             error : function(err) {
-                console.log("failed : " + err);
+                console.log("failed : " + JSON.stringify(err));
             }
         });
     });

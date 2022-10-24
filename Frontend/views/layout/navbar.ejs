@@ -10,7 +10,17 @@
                     <div style="width: 60px; height: 60px; border-radius: 100px; display: flex; justify-content: center;">
                         <img src="<%= user.image %>" alt="" height="100%" style="border-radius: 100px;">
                     </div>
-                    <div style="margin-left: 10px; margin-right: 10px"><%- user.name%></div>
+                    <div style="display: flex; margin-left: 10px; margin-right: 10px">
+                        <div style="display: flex; align-items: center"><%- user.name%></div>
+                        <div class="iconDiv" style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.6); margin-left: 10px; padding: 5px; border-radius: 50px;">
+                            <% if(user.provider == 'naver'){ %>
+                                <img src="/img/naverLogout.png" alt="img" class="platformLogo" style="width: 20px; height: 15px;">
+                            <% } %>
+                            <% if(user.provider == 'kakao'){ %>
+                                <img src="/img/kakaoLogo.png" alt="img" class="platformLogo">
+                            <% } %>
+                        </div>
+                    </div>
                     <div><i onclick="userSub();" class="fa-solid fa-chevron-down fa-2xs userDropDown"></i></div>
                     <input type="hidden" id="userElement" value="<%- user.id %>">
                 </li>
@@ -32,15 +42,9 @@
     <ul>
         <li class="userSub">
             <div class="subDiv userSub__logout" onclick="location.href='/login/logout'">
-                <div class="iconDiv" style="display: flex; align-items: center;">
-                    <% if(user.provider == 'naver'){ %>
-                        <img src="/img/naverLogout.png" alt="img" class="platformLogo" style="width: 20px; height: 15px">
-                    <% } %>
-                    <% if(user.provider == 'kakao'){ %>
-                        <img src="/img/kakaoLogo.png" alt="img" class="platformLogo">
-                    <% } %>
+                <div>
+                    로그아웃 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </div>
-                    로그아웃 <!--<i class="fa-solid fa-arrow-right-from-bracket"></i>-->
             </div>
         </li>
         <li class="bgSub">

@@ -73,14 +73,18 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var ps = new kakao.maps.services.Places();
 
 let markers = [];
+function enterSearchAddr(){
+    if (window.event.keyCode == 13){
+        searchAddr()
+    }
 
+}
 function searchAddr(){
     deleteMarker()
     var marker = new kakao.maps.Marker();
     marker.setMap(null)
 
     let addr = document.getElementsByClassName('addrInput')[0].value;
-    console.log(addr)
 // 키워드로 장소를 검색합니다
     ps.keywordSearch(addr, placesSearchCB);
 
