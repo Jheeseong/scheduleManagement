@@ -74,7 +74,6 @@ const ScheduleController = {
             let findSchedule = await Schedule.findOne({_id: req.params.id})
                 .populate('tagInfo')
                 .exec();
-            console.log('find : ' + findSchedule)
             res.json({schedule: findSchedule, findScheduleSuccess: true})
         } catch (err) {
             console.log(err)
@@ -101,12 +100,38 @@ const ScheduleController = {
     },
     findScheduleCnt: async (req, res) => {
         try {
-            let scheduleCnt = await Schedule.find().count().exec();
-            res.json({scheduleCnt: scheduleCnt, findScheduleSuccess: true, message: "총 일정 개수는 ." + scheduleCnt + "개입니다."})
+            let allScheduleTag = []
+            let selectScheduleTag = []
+            let schedules = await Schedule.find({userInfo: req.user._id})
+                .populate("tagInfo")
+                .exec();
+            schedules.map((res) => {
+                res.tagInfo.map((result) => {
+                    allScheduleTag.push(result.content)
+
+                    let tags = new Object();
+
+                    let find = selectScheduleTag.find(v => v.content === result.content)
+                    if (find === undefined) {
+                        tags.content = result.content;
+                        tags.count = 1;
+
+                        tags = JSON.stringify(tags)
+                        selectScheduleTag.push(JSON.parse(tags))
+                    } else {
+                        find.count += 1;
+                    }
+                })
+            })
+            console.log(selectScheduleTag)
+            let scheduleCnt = await Schedule.find({userInfo: req.user._id}).count().exec();
+            res.json({allScheduleTag: allScheduleTag, selectScheduleTag: selectScheduleTag, findScheduleSuccess: true})
         } catch (err) {
+            console.log(err)
             return res.status(400).json({findScheduleSuccess: false, message: "총 일정 개수를 찾을 수 없습니다.", err: err})
         }
-    }
+    },
+
 }
 
 module.exports = ScheduleController;
