@@ -66,7 +66,12 @@ function openListModal(selectedEventList, infoDate) {
         body.style.overflow = 'auto';
     }
 }
-
+function sortList(p){
+    document.getElementById('scheduleTbody')
+    switch (p){
+        case 'title': ;
+    }
+}
 function tagSearch() {
     /* 희성이코드 */
     $.ajax({
@@ -328,47 +333,55 @@ function setTime(date) {
 }
 
 function editSchedule(scheduleId) {
-    let startDate = document.getElementById('startDate').value;
-    let endDate = document.getElementById('endDate').value;
-    const title = document.getElementById('scheduleName').value;
-    const content = document.getElementById('scheduleContent').value;
-    const priority = document.getElementById('schedulePriority').value;
-    const address = document.getElementById('addrInput').value;
     const tagValue = document.getElementsByClassName('tagValue');
     const arrayTag = [];
 
     for (let i = 0; i < tagValue.length; i++) {
         arrayTag.push(tagValue[i].getAttribute('value'))
     }
-    console.log('1 : ' + startDate + ' - ' + endDate)
-    startDate = setTime(startDate);
-    endDate = setTime(endDate);
-    if (startDate > endDate) {
-        alert('일정 시작일과 종료일을 다시 확인해주세요.')
+
+    const schedules = {
+        startDate: setTime(document.getElementById('startDate').value),
+        endDate: setTime(document.getElementById('endDate').value),
+        title: document.getElementById('scheduleName').value,
+        content: document.getElementById('scheduleContent').value,
+        priority: document.getElementById('schedulePriority').value,
+        address: document.getElementById('addrInput').value,
+        tagInfo: arrayTag,
     }
-    /* 일정 편집 API 요청 */
-    $.ajax({
-        type: 'POST',
-        url: 'schedule/update/' + scheduleId,
-        data: {
-            startDate: startDate,
-            endDate: endDate,
-            title: title,
-            content: content,
-            priority: priority,
-            address: address,
-            tagInfo: arrayTag
-        },
-        dataType: "json",
-        success: function (res) {
-            alert('일정 편집이 완료되었습니다.');
-            window.location.reload();
-        },
-        error: function (err) {
-            window.alert("수정 실패")
-            console.log(err)
-        }
-    })
+
+    if (schedules.startDate > schedules.endDate) {
+        alert('시작일, 종료일을 다시 확인해주세요.')
+        return
+    } else if (!schedules.title) {
+        alert('일정 제목을 입력해주세요.')
+        return
+    } else if (!schedules.content) {
+        alert('일정 내용을 입력해주세요.')
+        return
+    } else if (!schedules.priority) {
+        alert('우선순위를 입력해주세요.')
+        return
+    } else if (schedules.tagInfo.length == 0) {
+        alert('태그를 입력해주세요.')
+        return
+    } else {
+        /* 일정 편집 API 요청 */
+        $.ajax({
+            type: 'POST',
+            url: 'schedule/update/' + scheduleId,
+            data: schedules,
+            dataType: "json",
+            success: function (res) {
+                alert('일정 편집이 완료되었습니다.');
+                window.location.reload();
+            },
+            error: function (err) {
+                window.alert("수정 실패")
+                console.log(err)
+            }
+        })
+    }
 }
 
 function deleteSchedule(scheduleId) {
