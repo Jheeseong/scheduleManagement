@@ -29,14 +29,25 @@
         <div class="content" style="flex-direction: column">
             <div class="content content--schedule">
                 <div class="content__top">일정 목록 <button onclick="findScheduleCnt()">일정개수</button></div>
-                <div class="content__mid">
-                    <div>일정 리스트</div>
+                <div class="content__mid ScheduleContent__mid">
+                    <table class="MyScheduleListTable" id="MyScheduleListTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">일정 상태</th>
+                            <th scope="col">일정 제목</th>
+                            <th scope="col">일정</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tr_MyScheduleList" id="tr_MyScheduleList">
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="content content--tag">
                 <div class="content__top">태그 목록 </div>
-                <div class="content__mid">
-                    <div>태그 리스트</div>
+                <div class="content__mid tagContent__mid">
+                    <div class="MyTagList">
+                    </div>
                 </div>
             </div>
         </div>

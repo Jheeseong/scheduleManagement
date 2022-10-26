@@ -32,6 +32,14 @@ html{
     padding: 10px 20px;
     height: 90%;
 }
+.ScheduleContent__mid{
+    align-items: stretch;
+    height: 70%;
+}
+.tagContent__mid{
+    align-items: flex-start;
+    height: 70%;
+}
 
 .content--chart{
 }
@@ -51,4 +59,32 @@ html{
 .platformLogo{
     width: 30px;
     height: 30px;
+}
+.MyScheduleListTable{
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+.MyTagList{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.MyTagDiv{
+    display: inline;
+    margin: 8px 15px 8px 0;
+    position: relative;
+}
+.MyTagValue{
+    cursor: pointer;
+    list-style: none;
+    color: #a8a8a8;
+    align-items: center;
+    font-size: 18px;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    padding: 0px 4px;
+    height: fit-content;
+    width: fit-content;
 }

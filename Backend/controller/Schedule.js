@@ -83,6 +83,7 @@ const ScheduleController = {
     findScheduleByUserInfo: async (req, res) => {
         try {
             let findSchedules = await Schedule.find({userInfo: req.user._id})
+                .populate("tagInfo")
                 .exec();
             res.json({schedule: findSchedules, findScheduleSuccess: true, message: '일정을 찾았습니다.'})
         } catch (err) {
@@ -125,7 +126,7 @@ const ScheduleController = {
             })
             console.log(selectScheduleTag)
             let scheduleCnt = await Schedule.find({userInfo: req.user._id}).count().exec();
-            res.json({allScheduleTag: allScheduleTag, selectScheduleTag: selectScheduleTag, findScheduleSuccess: true})
+            res.json({allScheduleTag: allScheduleTag, selectScheduleTag: selectScheduleTag, scheduleCnt: scheduleCnt, findScheduleSuccess: true})
         } catch (err) {
             console.log(err)
             return res.status(400).json({findScheduleSuccess: false, message: "총 일정 개수를 찾을 수 없습니다.", err: err})

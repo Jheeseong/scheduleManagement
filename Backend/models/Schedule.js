@@ -20,6 +20,10 @@ const ScheduleSchema = mongoose.Schema({
     address: {
         type: String
     },
+    status: {
+        type: Boolean,
+        default: false
+    },
     tagInfo:[{type: mongoose.Schema.Types.ObjectId, ref:"Tag"}],
     userInfo: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
     color: {
