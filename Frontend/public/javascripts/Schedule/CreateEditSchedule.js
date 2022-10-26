@@ -66,12 +66,68 @@ function openListModal(selectedEventList, infoDate) {
         body.style.overflow = 'auto';
     }
 }
-function sortList(p){
-    document.getElementById('scheduleTbody')
-    switch (p){
-        case 'title': ;
+
+/* 일정 목록 정렬 */
+function sortList(item, order) {
+    /* tr 배열 */
+    let rows = document.querySelectorAll('.scheduleTable tbody tr')
+    /* 정렬을 위한 배열 */
+    let arr = [];
+    for (let i = 0; i < rows.length; i++) {
+        arr.push(rows[i])
     }
+    let condition
+    arr.sort((a, b) => {
+        switch (item) {
+            case 'title'
+            :   condition = a.firstElementChild.innerText > b.firstElementChild.innerText;
+                break;
+            case 'startDate'
+            :   condition = a.children[1].innerText > b.children[1].innerText;
+                break;
+            case 'endDate'
+            :   condition = a.lastElementChild.innerText > b.lastElementChild.innerText;
+            break;
+        }
+        console.log('condition : ' + condition)
+
+        if (order == 'asc') {
+            return condition ? 1 : -1;
+        } else {
+            return condition ? -1 : 1;
+        }
+    })
+    console.log(arr[0], arr[1])
+
+    let str = ''
+    let onclick = ''
+    for (let i = 0; i < arr.length; i++) {
+        onclick = arr[i].getAttribute('onclick');
+        str += '<tr onclick="' + onclick + '">' + arr[i].innerHTML + '</tr>'
+        console.log('tr : ' + str)
+    }
+    document.querySelector('#scheduleTbody').innerHTML = str;
+
+    let target = document.querySelectorAll('.scheduleTable th');
+    switch (item) {
+        case 'title'
+        :   target = target[0];
+            break;
+        case 'startDate'
+        :   target = target[1];
+            break;
+        case 'endDate'
+        :   target = target[2];
+            break;
+    }
+    if (order == 'asc') {
+        target.setAttribute('onclick', 'sortList(\'' + item + '\', \'desc\')')
+    } else {
+        target.setAttribute('onclick', 'sortList(\'' + item + '\', \'asc\')')
+    }
+
 }
+
 function tagSearch() {
     /* 희성이코드 */
     $.ajax({
