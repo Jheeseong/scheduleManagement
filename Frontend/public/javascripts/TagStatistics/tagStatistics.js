@@ -25,11 +25,12 @@ function findMySchedule() {
         dataType: "json",
         success: function (res) {
             res.schedule.map((result) => {
-                let date = result.startDate +" ~ "+ result.endDate;
+                let date = result.startDate.substring(0, 10) + " " + result.startDate.substring(11,16) +" ~ "+ result.endDate.substring(0, 10) + " " + result.endDate.substring(11,16);
                 myScheduleTable.innerHTML +=
-                    '<tr>' +
+                    '<tr onclick="findScheduleTag(\'' + result._id + '\')">' +
                     `<td>${(result.status==false ? "미완료" : "완료")}</td>` +
                     `<td>${result.title}</td>` +
+                    `<td>${result.content}</td>` +
                     `<td>${date}</td>` +
                     '</tr>'
             })
@@ -40,6 +41,25 @@ function findMySchedule() {
         }
     })
 }
+function findScheduleTag(scheduleId) {
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/find/' + scheduleId,
+        dataType: 'json',
+        success: function (res) {
+            const selectTagArr = []
+            tagArr.map((result) => {
+                if (result.content === res.schedule.tagInfo.content) {
+                    selectTagArr.push(result)
+                }
+            })
+            console.log(selectTagArr)
+        },
+        error: function (err) {
+
+        }
+    })
+}
 function findMyTag() {
     $.ajax({
         type: 'POST',
@@ -47,19 +67,84 @@ function findMyTag() {
         dataType: 'json',
         success: function (res) {
             setChart(res);
-            const MyTagList = document.querySelector('.MyTagList')
+            setBarChart(res.selectScheduleTag);
+            /*const MyTagList = document.querySelector('.MyTagList')
             res.selectScheduleTag.map((result) => {
                 MyTagList.innerHTML +=
                     '<div class ="MyTagDiv ' + 'tag' + result.content + '">' +
                     '<span class="MyTagValue" id="MyTagValue" value="' + result.content + '">'+ result.content + '</span>' +
                     '</div>'
-            })
+            })*/
         },
         error: function (err) {
             window.alert("태그를 불러오던 중 오류가 발생하였습니다!")
             console.log(err)
         }
     })
+}
+
+const tagArr = [];
+function setBarChart(tagData) {
+    const tagNameArr = [];
+    const tagCntArr = [];
+    tagData.map((result) => {
+        tagNameArr.push(result.content)
+        tagCntArr.push(result.count)
+        tagArr.push(result)
+    })
+
+    var context = document
+        .getElementById('myBarChart')
+
+    var myBarChart = new Chart(context, {
+        type: 'bar', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            labels: tagNameArr,
+            datasets: [
+                { //데이터
+                    label: '사용 횟수', //차트 제목
+                    data: tagCntArr,
+                    backgroundColor: [
+                        //색상
+                        '#bf1932',
+                        '#e2583e',
+                        '#f0c05a',
+                        '#88b04b',
+                        '#93a9d1',
+                        '#0f4c81',
+                        '#6667ab',
+                        '#8e8e8e',
+                    ],
+                    borderColor: [],
+                    borderWidth: 0 //경계선 굵기
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            scale: {
+              ticks: {
+                  stepSize: 1
+              }
+            },
+            scales: {
+                x: {
+                  grid: {
+                      display: false
+                  }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+        }
+    });
 }
 
 function setChart(tagData) {

@@ -31,10 +31,17 @@
                 <div class="content__top">일정 목록 <button onclick="findScheduleCnt()">일정개수</button></div>
                 <div class="content__mid ScheduleContent__mid">
                     <table class="MyScheduleListTable" id="MyScheduleListTable">
+                        <colgroup>
+                            <col width="15%"/>
+                            <col width="15%"/>
+                            <col width="20%"/>
+                            <col width="50%"/>
+                        </colgroup>
                         <thead>
                         <tr>
                             <th scope="col">일정 상태</th>
                             <th scope="col">일정 제목</th>
+                            <th scope="col">일정 내용</th>
                             <th scope="col">일정</th>
                         </tr>
                         </thead>
@@ -46,6 +53,10 @@
             <div class="content content--tag">
                 <div class="content__top">태그 목록 </div>
                 <div class="content__mid tagContent__mid">
+                    <div style="width: 400px; height: 400px;">
+                        <!--차트가 그려질 부분-->
+                        <canvas id="myBarChart"></canvas>
+                    </div>
                     <div class="MyTagList">
                     </div>
                 </div>

@@ -65,6 +65,10 @@ html{
     text-align: center;
     border-collapse: collapse;
 }
+.tr_MyScheduleList tr:hover{
+    background-color: #dadada;
+    cursor: pointer;
+}
 .MyTagList{
     display: flex;
     justify-content: flex-start;
