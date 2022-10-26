@@ -46,6 +46,7 @@ function findMyTag() {
         url: 'schedule/findCnt',
         dataType: 'json',
         success: function (res) {
+            setChart(res);
             const MyTagList = document.querySelector('.MyTagList')
             res.selectScheduleTag.map((result) => {
                 MyTagList.innerHTML +=
@@ -59,4 +60,72 @@ function findMyTag() {
             console.log(err)
         }
     })
+}
+
+function setChart(tagData) {
+    console.log(JSON.stringify(tagData.selectScheduleTag))
+    const tagNameArr = [];
+    const tagCntArr = [];
+    const tagCntPer = [];
+    let totalCnt = 0;
+    for(let i = 0; i < tagData.selectScheduleTag.length; i++){
+        tagNameArr.push(tagData.selectScheduleTag[i].content)
+        tagCntArr.push(tagData.selectScheduleTag[i].count)
+        totalCnt += tagData.selectScheduleTag[i].count;
+    }
+    console.log('tagNameArr : ' + tagNameArr)
+    console.log('tagCntArr : ' + tagCntArr)
+    console.log('totalCnt : ' + totalCnt)
+
+    for(let i = 0; i < tagCntArr.length; i++){
+        tagCntPer.push(((tagCntArr[i] / totalCnt) * 100).toFixed(1) + '(' + tagCntArr[i] + ')')
+    }
+    console.log('percent : ' + tagCntPer)
+
+    var context = document
+        .getElementById('myChart')
+        .getContext('2d');
+
+    var myChart = new Chart(context, {
+        type: 'pie', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            labels: tagNameArr,
+            datasets: [
+                { //데이터
+                    label: 'tagChart', //차트 제목
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    data: tagCntArr,
+                    backgroundColor: [
+                        //색상
+                        '#bf1932',
+                        '#e2583e',
+                        '#f0c05a',
+                        '#88b04b',
+                        '#93a9d1',
+                        '#0f4c81',
+                        '#6667ab',
+                        '#8e8e8e',
+                    ],
+                    borderColor: [],
+                    borderWidth: 0 //경계선 굵기
+                }
+            ]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            plugins: {
+                tooltips: {
+                    enabled: false
+                },
+                datalabels: {
+                    formatter: function (value, context) {
+                        return Math.round(value / context.chart.getDatasetMeta(0).total * 100) + "%";
+                    },
+                    color: '#fff',
+                }
+            }
+        }
+    });
 }
