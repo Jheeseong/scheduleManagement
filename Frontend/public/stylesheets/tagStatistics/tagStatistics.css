@@ -20,18 +20,52 @@ html{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-size: 19px;
+    font-size: 17px;
+    font-weight: bold;
     padding: 10px 20px;
     height: 50px;
     border-bottom: 1px solid #e3e3e3;
 }
 .content__mid{
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     padding: 10px 20px;
-    height: 90%;
+    height: calc(100% - 90px);
 }
+.content--chart{
+    width: 100%;
+    height: 50%;
+    border-bottom: 1px solid #e3e3e3;
+}
+.myChartDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+}
+.legendDiv{
+    width: 25%;
+    height: 260px;
+    overflow-y: auto;
+}
+.labelDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.legend{
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.label{
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50px;
+}
+
 .ScheduleContent__mid{
     align-items: stretch;
     height: 70%;
@@ -41,21 +75,13 @@ html{
     height: 70%;
 }
 
-.content--chart{
-}
 .verticalLine{
     padding: 0px;
     width: 0px;
     height: 100%;
     border-left: 1px solid #e3e3e3;
 }
-.content--schedule, .content--tag{
-    width: 100%;
-    height: 50%;
-}
-.content--schedule{
-    border-bottom: 1px solid #e3e3e3;
-}
+
 .platformLogo{
     width: 30px;
     height: 30px;

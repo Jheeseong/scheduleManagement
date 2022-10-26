@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     findMyTag()
 })
 
-function findScheduleCnt(){
+function findScheduleCnt() {
     $.ajax({
         type: 'POST',
         url: 'schedule/findCnt',
@@ -17,6 +17,7 @@ function findScheduleCnt(){
         }
     })
 }
+
 function findMySchedule() {
     const myScheduleTable = document.querySelector('.tr_MyScheduleList')
     $.ajax({
@@ -72,7 +73,7 @@ function findMyTag() {
             res.selectScheduleTag.map((result) => {
                 MyTagList.innerHTML +=
                     '<div class ="MyTagDiv ' + 'tag' + result.content + '">' +
-                    '<span class="MyTagValue" id="MyTagValue" value="' + result.content + '">'+ result.content + '</span>' +
+                    '<span class="MyTagValue" id="MyTagValue" value="' + result.content + '">' + result.content + '</span>' +
                     '</div>'
             })*/
         },
@@ -148,12 +149,11 @@ function setBarChart(tagData) {
 }
 
 function setChart(tagData) {
-    console.log(JSON.stringify(tagData.selectScheduleTag))
     const tagNameArr = [];
     const tagCntArr = [];
     const tagCntPer = [];
     let totalCnt = 0;
-    for(let i = 0; i < tagData.selectScheduleTag.length; i++){
+    for (let i = 0; i < tagData.selectScheduleTag.length; i++) {
         tagNameArr.push(tagData.selectScheduleTag[i].content)
         tagCntArr.push(tagData.selectScheduleTag[i].count)
         totalCnt += tagData.selectScheduleTag[i].count;
@@ -162,10 +162,12 @@ function setChart(tagData) {
     console.log('tagCntArr : ' + tagCntArr)
     console.log('totalCnt : ' + totalCnt)
 
-    for(let i = 0; i < tagCntArr.length; i++){
+    for (let i = 0; i < tagCntArr.length; i++) {
         tagCntPer.push(((tagCntArr[i] / totalCnt) * 100).toFixed(1) + '(' + tagCntArr[i] + ')')
     }
     console.log('percent : ' + tagCntPer)
+    console.log(Chart.controllers.pie.overrides.plugins.legend)
+
 
     var context = document
         .getElementById('myChart')
@@ -191,26 +193,44 @@ function setChart(tagData) {
                         '#6667ab',
                         '#8e8e8e',
                     ],
+                    hoverOffset: 20,
                     borderColor: [],
                     borderWidth: 0 //경계선 굵기
                 }
             ]
         },
         options: {
-            legend: {
-                display: false
-            },
+            radius: '90%',
             plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        generateLabels: function (myChart) {
+                            console.log('myChart : ' + JSON.stringify(myChart.data))
+                            let str = '';
+                            for(let i = 0; i < myChart.data.labels.length; i++){
+                                str += '<div class="legend"><div class="label" style="background-color: ' + myChart.data.datasets[0].backgroundColor[i] + '"></div>' + myChart.data.labels[i] + '</div>';
+                            }
+                            document.getElementById('legendDiv').innerHTML = str;
+                        },
+                },
+                htmlLegend:{
+                    containerID: 'legendDiv'
+                },
+
+
+                },
                 tooltips: {
                     enabled: false
                 },
                 datalabels: {
                     formatter: function (value, context) {
-                        return Math.round(value / context.chart.getDatasetMeta(0).total * 100) + "%";
+                        return Math.round(value / context.myChart.getDatasetMeta(0).total * 100) + "%";
                     },
                     color: '#fff',
                 }
+
             }
-        }
+        },
     });
 }
