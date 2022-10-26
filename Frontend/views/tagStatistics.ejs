@@ -16,19 +16,33 @@
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
     <div class="wrapper__form">
-        <div class="content content--chart">
-            <div class="content__top">태그 현황</div>
-            <div class="content__mid">
-                <div style="width: 400px; height: 400px;">
-                    <!--차트가 그려질 부분-->
-                    <canvas id="myChart"></canvas>
+        <div class="content">
+            <div class="content--chart">
+                <div class="content__top">태그 현황</div>
+                <div class="content__mid">
+                    <div class="myChartDiv">
+                        <div style="width: 300px; height: 300px;">
+                            <!--차트가 그려질 부분-->
+                            <canvas id="myChart" onclick="console.log(JSON.stringify(this))"></canvas>
+                        </div>
+                    </div>
+                    <div id="legendDiv" class="legendDiv">
+                        <div class="legend"><div class="label"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content--tag">
+                <div class="content__top">태그 목록 </div>
+                <div class="content__mid tagContent__mid">
+                    <div class="MyTagList">
+                    </div>
                 </div>
             </div>
         </div>
         <div class="verticalLine"></div>
         <div class="content" style="flex-direction: column">
-            <div class="content content--schedule">
-                <div class="content__top">일정 목록 <button onclick="findScheduleCnt()">일정개수</button></div>
+            <div class="content--schedule">
+                <div class="content__top">일정 목록 </div>
                 <div class="content__mid ScheduleContent__mid">
                     <table class="MyScheduleListTable" id="MyScheduleListTable">
                         <thead>
@@ -41,13 +55,6 @@
                         <tbody class="tr_MyScheduleList" id="tr_MyScheduleList">
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="content content--tag">
-                <div class="content__top">태그 목록 </div>
-                <div class="content__mid tagContent__mid">
-                    <div class="MyTagList">
-                    </div>
                 </div>
             </div>
         </div>
