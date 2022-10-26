@@ -327,4 +327,12 @@
 .tagListDiv .autoTagDiv:hover > .deleteTagValue{
     display: flex;
 }
-
+.fa-sort.fa-2xs{
+    display: none;
+}
+th:hover{
+    cursor: pointer;
+}
+th:hover .fa-sort.fa-2xs{
+    display: inline;
+}
