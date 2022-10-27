@@ -19,13 +19,40 @@
         <div class="content">
             <div class="content--chart">
                 <div class="content__top">태그 현황</div>
-                <div class="content__mid">
-                    <div class="myChartDiv">
-                        <div style="width: 300px; height: 300px;">
-                            <!--차트가 그려질 부분-->
-                            <canvas id="myChart" onclick="console.log(JSON.stringify(this))"></canvas>
+                <div class="content__mid" style="">
+
+
+                    <div class="myChartDiv" style="">
+                        <div style="width: 320px; height: 100%; ">
+                            <div id="slider" style="">
+                                <input type="radio" name="slider" id="slide1" checked>
+                                <input type="radio" name="slider" id="slide2">
+                                <div id="slides">
+                                    <div id="overflow" style="">
+                                        <div class="inner" style="">
+                                            <div class="slide slide_1">
+                                                <div class="slide-content">
+                                                    <!--차트가 그려질 부분-->
+                                                    <canvas id="myChart" style="height: 110px"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="slide slide_2">
+                                                <div class="slide-content">
+                                                    <!--차트가 그려질 부분-->
+                                                    <canvas id="myBarChart" style="height: 166px; margin-top: 55px;"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="controls">
+                                    <label for="slide1"><i class="fa-solid fa-caret-left fa-xl"></i></label>
+                                    <label for="slide2"><i class="fa-solid fa-caret-right fa-xl"></i></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div id="legendDiv" class="legendDiv">
                         <div class="legend"><div class="label"></div></div>
                     </div>
@@ -34,10 +61,6 @@
             <div class="content--tag">
                 <div class="content__top">태그 목록 </div>
                 <div class="content__mid tagContent__mid">
-                    <div style="width: 400px; height: 400px;">
-                        <!--차트가 그려질 부분-->
-                        <canvas id="myBarChart"></canvas>
-                    </div>
                     <div class="MyTagList">
                     </div>
                 </div>

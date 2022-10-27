@@ -12,7 +12,7 @@
                     </div>
                     <div style="display: flex; margin-left: 10px; margin-right: 10px">
                         <div style="display: flex; align-items: center"><%- user.name%></div>
-                        <div class="iconDiv" style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.6); margin-left: 10px; padding: 5px; border-radius: 50px;">
+                        <div class="iconDiv" onclick="minimize()" style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.6); margin-left: 10px; padding: 5px; border-radius: 50px;">
                             <% if(user.provider == 'naver'){ %>
                                 <img src="/img/naverLogout.png" alt="img" class="platformLogo" style="width: 20px; height: 15px;">
                             <% } %>
