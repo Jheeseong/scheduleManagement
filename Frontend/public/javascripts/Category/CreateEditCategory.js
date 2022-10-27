@@ -27,7 +27,7 @@ function openCategoryModal() {
     const categoryBtn = document.querySelector('.categoryBtnDiv');
 
     categoryTop.innerText = '카테고리 생성'
-    categoryBtn.innerHTML =
+categoryBtn.innerHTML =
         '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
         `<button onclick='saveCategory()'>저장</button>`
     $.ajax({

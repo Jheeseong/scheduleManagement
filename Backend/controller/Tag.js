@@ -53,6 +53,20 @@ const TagController = {
         } catch (err) {
             throw new Error(err)
         }
+    },
+    findTagById: async (req, res) => {
+        try {
+             let findTag = await Tag.findOne({_id: req.params.id})
+                 .populate({
+                     path: "scheduleInfo",
+                    match: {userInfo: req.user._id}})
+                 .exec();
+             res.json({selectTag: findTag, findTagSuccess: true, message: "태그를 찾았습니다."})
+        } catch (err) {
+            console.log(err)
+            res.status(400).json({findTagSuccess: false, message: "태그를 찾지 못하였습니다.", error: err})
+        }
+
     }
 }
 

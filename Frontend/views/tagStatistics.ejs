@@ -32,23 +32,37 @@
                 </div>
             </div>
             <div class="content--tag">
-                <div class="content__top">태그 목록 </div>
+                <div class="content__top">태그 목록 <button onclick="findMyTag()">전체보기</button></div>
                 <div class="content__mid tagContent__mid">
-                    <div style="width: 400px; height: 400px;">
-                        <!--차트가 그려질 부분-->
+                    <!--<div style="width: 400px; height: 400px;">
+                        &lt;!&ndash;차트가 그려질 부분&ndash;&gt;
                         <canvas id="myBarChart"></canvas>
-                    </div>
-                    <div class="MyTagList">
-                    </div>
+                    </div>-->
+                    <table class="myTagListTable" id="myTagListTable">
+                        <colgroup>
+                            <col width="25%"/>
+                            <col width="50%"/>
+                            <col width="25%"/>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th scope="col">태그 명</th>
+                            <th scope="col">비율</th>
+                            <th scope="col">개수</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tr_MyTagList" id="tr_MyTagList">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
         <div class="verticalLine"></div>
         <div class="content" style="flex-direction: column">
             <div class="content--schedule">
-                <div class="content__top">일정 목록 </div>
+                <div class="content__top">일정 목록 <button onclick="findMySchedule()">전체보기</button></div>
                 <div class="content__mid ScheduleContent__mid">
-                    <table class="MyScheduleListTable" id="MyScheduleListTable">
+                    <table class="myScheduleListTable" id="myScheduleListTable">
                         <colgroup>
                             <col width="15%"/>
                             <col width="15%"/>

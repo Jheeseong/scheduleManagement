@@ -86,7 +86,7 @@ html{
     width: 30px;
     height: 30px;
 }
-.MyScheduleListTable{
+.myScheduleListTable{
     width: 100%;
     text-align: center;
     border-collapse: collapse;
@@ -95,26 +95,12 @@ html{
     background-color: #dadada;
     cursor: pointer;
 }
-.MyTagList{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
+.myTagListTable{
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
 }
-.MyTagDiv{
-    display: inline;
-    margin: 8px 15px 8px 0;
-    position: relative;
-}
-.MyTagValue{
+.tr_MyTagList tr:hover{
+    background-color: #dadada;
     cursor: pointer;
-    list-style: none;
-    color: #a8a8a8;
-    align-items: center;
-    font-size: 18px;
-    border-radius: 4px;
-    background-color: #f5f5f5;
-    padding: 0px 4px;
-    height: fit-content;
-    width: fit-content;
 }

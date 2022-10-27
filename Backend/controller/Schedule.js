@@ -74,6 +74,7 @@ const ScheduleController = {
             let findSchedule = await Schedule.findOne({_id: req.params.id})
                 .populate('tagInfo')
                 .exec();
+
             res.json({schedule: findSchedule, findScheduleSuccess: true})
         } catch (err) {
             console.log(err)
@@ -114,6 +115,7 @@ const ScheduleController = {
 
                     let find = selectScheduleTag.find(v => v.content === result.content)
                     if (find === undefined) {
+                        tags.id = result._id
                         tags.content = result.content;
                         tags.count = 1;
 
@@ -122,6 +124,7 @@ const ScheduleController = {
                     } else {
                         find.count += 1;
                     }
+
                 })
             })
             console.log(selectScheduleTag)
