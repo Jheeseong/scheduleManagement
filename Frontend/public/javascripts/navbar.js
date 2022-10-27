@@ -73,3 +73,35 @@ for(let i = 0; i < colorElement.length; i++){
         });
     });
 }
+
+function minimize(){
+    const mainMenu = document.getElementById('mainMenu');
+    const colorBtn = document.getElementsByClassName('colorDiv')[0];
+    const colorIcon = document.getElementsByClassName('fa-paint-roller')[0];
+    const userInfo = mainMenu.firstElementChild.firstElementChild;
+    const bgSub = document.getElementsByClassName('bgSub');
+    const menuTabBox = document.getElementsByClassName('infoBox__bottom')[0];
+    mainMenu.style.transition = 'all 0.3s ease-in-out';
+    mainMenu.style.height = '100px';
+
+    menuTabBox.style.borderRadius = '25px';
+    userInfo.style.borderRadius = '0px';
+    userInfo.style.height = '100%';
+
+    colorBtn.style.width = '50px';
+    colorBtn.style.height = '25px';
+    colorBtn.style.right = '330px';
+    colorBtn.classList.add('fa-xs');
+
+    userInfo.style.position = 'absolute';
+    userInfo.style.right = '0px';
+    userInfo.style.width = '300px';
+    userInfo.firstElementChild.style.width = '100%';
+
+    userInfo.remove();
+    mainMenu.appendChild(userInfo)
+
+    bgSub.style.top = ''
+
+
+}

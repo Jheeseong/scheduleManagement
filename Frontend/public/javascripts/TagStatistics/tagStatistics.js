@@ -182,6 +182,18 @@ function setBarChart(tagData) {
             ]
         },
         options: {
+            onClick: (evt) => {
+                const points = myBarChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+
+                if (points.length) {
+                    const firstPoint = points[0];
+                    var label = myBarChart.data.labels[firstPoint.index];
+                    var value = myBarChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+                    console.log(label +" : "+ value);
+
+                    /*findScheduleByTag();*/
+                }
+            },
             plugins: {
                 legend: {
                     display: false,
@@ -256,6 +268,18 @@ function setChart(tagData) {
             ]
         },
         options: {
+            onClick: (evt) => {
+                const points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+
+                if (points.length) {
+                    const firstPoint = points[0];
+                    var label = myChart.data.labels[firstPoint.index];
+                    var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+                    console.log(label +" : "+ value);
+
+                    /*findScheduleByTag();*/
+                }
+            },
             radius: '90%',
             plugins: {
                 legend: {
@@ -288,4 +312,21 @@ function setChart(tagData) {
             }
         },
     });
+
+}
+
+function findScheduleByTag(label){
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/findScheduleByTag',
+        data: label,
+        dataType: 'json',
+        success: function (res) {
+            console.log(JSON.stringify(res));
+        },
+        error: function (err) {
+            window.alert("일정 검색 실패")
+            console.log(err)
+        }
+    })
 }
