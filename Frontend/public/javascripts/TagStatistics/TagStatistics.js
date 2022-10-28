@@ -22,7 +22,7 @@ function findMySchedule() {
             res.schedule.map((result) => {
                 let date = result.startDate.substring(0, 10) + " " + result.startDate.substring(11,16) +" ~ "+ result.endDate.substring(0, 10) + " " + result.endDate.substring(11,16);
                 myScheduleTable.innerHTML +=
-                    '<tr onclick="findScheduleTag(\'' + result._id + '\')">' +
+                    '<tr class="MyScheduleList_tr" onclick="findScheduleTag(\'' + result._id + '\', this)">' +
                     `<td>${(result.status==false ? "미완료" : "완료")}</td>` +
                     `<td>${result.title}</td>` +
                     `<td>${result.content}</td>` +
@@ -64,12 +64,12 @@ function findMyTag() {
 
             res.selectScheduleTag.map((result) => {
                 MyTagList.innerHTML +=
-                    '<tr onclick="findTagSchedule(\'' + result.id + '\')">' +
+                    '<tr class="MyTagList_tr" onclick="findTagSchedule(\'' + result.id + '\')">' +
                     `<td>${result.content}</td>` +
                     '<td><div style="width: 48%;margin: 0 auto;border-radius: 20px;overflow: hidden">' +
                     '<span style="display:inline-block; text-align: left; line-height: 19px; height: 66.6%;width: 98%;border-radius: 20px;background-color: #c7c7c7">' +
                     '<span style="text-align: center ; display:inline-block; border-radius: 20px;height: 100%;width:'+ ((result.count/allCnt) * 100).toFixed(1) +'%; background-color: #0098fe;line-height: 19px">' +
-                    '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; height: 100%; line-height: 19px; width: 98%;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
+                    '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; height: 100%; line-height: 19px; min-width: 185px;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
                     '</span></span></div></td>' +
                     /*`<td><progress value="${((result.count/allCnt) * 100).toFixed(1)}" max="100"></progress></td>` +*/
                     `<td>${result.count + " / " + allCnt}</td>` +
@@ -85,12 +85,27 @@ function findMyTag() {
         }
     })
 }
-function findScheduleTag(scheduleId) {
+
+function findScheduleTag(scheduleId, event) {
     $.ajax({
         type: 'POST',
         url: 'schedule/find/' + scheduleId,
         dataType: 'json',
         success: function (res) {
+
+            const tr_schedule = document.querySelector('.tr_MyScheduleList')
+            const tr = tr_schedule.getElementsByTagName("tr")
+            for (let i = 0; i < tr.length; i++) {
+                tr[i].addEventListener('mouseover',function (){
+                    tr[i].setAttribute('class','hover')
+                })
+                tr[i].addEventListener('mouseout', function (){
+                    tr[i].removeAttribute('class')
+                })
+                tr[i].style.background = "white";
+            }
+            event.style.backgroundColor = "red";
+
             let selectTagArr = []
 
             tagArr.map((result) => {
@@ -122,7 +137,7 @@ function findScheduleTag(scheduleId) {
                     '<td><div style="width: 48%;margin: 0 auto;border-radius: 20px;overflow: hidden">' +
                     '<span style="display:inline-block; text-align: left; line-height: 19px; height: 66.6%;width: 98%;border-radius: 20px;background-color: #c7c7c7">' +
                     '<span style="text-align: center ; display:inline-block; border-radius: 20px;height: 100%;width:'+ ((result.count/allCnt) * 100).toFixed(1) +'%; background-color: #0098fe;line-height: 19px">' +
-                    '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; height: 100%; line-height: 19px; width: 98%;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
+                    '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; height: 100%; line-height: 19px; min-width: 185px;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
                     '</span></span></div></td>' +
                     /*`<td><progress value="${((result.count/allCnt) * 100).toFixed(1)}" max="100"></progress></td>` +*/
                     `<td>${result.count + " / " + allCnt}</td>` +
