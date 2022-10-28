@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/tagStatistics/tagStatistics.css">
     <script defer src="/javascripts/navbar.js"></script>
-    <script defer src="/javascripts/TagStatistics/tagStatistics.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script defer src="/javascripts/TagStatistics/TagStatistics.js"></script>
+    <script defer src="/javascripts/TagStatistics/Chart.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 <body>
 <%- include ('layout/navbar.ejs') %>
@@ -59,12 +60,19 @@
                 </div>
             </div>
             <div class="content--tag">
-                <div class="content__top">태그 목록 <button onclick="findMyTag()">전체보기</button></div>
+                <div class="content__top tagContent__top">
+                    <div>
+                        <div>태그 목록</div>
+                        <div class="tagList_cnt"></div>
+                    </div>
+                    <div>
+                        <div class="selectTitle"></div>
+                        <div class="tagScheduleReload" onclick="findMyTag()">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </div>
+                    </div>
+                </div>
                 <div class="content__mid tagContent__mid">
-                    <!--<div style="width: 400px; height: 400px;">
-                        &lt;!&ndash;차트가 그려질 부분&ndash;&gt;
-                        <canvas id="myBarChart"></canvas>
-                    </div>-->
                     <table class="myTagListTable" id="myTagListTable">
                         <colgroup>
                             <col width="25%"/>
@@ -96,7 +104,19 @@
         <div class="verticalLine"></div>
         <div class="content" style="flex-direction: column">
             <div class="content--schedule">
-                <div class="content__top">일정 목록 <button onclick="findMySchedule()">전체보기</button></div>
+                <div class="content__top scheduleContent__top">
+                    <div>
+                        <div>일정 목록</div>
+                        <div class="scheduleList_cnt"></div>
+                    </div>
+                    <div>
+                        <div class="selectTitle"></div>
+                        <div class="tagScheduleReload" onclick="findMySchedule()">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="content__mid ScheduleContent__mid">
                     <table class="myScheduleListTable" id="myScheduleListTable">
                         <colgroup>

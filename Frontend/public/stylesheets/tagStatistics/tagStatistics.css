@@ -72,7 +72,14 @@ html{
     height: 16px;
     border-radius: 50px;
 }
-
+.scheduleContent__top{
+    display: flex;
+    justify-content: space-between;
+}
+.tagContent__top{
+    display: flex;
+    justify-content: space-between;
+}
 .ScheduleContent__mid{
     align-items: stretch;
     height: 70%;
@@ -87,10 +94,19 @@ html{
     overflow-y: hidden;
     padding: 10px;
 }
+.content__top > div {
+    display: flex;
+    align-items: center;
+}
+.tagScheduleReload{
+    cursor: pointer;
+    padding-right: 25px;
+}
+.tagList_cnt, .scheduleList_cnt{
+    padding-left: 10px;
+}
 
 .verticalLine{
-    padding: 0px;
-    width: 0px;
     height: 100%;
     border-left: 1px solid #e3e3e3;
 }
@@ -124,11 +140,26 @@ html{
 }
 .myTagListTable thead {
     position: sticky;
-    top: 0px
 }
 .tr_MyTagList tr:hover{
     background-color: #dadada;
     cursor: pointer;
+}
+.selectTitle{
+    display: flex;
+    align-items: center;
+}
+.selectTitle > span{
+    color: #0098fe;
+    margin-right: 8px;
+    font-size: 15px;
+
+}
+.selectTitle > div{
+    font-weight: normal;
+    color: #a8a8a8;
+    font-size: 15px;
+    margin-right: 8px;
 }
 
 
