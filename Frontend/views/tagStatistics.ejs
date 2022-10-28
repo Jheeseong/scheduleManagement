@@ -20,12 +20,12 @@
         <div class="content">
             <div class="content--chart">
                 <div class="content__top">태그 현황</div>
-                <div class="content__mid" style="">
+                <div class="content__mid">
 
 
-                    <div class="myChartDiv" style="">
+                    <div class="myChartDiv">
                         <div style="width: 320px; height: 100%; ">
-                            <div id="slider" style="">
+                            <div id="slider">
                                 <input type="radio" name="slider" id="slide1" checked>
                                 <input type="radio" name="slider" id="slide2">
                                 <div id="slides">
@@ -34,7 +34,7 @@
                                             <div class="slide slide_1">
                                                 <div class="slide-content">
                                                     <!--차트가 그려질 부분-->
-                                                    <canvas id="myChart" style="height: 110px"></canvas>
+                                                    <canvas id="myChart" style="width: 220px; height: 110px"></canvas>
                                                 </div>
                                             </div>
                                             <div class="slide slide_2">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="content__mid tagContent__mid">
-                    <table class="myTagListTable" id="myTagListTable">
+                    <table class="myTagListTable theadTable" id="myTagListTable">
                         <colgroup>
                             <col width="25%"/>
                             <col width="50%"/>
@@ -118,7 +118,7 @@
 
                 </div>
                 <div class="content__mid ScheduleContent__mid">
-                    <table class="myScheduleListTable" id="myScheduleListTable">
+                    <table class="myScheduleListTable theadTable">
                         <colgroup>
                             <col width="15%"/>
                             <col width="15%"/>
@@ -133,9 +133,19 @@
                             <th scope="col">일정</th>
                         </tr>
                         </thead>
-                        <tbody class="tr_MyScheduleList" id="tr_MyScheduleList">
-                        </tbody>
                     </table>
+                    <div class="tableDiv">
+                        <table class="myScheduleListTable" id="myScheduleListTable">
+                            <colgroup>
+                                <col width="15%"/>
+                                <col width="15%"/>
+                                <col width="20%"/>
+                                <col width="50%"/>
+                            </colgroup>
+                            <tbody class="tr_MyScheduleList" id="tr_MyScheduleList">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
