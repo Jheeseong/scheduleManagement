@@ -226,7 +226,8 @@ function setChart(tagData) {
     const tagCntArr = [];
     const tagCntPer = [];
     let totalCnt = 0;
-    for (let i = 0; i < tagData.selectScheduleTag.length; i++) {
+
+    for (let i = 0; i < tagData.selectScheduleTag.length ; i++) {
         tagNameArr.push(tagData.selectScheduleTag[i].content)
         tagCntArr.push(tagData.selectScheduleTag[i].count)
         totalCnt += tagData.selectScheduleTag[i].count;
