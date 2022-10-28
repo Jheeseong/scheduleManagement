@@ -40,7 +40,7 @@ html{
     height: 93%;
 }
 .content--chart .content__mid, .content--tag .content__mid{
-    height: 77%;
+    height: 75%;
 }
 
 .content--chart{
@@ -92,7 +92,7 @@ html{
 }
 .ScheduleContent__mid{
     align-items: stretch;
-    height: 70%;
+    height: 90%;
 }
 .content--schedule{
     height: 100%;
