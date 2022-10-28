@@ -79,7 +79,7 @@ function minimize(){
     const colorBtn = document.getElementsByClassName('colorDiv')[0];
     const colorIcon = document.getElementsByClassName('fa-paint-roller')[0];
     const userInfo = mainMenu.firstElementChild.firstElementChild;
-    const bgSub = document.getElementsByClassName('bgSub');
+    const bgSub = document.getElementById('bgSub');
     const menuTabBox = document.getElementsByClassName('infoBox__bottom')[0];
     mainMenu.style.transition = 'all 0.3s ease-in-out';
     mainMenu.style.height = '100px';
@@ -101,7 +101,8 @@ function minimize(){
     userInfo.remove();
     mainMenu.appendChild(userInfo)
 
-    bgSub.style.top = ''
+    bgSub.style.top = '-165px'
+    bgSub.style.right = '118px'
 
 
 }
