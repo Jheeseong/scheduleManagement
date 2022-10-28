@@ -69,7 +69,7 @@ function findMyTag() {
                     '<td><div style="width: 48%;margin: 0 auto;border-radius: 20px;overflow: hidden">' +
                     '<span style="display:inline-block; text-align: left; line-height: 19px; height: 66.6%;width: 98%;border-radius: 20px;background-color: #c7c7c7">' +
                     '<span style="text-align: center ; display:inline-block; border-radius: 20px;height: 100%;width:'+ ((result.count/allCnt) * 100).toFixed(1) +'%; background-color: #0098fe;line-height: 19px">' +
-                    '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; height: 100%; line-height: 19px; width: 98%;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
+                    '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; background-color: inherit; height: 100%; line-height: 19px; width: 98%;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
                     '</span></span></div></td>' +
                     /*`<td><progress value="${((result.count/allCnt) * 100).toFixed(1)}" max="100"></progress></td>` +*/
                     `<td>${result.count + " / " + allCnt}</td>` +
