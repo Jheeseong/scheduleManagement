@@ -77,7 +77,7 @@ function findScheduleTag(scheduleId) {
         dataType: 'json',
         success: function (res) {
             let selectTagArr = []
-            let tagId
+
             tagArr.map((result) => {
                 res.schedule.tagInfo.map((tags) => {
                     if (result.content === tags.content) {
@@ -85,7 +85,6 @@ function findScheduleTag(scheduleId) {
                     }
                 })
             })
-            console.log(selectTagArr)
 
             const MyTagList = document.querySelector('.tr_MyTagList')
             MyTagList.innerHTML = '';

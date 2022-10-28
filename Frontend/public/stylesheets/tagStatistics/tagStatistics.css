@@ -104,6 +104,7 @@ html{
     text-align: center;
     border-collapse: collapse;
 }
+
 .tr_MyTagList tr:hover{
     background-color: #dadada;
     cursor: pointer;
