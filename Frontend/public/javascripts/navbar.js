@@ -75,12 +75,16 @@ for(let i = 0; i < colorElement.length; i++){
 }
 
 function minimize(){
+    const wrapper = document.getElementsByClassName('wrapper')[0];
     const mainMenu = document.getElementById('mainMenu');
     const colorBtn = document.getElementsByClassName('colorDiv')[0];
     const colorIcon = document.getElementsByClassName('fa-paint-roller')[0];
     const userInfo = mainMenu.firstElementChild.firstElementChild;
     const bgSub = document.getElementById('bgSub');
     const menuTabBox = document.getElementsByClassName('infoBox__bottom')[0];
+
+    wrapper.style.height = '79%'
+
     mainMenu.style.transition = 'all 0.3s ease-in-out';
     mainMenu.style.height = '100px';
 
