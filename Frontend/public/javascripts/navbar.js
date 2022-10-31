@@ -1,3 +1,4 @@
+
 //서브메뉴 닫는 이벤트리스너
 document.getElementsByClassName('wrapper')[0].addEventListener('mousedown', closeSub);
 document.getElementById('mainMenu').addEventListener('mousedown', closeSub);
