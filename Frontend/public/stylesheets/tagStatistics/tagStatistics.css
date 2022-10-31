@@ -82,7 +82,7 @@ html{
     height: 16px;
     border-radius: 50px;
 }
-.tagContent__top, .scheduleContent__top, .tagChart__top{
+.scheduleContent__top, .tagContent__top, .tagChart__top{
     display: flex;
     justify-content: space-between;
 }
@@ -149,9 +149,6 @@ th{
 td{
     height: 35px;
 }
-tr:focus{
-    background-color: black;
-}
 tr:nth-child(odd):not(thead tr){
     background-color: rgba(0, 152, 254, .025);
 }
@@ -203,6 +200,12 @@ tr:nth-child(odd):not(thead tr){
     margin-right: 8px;
 }
 
+.MyScheduleList_tr.focusedTr, .MyTagList_tr.focusedTr{
+    background-color: rgba(66, 152, 254, .3);
+}
+.MyScheduleList_tr.focusedTr:hover, .MyTagList_tr.focusedTr:hover{
+    background-color: rgba(66, 152, 254, .3);
+}
 
 /* slide */
 #slider {

@@ -44,7 +44,8 @@ function findMySchedule() {
     })
 }
 /*선택한 태그 중 내가 작성한 스케줄리스트 불러오는 함수*/
-function findTagSchedule(tagId) {
+function findTagSchedule(tagId, event) {
+    focusTr(event)
     $.ajax({
         type: "POST",
         url: 'schedule/findTag/' + tagId,
@@ -77,7 +78,7 @@ function updateScheduleList(schedules) {
     schedules.map((result) => {
         let date = result.startDate.substring(0, 10) + " " + result.startDate.substring(11,16) +" ~ "+ result.endDate.substring(0, 10) + " " + result.endDate.substring(11,16);
         myScheduleTable.innerHTML +=
-            '<tr class="MyScheduleList_tr" onclick="findScheduleTag(\'' + result._id + '\')">' +
+            '<tr class="MyScheduleList_tr" onclick="findScheduleTag(\'' + result._id + '\', this)">' +
             `<td>${(result.status==false ? "미완료" : "완료")}</td>` +
             `<td>${result.title}</td>` +
             `<td>${result.content}</td>` +
@@ -110,7 +111,8 @@ function findMyTag() {
     })
 }
 /*선택한 스케줄에 포함되어 있는 태그를 불러오는 함수*/
-function findScheduleTag(scheduleId) {
+function findScheduleTag(scheduleId, event) {
+    focusTr(event)
     $.ajax({
         type: 'POST',
         url: 'schedule/find/' + scheduleId,
@@ -154,7 +156,7 @@ function updateTagList(tags) {
 
     tags.map((result) => {
         MyTagList.innerHTML +=
-            '<tr class="MyTagList_tr" onclick="findTagSchedule(\'' + result.id + '\')">' +
+            '<tr class="MyTagList_tr" onclick="findTagSchedule(\'' + result.id + '\', this)">' +
             `<td>${result.content}</td>` +
             '<td><div style="width: 48%;margin: 0 auto;border-radius: 20px;overflow: hidden">' +
             '<span style="display:inline-block; text-align: left; line-height: 19px; height: 66.6%;width: 98%;border-radius: 20px;background-color: #c7c7c7">' +
@@ -164,4 +166,20 @@ function updateTagList(tags) {
             `<td>${result.count + " / " + allCnt}</td>` +
             '</tr>'
     })
+}
+
+function focusTr(event){
+    console.log(event)
+    const trArr = document.querySelectorAll('tr')
+    if(event.classList.length){
+        if(event.classList.contains('focusedTr')){
+            event.classList.remove('focusedTr')
+        }
+        else{
+            for(let i = 0; i < trArr.length; i++){
+                trArr[i].classList.remove('focusedTr')
+            }
+            event.classList.add('focusedTr')
+        }
+    }
 }
