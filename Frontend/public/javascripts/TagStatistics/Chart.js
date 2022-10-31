@@ -82,14 +82,24 @@ function setChart(tagData) {
     const tagNameArr = [];
     const tagCntArr = [];
     const tagCntPer = [];
+    const etcTagName = [];
+    let etcTagCnt = 0;
     let totalCnt = 0;
 
     for (let i = 0; i < tagData.selectScheduleTag.length ; i++) {
-        tagNameArr.push(tagData.selectScheduleTag[i].content)
-        tagCntArr.push(tagData.selectScheduleTag[i].count)
+        /*최대 차트 숫자인 8개 이하 시 그래프에 표시*/
+        if (i < 7) {
+            tagNameArr.push(tagData.selectScheduleTag[i].content);
+            tagCntArr.push(tagData.selectScheduleTag[i].count);
+        } else {
+            etcTagName.push(tagData.selectScheduleTag[i].content)
+            etcTagCnt += tagData.selectScheduleTag[i].count
+        }
+
         totalCnt += tagData.selectScheduleTag[i].count;
     }
-
+    tagNameArr.push('기타')
+    tagCntArr.push(etcTagCnt)
 
     for (let i = 0; i < tagCntArr.length; i++) {
         tagCntPer.push(((tagCntArr[i] / totalCnt) * 100).toFixed(1) + '(' + tagCntArr[i] + ')')
@@ -174,9 +184,20 @@ function setChart(tagData) {
                     labels: {
                         generateLabels: function (myChart) {
                             let str = '';
+
                             for(let i = 0; i < myChart.data.labels.length; i++){
-                                str += '<div class="legend"><div class="label" style="background-color: ' + myChart.data.datasets[0].backgroundColor[i] + '"></div>' + myChart.data.labels[i] + '</div>';
+                                if (myChart.data.labels[i] === "기타") {
+                                    str += '<div class="legend" onclick="openEtc()" style="cursor: pointer"><div class="label" style="background-color: ' + myChart.data.datasets[0].backgroundColor[i] + '"></div>' + myChart.data.labels[i] + '</div>' +
+                                    '<div class="legend__etcList" style="display: none">'
+                                    for (let i = 0; i < etcTagName.length; i++) {
+                                        str += '<div class="legend__etc">' + etcTagName[i] + '</div>'
+                                    }
+                                    str += '</div>'
+                                } else {
+                                    str += '<div class="legend"><div class="label" style="background-color: ' + myChart.data.datasets[0].backgroundColor[i] + '"></div>' + myChart.data.labels[i] + '</div>';
+                                }
                             }
+
                             document.getElementById('legendDiv').innerHTML = str;
                         },
                     },
@@ -197,5 +218,13 @@ function setChart(tagData) {
             }
         },
     });
+}
 
+function openEtc() {
+    let etcList = document.querySelector('.legend__etcList');
+    if (etcList.style.display == 'none') {
+        etcList.style.display = 'block';
+    } else {
+        etcList.style.display = 'none';
+    }
 }

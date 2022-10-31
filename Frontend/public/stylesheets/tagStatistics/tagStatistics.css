@@ -76,6 +76,9 @@ html{
     align-items: center;
     padding: 5px 0;
 }
+.legend__etc{
+    padding: 4px 0 2px 21px;
+}
 .label{
     margin-right: 5px;
     width: 16px;

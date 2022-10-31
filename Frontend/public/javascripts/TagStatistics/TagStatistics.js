@@ -16,26 +16,6 @@ function findMySchedule() {
         dataType: "json",
         success: function (res) {
             updateScheduleList(res.schedule)
-
-            /*const scheduleListCnt = document.querySelector('.scheduleList_cnt')
-            scheduleListCnt.innerHTML =
-                '<span>' + res.schedule.length +'</span>'
-
-            const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle')
-            scheduleContentTop.innerHTML = '';
-
-            const myScheduleTable = document.querySelector('.tr_MyScheduleList')
-            myScheduleTable.innerHTML = ''
-            res.schedule.map((result) => {
-                let date = result.startDate.substring(0, 10) + " " + result.startDate.substring(11,16) +" ~ "+ result.endDate.substring(0, 10) + " " + result.endDate.substring(11,16);
-                myScheduleTable.innerHTML +=
-                    '<tr class="MyScheduleList_tr" onclick="findScheduleTag(\'' + result._id + '\')">' +
-                    `<td>${(result.status==false ? "미완료" : "완료")}</td>` +
-                    `<td>${result.title}</td>` +
-                    `<td>${result.content}</td>` +
-                    `<td>${date}</td>` +
-                    '</tr>'
-            })*/
         },
         error: function (err) {
             window.alert("일정을 불러오던 중 오류가 발생하였습니다!")

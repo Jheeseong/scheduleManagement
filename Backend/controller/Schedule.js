@@ -127,6 +127,9 @@ const ScheduleController = {
 
                 })
             })
+            selectScheduleTag.sort((a, b) => {
+                return a[1] - b[1];
+            })
             console.log(selectScheduleTag)
             let scheduleCnt = await Schedule.find({userInfo: req.user._id}).count().exec();
             res.json({allScheduleTag: allScheduleTag, selectScheduleTag: selectScheduleTag, scheduleCnt: scheduleCnt, findScheduleSuccess: true})
