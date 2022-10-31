@@ -49,6 +49,7 @@ function openListModal(selectedEventList, infoDate) {
     document.querySelector('.scheduleAdd__div').setAttribute('onclick', 'openCreateModal(\'' + infoDate + '\')')
 
     let tbodyTag = document.getElementById('scheduleTbody');
+
     let str = '';
     for (let i = 0; i < selectedEventList.length; i++) {
         str += '<tr onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">';

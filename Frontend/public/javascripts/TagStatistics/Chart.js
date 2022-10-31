@@ -135,7 +135,36 @@ function setChart(tagData) {
                     var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
                     console.log(label +" : "+ value);
 
-                    /*findScheduleByTag();*/
+                    $.ajax({
+                        type: 'POST',
+                        url: 'schedule/findTagByContent/',
+                        data: {content: label},
+                        dataType: 'json',
+                        success: function (res) {
+                            /*그래프에서 클릭한 태그가 포함되어 있는 스케줄을 불러오는 함수*/
+                            updateScheduleList(res.selectTag.scheduleInfo)
+
+                            const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle')
+                            scheduleContentTop.innerHTML =
+                                '<div>선택 태그</div>' +
+                                '<span>' + res.selectTag.content +'</span>'
+
+                            let selectTagArr = []
+
+                            tagArr.map((result) => {
+                                if (result.content === res.selectTag.content) {
+                                    selectTagArr.push(result)
+                                }
+                            })
+                            /*그래프에서 클릭한 태그를 불러오는 함수*/
+                            updateTagList(selectTagArr)
+
+                        },
+                        error: function (err) {
+                            window.alert("일정을 찾지 못하였습니다.")
+                            console.log(err)
+                        }
+                    })
                 }
             },
             radius: '90%',
@@ -154,8 +183,6 @@ function setChart(tagData) {
                     htmlLegend:{
                         containerID: 'legendDiv'
                     },
-
-
                 },
                 tooltips: {
                     enabled: false

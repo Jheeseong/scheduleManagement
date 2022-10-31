@@ -82,11 +82,7 @@ html{
     height: 16px;
     border-radius: 50px;
 }
-.scheduleContent__top{
-    display: flex;
-    justify-content: space-between;
-}
-.tagContent__top{
+.tagContent__top, .scheduleContent__top, .tagChart__top{
     display: flex;
     justify-content: space-between;
 }

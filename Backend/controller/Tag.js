@@ -56,7 +56,7 @@ const TagController = {
     },
     findTagScheduleByContent: async (req, res) => {
         try {
-            let tags = await Tag.findOne({content: req.params.content})
+            let tags = await Tag.findOne({content: req.body.content})
                 .populate({
                     path: "scheduleInfo",
                     match: {userInfo: req.user._id}})

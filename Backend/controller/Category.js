@@ -129,7 +129,7 @@ const CategoryController = {
     findAllCategory: async (req, res) => {
         try {
             let categories = await Category.find({$or: [{userInfo: req.user._id}, {creator: req.user._id}]})
-                .select('creator')
+                /*.select("creator")*/
                 /*.distinct('creator')*/
                 .exec();
 
@@ -146,8 +146,8 @@ const CategoryController = {
                     })
                     .exec();
                 let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
-                    findCategory.tagInfo.map((res) => {
-                        res.scheduleInfo.map((result) => {
+                    findCategory.tagInfo.map((tag) => {
+                        tag.scheduleInfo.map((result) => {
                             if (!schedules.includes(result)) {
                                 let schedule = result
                                 schedule.color = colorCode
@@ -156,8 +156,6 @@ const CategoryController = {
                         })
                     })
             }))
-
-            console.log(schedules)
             /*let allCategory = await Category.find({userInfo: req.user._id})
                 .populate({
                     path: "tagInfo",
@@ -178,7 +176,7 @@ const CategoryController = {
                     })
                 })
             })*/
-            res.json({schedules: schedules, scheduleFind: true, message: "일정을 찾았습니다."})
+            res.json({schedules: schedules, categories: categories, scheduleFind: true, message: "일정을 찾았습니다."})
         } catch (err) {
             console.log(err)
         }

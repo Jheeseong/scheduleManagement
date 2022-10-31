@@ -22,5 +22,5 @@ router.post('/findCnt', checkLogIn, scheduleController.findScheduleCnt);
 
 router.post('/findTag/:id', checkLogIn, tagController.findTagById)
 
-router.post('findTagByContent/:content', checkLogIn, tagController.findTagScheduleByContent)
+router.post('/findTagByContent', checkLogIn, tagController.findTagScheduleByContent)
 module.exports = router;

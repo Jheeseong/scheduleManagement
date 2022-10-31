@@ -31,17 +31,20 @@ function findMyCategory() {
 function MyCategory() {
     document.getElementsByClassName('sharedCategory')[0].style.display = 'none';
     document.getElementsByClassName('myCategory')[0].style.display = 'block';
+    document.getElementsByClassName('allCategory')[0].style.display = 'none';
+    onlyMySchedule()
 }
 
 /* 카테고리 영역 내 공유함 탭 클릭 시 */
 function sharedCategory(){
     document.getElementsByClassName('myCategory')[0].style.display = 'none';
     document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
+    document.getElementsByClassName('allCategory')[0].style.display = 'none';
 }
 
 function findShareCategory() {
-    document.getElementsByClassName('myCategory')[0].style.display = 'none';
-    document.getElementsByClassName('sharedCategory')[0].style.display = 'block';
+    document.getElementsByClassName('myCategory')[0].style.display = 'block';
+    document.getElementsByClassName('sharedCategory')[0].style.display = 'none';
     $.ajax({
         type: 'POST',
         url: 'category/shareCategory',
@@ -101,7 +104,7 @@ function applySchedule(id, creator) {
             /*console.log(res)*/
             const schedules = res.schedules;
             eventList = [];
-            /*console.log('schedule : ' + JSON.stringify(schedules));*/
+            console.log('schedule : ' + JSON.stringify(schedules));
             schedules.map((result) => {
                 /*console.log(result)*/
                 eventData.title = result.title;
@@ -125,16 +128,21 @@ function applySchedule(id, creator) {
 }
 
 function allCategory(){
+    document.getElementsByClassName('myCategory')[0].style.display = 'none';
+    document.getElementsByClassName('sharedCategory')[0].style.display = 'none';
+    document.getElementsByClassName('allCategory')[0].style.display = 'block';
+
     $.ajax({
         type: 'POST',
         url: 'category/findAllCategory',
         dataType: "json",
         async: false,
         success: function (res) {
+
             const schedules = res.schedules;
+            console.log(res)
             eventList = [];
             schedules.map((result) => {
-                console.log(result)
                 eventData.title = result.title;
                 eventData.start = result.startDate.split('Z')[0];
                 eventData.end = result.endDate.split('Z')[0];
@@ -151,7 +159,6 @@ function allCategory(){
         }
     })
     calendar.removeAllEvents()
-    console.log(eventList)
     applyCalendar(eventList)
     calendar.render();
 }
