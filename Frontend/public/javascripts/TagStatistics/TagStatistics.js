@@ -64,7 +64,7 @@ function findMyTag() {
 
             res.selectScheduleTag.map((result) => {
                 MyTagList.innerHTML +=
-                    '<tr class="MyTagList_tr" onclick="findTagSchedule(\'' + result.id + '\')">' +
+                    '<tr class="MyTagList_tr" onclick="findTagSchedule(\'' + result.id + '\', this)">' +
                     `<td>${result.content}</td>` +
                     '<td><div style="width: 48%;margin: 0 auto;border-radius: 20px;overflow: hidden">' +
                     '<span style="display:inline-block; text-align: left; line-height: 19px; height: 66.6%;width: 98%;border-radius: 20px;background-color: #c7c7c7">' +
@@ -85,15 +85,33 @@ function findMyTag() {
         }
     })
 }
+function focusTr(event){
+    console.log(event)
+    const trArr = document.querySelectorAll('tr')
+    if(event.classList.length){
+        if(event.classList.contains('focusedTr')){
+            event.classList.remove('focusedTr')
+        }
+        else{
+            for(let i = 0; i < trArr.length; i++){
+                trArr[i].classList.remove('focusedTr')
+            }
+            event.classList.add('focusedTr')
+        }
+    }
+}
 
 function findScheduleTag(scheduleId, event) {
+    console.log('123 : ' + event)
+    focusTr(event)
+
     $.ajax({
         type: 'POST',
         url: 'schedule/find/' + scheduleId,
         dataType: 'json',
         success: function (res) {
 
-            const tr_schedule = document.querySelector('.tr_MyScheduleList')
+            /*const tr_schedule = document.querySelector('.tr_MyScheduleList')
             const tr = tr_schedule.getElementsByTagName("tr")
             for (let i = 0; i < tr.length; i++) {
                 tr[i].addEventListener('mouseover',function (){
@@ -104,7 +122,7 @@ function findScheduleTag(scheduleId, event) {
                 })
                 tr[i].style.background = "white";
             }
-            event.style.backgroundColor = "red";
+            event.style.backgroundColor = "red";*/
 
             let selectTagArr = []
 
@@ -132,7 +150,7 @@ function findScheduleTag(scheduleId, event) {
 
            selectTagArr.map((result) => {
                MyTagList.innerHTML +=
-                    '<tr onclick="findTagSchedule(\'' + result.id + '\')">' +
+                    '<tr class="MyTagList_tr" onclick="findTagSchedule(\'' + result.id + '\', this)">' +
                     `<td>${result.content}</td>` +
                     '<td><div style="width: 48%;margin: 0 auto;border-radius: 20px;overflow: hidden">' +
                     '<span style="display:inline-block; text-align: left; line-height: 19px; height: 66.6%;width: 98%;border-radius: 20px;background-color: #c7c7c7">' +
@@ -154,7 +172,9 @@ function findScheduleTag(scheduleId, event) {
     })
 }
 
-function findTagSchedule(tagId) {
+function findTagSchedule(tagId, event) {
+    focusTr(event)
+
     $.ajax({
         type: "POST",
         url: 'schedule/findTag/' + tagId,
@@ -175,7 +195,7 @@ function findTagSchedule(tagId) {
             res.selectTag.scheduleInfo.map((result) => {
                 let date = result.startDate.substring(0, 10) + " " + result.startDate.substring(11,16) +" ~ "+ result.endDate.substring(0, 10) + " " + result.endDate.substring(11,16);
                 myScheduleTable.innerHTML +=
-                    '<tr onclick="findScheduleTag(\'' + result._id + '\')">' +
+                    '<tr class="MyScheduleList_tr" onclick="findScheduleTag(\'' + result._id + '\', this)">' +
                     `<td>${(result.status==false ? "미완료" : "완료")}</td>` +
                     `<td>${result.title}</td>` +
                     `<td>${result.content}</td>` +
