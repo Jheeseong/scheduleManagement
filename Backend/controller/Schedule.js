@@ -1,5 +1,6 @@
 const { Schedule } = require('../models/Schedule')
 const TagController = require('../controller/Tag')
+const LogController = require('../controller/Log')
 
 const ScheduleController = {
     saveSchedule: async (req, res) => {
@@ -24,9 +25,13 @@ const ScheduleController = {
                 }
 
                 await Schedule.updateOne({_id: schedule._id}, {$push: {tagInfo: tags._id}});
+
             }));
+            await LogController.saveLog(req.body.title + " 일정이 생성되었습니다.", req.user._id)
+
             res.json({scheduleSuccess: true, message: "일정등록이 되었습니다."});
         } catch (err) {
+            console.log(err)
             return res.status(400).json({scheduleSuccess: false, message:"일정등록이 실패하였습니다.",err: err})
         }
     },
@@ -34,7 +39,7 @@ const ScheduleController = {
         try {
             const findSchedule = await Schedule.findOne({_id: req.params.id})
                 .exec();
-            console.log(findSchedule);
+
             if (findSchedule) {
                 console.log(findSchedule.tagInfo)
                 await TagController.disconnectSchedule(findSchedule.tagInfo, findSchedule._id);
@@ -47,7 +52,7 @@ const ScheduleController = {
                     return tags._id;
                 }));
 
-                await Schedule.updateOne({_id: req.params.id},
+                let result = await Schedule.findOneAndUpdate({_id: req.params.id},
                     {
                         $set: {
                             startDate: req.body.startDate,
@@ -59,7 +64,14 @@ const ScheduleController = {
                             // userInfo: req.body.userInfo,
                             tagInfo: promiseTag,
                         }
-                    });
+                    }, {new: true});
+                if (findSchedule.title === result.title) {
+                    await LogController.saveLog(findSchedule.title + " 일정이 수정되었습니다.", req.user._id);
+                } else {
+                    await LogController.saveLog(findSchedule.title + " 일정이 " + result.title + " 로 수정되었습니다.", req.user._id);
+                }
+
+
                 res.json({scheduleUpdate: true, message: "일정편집이 되었습니다."});
             } else {
                 res.json({scheduleUpdate: false, message: "일정을 찾지못하였습니다."});
@@ -94,7 +106,14 @@ const ScheduleController = {
     },
     deleteSchedule: async (req, res) => {
         try {
+            let schedule = await Schedule.findOne({_id: req.params.id})
+                .exec();
+
             await Schedule.deleteOne({_id: req.params.id});
+
+            console.log(schedule)
+
+            await LogController.saveLog(schedule.title + " 일정이 삭제되었습니다.", req.user.id)
             res.json({scheduleDelete: true, message: "일정 삭제를 완료하였습니다."})
         } catch (err) {
             return res.status(400).json({scheduleDelete: false, message: "일정 삭제를 실패하였습니다.", err: err})

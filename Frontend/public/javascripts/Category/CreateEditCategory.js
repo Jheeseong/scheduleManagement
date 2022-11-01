@@ -107,7 +107,6 @@ function openUpdateCategoryModal(id) {
                 '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
                 `<button onclick='categoryUpdate("${id}")'>편집</button>`
 
-            AddUserTagMotion();
         },
         error: function (err) {
             window.alert("카테고리 모달창을 불러오는 도중 오류가 생겨 다시 시도해주세요!")

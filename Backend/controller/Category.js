@@ -1,5 +1,6 @@
 const { Category } = require('../models/Category')
 const TagController = require('../controller/Tag')
+const LogController = require('../controller/Log')
 
 const CategoryController = {
     saveCategory: async (req, res) => {
@@ -19,6 +20,8 @@ const CategoryController = {
 
             await category.save();
 
+            req.body.userName.push(req.user._id)
+            await LogController.saveLog(req.body.title + " 카테고리가 생성되었습니다.", req.body.userName)
             res.json({categorySuccess: true, message:"카테고리등록이 되었습니다."})
         } catch (err) {
             return res.status(400).json({categorySuccess: false, message:"카테고리등록에 실패하였습니다.", err: err})
@@ -26,7 +29,7 @@ const CategoryController = {
     },
     updateCategory: async (req, res) => {
         try {
-          let findCategory = Category.findOne({_id: req.params.id})
+          let findCategory = await Category.findOne({_id: req.params.id})
               .exec();
             if (findCategory) {
                 const findTag = [];
@@ -41,7 +44,7 @@ const CategoryController = {
                     shareUserName = req.body.userName;
                 }
 
-                await Category.updateOne({_id: req.params.id},
+                let result = await Category.findOneAndUpdate({_id: req.params.id},
                     {
                         $set: {
                             title: req.body.title,
@@ -49,7 +52,19 @@ const CategoryController = {
                             tagInfo: findTag,
                             userInfo: shareUserName
                         }
-                    });
+                    }, {new: true});
+
+                shareUserName.push(req.user._id)
+
+                console.log(findCategory)
+                console.log(result)
+
+                if (findCategory.title === result.title) {
+                    await LogController.saveLog(findCategory.title + " 카테고리가 수정되었습니다.", shareUserName);
+                } else {
+                    await LogController.saveLog(findCategory.title + " 카테고리가 " + result.title + " 로 수정되었습니다.", shareUserName);
+                }
+
                 res.json({categoryUpdate: true, message: "카테고리편집이 되었습니다."});
             } else {
                 res.json({categoryUpdate: false, message: "카테고리를 찾지봇하였습니다."})
@@ -60,7 +75,13 @@ const CategoryController = {
     },
     deleteCategory: async (req, res) => {
       try {
+          let category = await Category.findOne({_id: req.params.id})
+              .exec();
+
         await Category.deleteOne({_id: req.params.id});
+
+        await LogController.saveLog(category.title + " 카테고리가 삭제되었습니다.", category.userInfo)
+
         res.json({categoryDelete: true, message: "카테고리 삭제를 완료하였습니다."})
       } catch (err) {
           return res.status(400).json({categoryDelete: false, message: "카테고리 삭제를 실패하였습니다.", err: err})
