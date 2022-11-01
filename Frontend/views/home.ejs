@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <link rel="stylesheet" href="/stylesheets/login/login.css">
     <link rel="stylesheet" href="/stylesheets/Dashboard/dashboard.css">
     <script defer src="/javascripts/navbar.js"></script>
 </head>
@@ -15,30 +14,97 @@
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
     <div class="wrapper__form">
-        <div class="contentColumn">
-            <div class="contentRow">
-                <div class="content">1.1</div>
-                <div class="content">1.2</div>
+        <div class="contentRow">
+            <div class="contentCol">
+                <div class="content">
+                    <div class="content__top">
+                        <div class="content__title">
+                            <i class="fa-solid fa-chart-pie" style="color: #6681FF"></i>
+                             차트
+                        </div>
+                    </div>
+                    <div class="content__mid">
+                        내용
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content__top">
+                        <div class="content__title">
+                            <i class="fa-solid fa-file-lines" style="color: #FFA500FF"></i>
+                             메모
+                        </div>
+                        <div class="content__top__add" onclick="">
+                            <i class="fa-solid fa-plus" onclick=""></i>
+                        </div>
+                    </div>
+                    <div class="content__mid">
+                        <div class="notepad">
+
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="contentRow">
-                <div class="content">2</div>
+            <div class="contentCol visibleCol">
+                <div class="content__top">
+                    <div class="content__title">
+                        <i class="fa-solid fa-clipboard-list" style="color: #CE9462"></i>
+                         일정
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content__mid">
+                        <div class="content__top">
+                            <div class="content__subtitle">
+                                미완료 일정
+                            </div>
+                        </div>
+                        <div>
+                            내용
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content__mid">
+                        <div class="content__top">
+                            <div class="content__subtitle">
+                                완료 일정
+                            </div>
+                        </div>
+                        <div>
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contentCol">
+                <div class="content">
+                    <div class="content__top">
+                        <div class="content__title">
+                            <i class="fa-solid fa-folder" style="color: #FFD664"></i>
+                             카테고리
+                        </div>
+                    </div>
+                    <div class="content__mid">
+                        <div>
+                            내용
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content__top">
+                        <div class="content__title">
+                            <i class="fa-solid fa-clock" style="color: #74C0FC"></i>
+                             활동 로그
+                        </div>
+                    </div>
+                    <div class="content__mid">
+                        <div>
+                            내용
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="contentColumn">
-            <div class="contentRow">
-                <div class="content">3</div>
-            </div>
-            <div class="contentRow">
-                <div class="content">4</div>
-            </div>
-        </div>
-
-
-
-
-        <!--<div>오늘 할 일 완료율 표시</div>
-        <div>오늘 일정 리스트</div>
-        <div>일정 생성 및 편집(+삭제) 모달</div>-->
     </div>
 </div>
 </body>
