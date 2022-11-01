@@ -21,7 +21,15 @@ const CategoryController = {
             await category.save();
 
             req.body.userName.push(req.user._id)
-            await LogController.saveLog(req.body.title + " 카테고리가 생성되었습니다.", req.body.userName)
+            const log = {
+                type: "카테고리",
+                content: "생성",
+                beforeName: req.body.title,
+                afterName: req.body.title,
+                creator: req.user._id,
+                userInfo: req.body.userName
+            }
+            await LogController.saveLog(log)
             res.json({categorySuccess: true, message:"카테고리등록이 되었습니다."})
         } catch (err) {
             return res.status(400).json({categorySuccess: false, message:"카테고리등록에 실패하였습니다.", err: err})
@@ -56,14 +64,16 @@ const CategoryController = {
 
                 shareUserName.push(req.user._id)
 
-                console.log(findCategory)
-                console.log(result)
-
-                if (findCategory.title === result.title) {
-                    await LogController.saveLog(findCategory.title + " 카테고리가 수정되었습니다.", shareUserName);
-                } else {
-                    await LogController.saveLog(findCategory.title + " 카테고리가 " + result.title + " 로 수정되었습니다.", shareUserName);
+                const log = {
+                    type: "카테고리",
+                    content: "수정",
+                    beforeName: findCategory.title,
+                    afterName: result.title,
+                    creator: req.user._id,
+                    userInfo: shareUserName
                 }
+
+                await LogController.saveLog(log)
 
                 res.json({categoryUpdate: true, message: "카테고리편집이 되었습니다."});
             } else {
@@ -78,9 +88,18 @@ const CategoryController = {
           let category = await Category.findOne({_id: req.params.id})
               .exec();
 
-        await Category.deleteOne({_id: req.params.id});
+          await Category.deleteOne({_id: req.params.id})
 
-        await LogController.saveLog(category.title + " 카테고리가 삭제되었습니다.", category.userInfo)
+          const log = {
+              type: "카테고리",
+              content: "삭제",
+              beforeName: category.title,
+              afterName: category.title,
+              creator: req.user._id,
+              userInfo: category.userInfo
+          }
+
+        await LogController.saveLog(log)
 
         res.json({categoryDelete: true, message: "카테고리 삭제를 완료하였습니다."})
       } catch (err) {

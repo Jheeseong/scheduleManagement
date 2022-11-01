@@ -49,10 +49,12 @@ const loginRouter = require('./Backend/routes/login')
 const scheduleRouter = require('./Backend/routes/Schedule')
 const userRouter = require('./Backend/routes/user');
 const categoryRouter = require('./Backend/routes/Category')
+const logRouter = require('./Backend/routes/Log')
 
 app.use("/", indexRouter);
 app.use("/schedule", scheduleRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
 app.use("/category", categoryRouter);
+app.use("/log", logRouter);
 

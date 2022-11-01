@@ -122,3 +122,8 @@ body{
     margin: 20px 20px 40px 20px;
     background-color: #FFF7D1;
 }
+.userImage{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}

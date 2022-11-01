@@ -1,7 +1,16 @@
 const mongoose = require('mongoose')
 
 const LogSchema = mongoose.Schema({
+    type: {
+        type: String
+    },
     content: {
+        type: String
+    },
+    beforeName: {
+        type: String
+    },
+    afterName: {
         type: String
     },
     check: {
@@ -11,6 +20,7 @@ const LogSchema = mongoose.Schema({
     createDate: {
         type: Date
     },
+    creator: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
     userInfo: [{type: mongoose.Schema.Types.ObjectId, ref:"User"}]
 })
 

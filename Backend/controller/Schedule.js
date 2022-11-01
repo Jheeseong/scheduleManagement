@@ -27,7 +27,17 @@ const ScheduleController = {
                 await Schedule.updateOne({_id: schedule._id}, {$push: {tagInfo: tags._id}});
 
             }));
-            await LogController.saveLog(req.body.title + " 일정이 생성되었습니다.", req.user._id)
+
+            const log = {
+                type: "일정",
+                content: "생성",
+                beforeName: req.body.title,
+                afterName: req.body.title,
+                creator: req.user._id,
+                userInfo: req.user._id
+            }
+
+            await LogController.saveLog(log)
 
             res.json({scheduleSuccess: true, message: "일정등록이 되었습니다."});
         } catch (err) {
@@ -65,12 +75,17 @@ const ScheduleController = {
                             tagInfo: promiseTag,
                         }
                     }, {new: true});
-                if (findSchedule.title === result.title) {
-                    await LogController.saveLog(findSchedule.title + " 일정이 수정되었습니다.", req.user._id);
-                } else {
-                    await LogController.saveLog(findSchedule.title + " 일정이 " + result.title + " 로 수정되었습니다.", req.user._id);
+
+                const log = {
+                    type: "일정",
+                    content: "수정",
+                    beforeName: findSchedule.title,
+                    afterName: result.title,
+                    creator: req.user._id,
+                    userInfo: req.user._id
                 }
 
+                await LogController.saveLog(log);
 
                 res.json({scheduleUpdate: true, message: "일정편집이 되었습니다."});
             } else {
@@ -113,7 +128,16 @@ const ScheduleController = {
 
             console.log(schedule)
 
-            await LogController.saveLog(schedule.title + " 일정이 삭제되었습니다.", req.user.id)
+            const log = {
+                type: "일정",
+                content: "삭제",
+                beforeName: schedule.title,
+                afterName: schedule.title,
+                creator: req.user._id,
+                userInfo: req.user._id
+            }
+
+            await LogController.saveLog(log)
             res.json({scheduleDelete: true, message: "일정 삭제를 완료하였습니다."})
         } catch (err) {
             return res.status(400).json({scheduleDelete: false, message: "일정 삭제를 실패하였습니다.", err: err})
