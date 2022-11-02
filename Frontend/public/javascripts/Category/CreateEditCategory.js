@@ -86,7 +86,7 @@ function openUpdateCategoryModal(id) {
             document.getElementById('categoryName').value = res.category.title;
             tagListDiv.innerHTML = ''
             res.category.tagInfo.map((result) => {
-                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + result.content + '"  onclick="AddUserDeleteTag(\'' + result.content + '\')">' +
+                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + result.content + '"  onclick="AddUserDeleteTag(this)">' +
                     '<span class="AddUserTagValue" id="AddUserTagValue" value="' + result.content +'">' + result.content + '</span>' +
                     '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
                     '</div>'

@@ -233,6 +233,8 @@ body{
     height: 40%;
     align-items: center;
     display: flex;
+    font-weight: bold;
+    font-size: 16px;
 }
 .categoryBottom{
     height: 60%;

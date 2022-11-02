@@ -187,7 +187,7 @@ function AddUserSearchTag() {
     for(let i = 0; i < autoTag.length; i++){
         autoTag[i].addEventListener('click', function () {
             let selectedTag = autoTag[i].getAttribute('value');
-            tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + selectedTag + '"  onclick="AddUserDeleteTag(\'' + selectedTag + '\')">' +
+            tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + selectedTag + '"  onclick="AddUserDeleteTag(this)">' +
                 '<span class="AddUserTagValue" id="AddUserTagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
                 '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
                 '</div>'
@@ -212,6 +212,6 @@ function AddUserSearchTag() {
 
 function AddUserDeleteTag(selectedTag){
     /*document.getElementsByClassName('aaa')[0].remove();*/
-    document.querySelector(`.AddUserAutoTagDiv.tag${selectedTag}`).remove();
+    selectedTag.remove();
     /*AddUserTagMotion();*/
 }

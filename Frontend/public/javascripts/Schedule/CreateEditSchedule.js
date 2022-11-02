@@ -379,7 +379,7 @@ function openEditModal(scheduleId) {
             tagListDiv.innerHTML = '';
             console.log('tag : ' + JSON.stringify(res.schedule));
             res.schedule.tagInfo.map((result) => {
-                tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '"  onclick="deleteTag(\'' + result.content + '\')">' +
+                tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '"  onclick="deleteTag(this)">' +
                     '<span class="tagValue" id="tagValue" value="' + result.content + '">' + result.content + '</span>' +
                     '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
                     '</div>'
@@ -604,7 +604,7 @@ function searchTag(event) {
     for (let i = 0; i < autoTag.length; i++) {
         autoTag[i].addEventListener('click', function () {
             let selectedTag = autoTag[i].getAttribute('value');
-            tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + selectedTag + '"  onclick="deleteTag(\'' + selectedTag + '\')">' +
+            tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + selectedTag + '"  onclick="deleteTag(this)">' +
                 '<span class="tagValue" id="tagValue" value="' + selectedTag + '">' + selectedTag + '</span>' +
                 '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
                 '</div>'
@@ -615,7 +615,7 @@ function searchTag(event) {
     }
     /* 엔터로 태그 선택 또는 등록 */
     if (event.keyCode == 13) {
-        tagListDiv.innerHTML += '<div class = "autoTagDiv ' + 'tag' + str + '" onclick="deleteTag(\'' + str + '\')">' +
+        tagListDiv.innerHTML += '<div class = "autoTagDiv ' + 'tag' + str + '" onclick="deleteTag(this)">' +
             '<span class="tagValue" id="tagValue" value="' + str + '">' + str + '</span>' +
             '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
             '</div>'
@@ -640,7 +640,7 @@ function searchTag(event) {
 
 function deleteTag(selectedTag) {
     /*document.getElementsByClassName('aaa')[0].remove();*/
-    document.querySelector(`.autoTagDiv.tag${selectedTag}`).remove();
+    selectedTag.remove();
     /*tagMotion()*/
 }
 
