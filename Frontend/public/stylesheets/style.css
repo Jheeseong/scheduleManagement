@@ -243,7 +243,8 @@ button:hover{
 
 /* 스크롤바 */
 ::-webkit-scrollbar {
-  width: 10px; /* THIS WILL RESET THE DEFAULT SCORLLBAR STYLING */
+  width: 6px; /* THIS WILL RESET THE DEFAULT SCORLLBAR STYLING */
+  height: 10px;
 }
 
 /* TO STYLE THE SCROLLBAR TRACK */

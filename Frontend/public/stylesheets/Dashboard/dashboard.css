@@ -1,3 +1,7 @@
+*:not(.navbar *){
+    font-family: none;
+}
+
 html {
     height: 100%;
 }
@@ -162,14 +166,23 @@ body{
 .scheduleContent.closed{
     opacity: 0;
 }
-.scheduleContent__col{
+.scheduleList{
+}
+.scheduleRow{
+    font-size: 14px;
+    background-color: white;
     height: fit-content;
     padding: 5px;
     margin-bottom: 7px;
     border: 1px solid #e3e3e3;
     border-radius: 6px;
 }
-.scheduleContent__col .fa-calendar{
+.scheduleTitle{
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+}
+.scheduleList .fa-calendar{
     margin-left: 4px;
 }
 .notepad, .logContent{
@@ -208,3 +221,25 @@ body{
 }
 
 
+/* 체크박스 커스텀 */
+.cb{
+    position: relative;
+    color: white;
+    margin: 0 3.5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    background-color: #0098fe;
+}
+.cb.checked{
+    background-color: #00D28C;
+}
+.cb > i{
+    display: none;
+    position: absolute;
+    top: 7px;
+    left: 1px;
+}
+.cb.checked > i {
+    display: block;
+}
