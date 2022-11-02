@@ -19,7 +19,7 @@ function findLog() {
                 } else {
                     str += '<span class="logMessage">'+ log.creator.name + "님이 " + log.beforeName + "에서 "+ log.afterName + "로 " + log.content + "하였습니다." +'</span>'
                 }
-                '</div>';
+                str += '</div>';
             })
 
             logList.innerHTML = str;

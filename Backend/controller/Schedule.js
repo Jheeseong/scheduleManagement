@@ -182,6 +182,42 @@ const ScheduleController = {
         }
     },
 
+    updateStatus: async (req, res) => {
+        try {
+            const findSchedule = await Schedule.findOne({_id: req.params.id})
+                .exec();
+
+            if (findSchedule) {
+
+                let result = await Schedule.findOneAndUpdate({_id: req.params.id},
+                    {
+                        $set: {
+                            status: req.body.status,
+                        }
+                    }, {new: true});
+
+                const log = {
+                    type: "일정",
+                    content: "수정",
+                    beforeName: findSchedule.title,
+                    afterName: result.title,
+                    creator: req.user._id,
+                    userInfo: req.user._id
+                }
+
+                await LogController.saveLog(log);
+
+                res.json({schedule: result, scheduleUpdate: true, message: "일정편집이 되었습니다."});
+            } else {
+                res.json({scheduleUpdate: false, message: "일정을 찾지못하였습니다."});
+            }
+
+        } catch (err) {
+            console.log('err : ' + err)
+            return res.status(400).json({scheduleUpdate: false, err: err})
+        }
+    },
+
 }
 
 module.exports = ScheduleController;
