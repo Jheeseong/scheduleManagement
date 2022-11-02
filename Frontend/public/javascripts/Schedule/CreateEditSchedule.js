@@ -52,10 +52,11 @@ function openListModal(selectedEventList, infoDate) {
 
     let str = '';
     for (let i = 0; i < selectedEventList.length; i++) {
-        str += '<tr onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">';
-        str += '<td>' + selectedEventList[i].title + '</td>';
-        str += '<td>' + selectedEventList[i].start.substring(0, 10) + ' ' + selectedEventList[i].start.substring(11, 16) + '</td>';
-        str += '<td>' + selectedEventList[i].end.substring(0, 10) + ' ' + selectedEventList[i].end.substring(11, 16) + '</td>';
+        str += '<tr>';
+        str += '<td><input id="statusCb" type="checkbox" onchange="updateStatus(\'' + selectedEventList[i].id + '\', this)"></td>';
+        str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + selectedEventList[i].title + '</td>';
+        str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + selectedEventList[i].start.substring(0, 10) + ' ' + selectedEventList[i].start.substring(11, 16) + '</td>';
+        str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + selectedEventList[i].end.substring(0, 10) + ' ' + selectedEventList[i].end.substring(11, 16) + '</td>';
         str += '</tr>';
     }
     tbodyTag.innerHTML = str;
@@ -67,7 +68,30 @@ function openListModal(selectedEventList, infoDate) {
         body.style.overflow = 'auto';
     }
 }
+/* 일정 상태 변경 */
+function updateStatus(id, cb){
+    let status;
+    if(cb.checked){
+        status = true;
+    }
+    else{
+        status = false;
+    }
 
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/updateStatus/' + id,
+        data: {status: status},
+        dataType: "json",
+        success: function (res) {
+            console.log(res.schedule.status)
+        },
+        error: function (err) {
+            window.alert("일정 상태 변경 실패")
+            console.log(err)
+        }
+    })
+}
 /* 일정 목록 정렬 */
 function sortList(item, order) {
     /* tr 배열 */
