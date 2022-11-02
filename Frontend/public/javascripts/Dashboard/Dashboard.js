@@ -1,7 +1,60 @@
 document.addEventListener('DOMContentLoaded', function () {
     findLog()
     categoryList()
+    findScheduleList();
 })
+
+function findScheduleList() {
+    let scheduleList = document.querySelector('.scheduleList')
+    let user = document.getElementById('userElement').value
+
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/findByUser/',
+        dataType: "json",
+        success: function (res) {
+            let complete = '';
+            let incomplete = '';
+
+            for (let i = 0; i < res.schedule.length; i++) {
+            let str = '';
+                str += '<div class="scheduleRow">';
+                str += '<div class="scheduleTitle">';
+                str += '<div class="cb" id="cb' + i + '" onclick="toggleChk(this)"><i class="fa-solid fa-check fa-sm"></i></div>' + res.schedule[i].title;
+                str += '</div>';
+                str += '<div>';
+                str += '<i class="fa-regular fa-calendar"></i> ' + setDate(res.schedule[i].startDate) + ' ~ ' + setDate(res.schedule[i].endDate);
+                str += '</div>';
+                str += '</div>';
+
+                if (res.schedule[i].status == true) {
+                    complete += str;
+                }
+                else{
+                    incomplete += str;
+                }
+            }
+
+            document.querySelector('.scheduleList.incomplete').innerHTML = incomplete;
+            document.querySelector('.scheduleList.complete').innerHTML = complete;
+        },
+        error: function (err) {
+            console.log(err)
+        }
+
+    })
+}
+function toggleChk(el){
+    el.classList.toggle('checked');
+}
+function setDate(date) {
+    let dateSplitArr = date.split('T');
+    let toDate = dateSplitArr[0];
+    let toTime = dateSplitArr[1];
+    let newDate = toDate + ' ' + toTime.split(':')[0] + ':' + toTime.split(':')[1];
+
+    return newDate;
+}
 
 function findLog() {
     const logList = document.querySelector('.logList')
@@ -13,12 +66,12 @@ function findLog() {
             let str = ''
             res.logs.map((log) => {
                 str += '<div class = "logRow">' +
-                    '<img class = "userImage" src="'+ log.creator.image +'">'
+                    '<img class = "userImage" src="' + log.creator.image + '">'
                 if (log.name.beforeName === log.name.afterName) {
                     str += '<span class = "logMessage">' + log.creator.name + "님이 " + log.name.beforeName + " " + log.content + "하였습니다." + '</span>';
 
                 } else {
-                    str += '<span class="logMessage">'+ log.creator.name + "님이 " + log.name.beforeName + "에서 "+ log.name.afterName + "로 " + log.content + "하였습니다." +'</span>'
+                    str += '<span class="logMessage">' + log.creator.name + "님이 " + log.name.beforeName + "에서 " + log.name.afterName + "로 " + log.content + "하였습니다." + '</span>'
                 }
                 str += '</div>';
             })
