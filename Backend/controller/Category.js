@@ -181,6 +181,7 @@ const CategoryController = {
                 /*let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
                 res.color = colorCode*/
                 let findCategory = await Category.findOne({_id: res._id})
+                    .populate('creator')
                     .populate({
                         path: "tagInfo",
                         populate: { path: "scheduleInfo",
@@ -199,6 +200,9 @@ const CategoryController = {
                         })
                     })
             }))
+            allCategory.sort(function (a,b) {
+                return(a.title < b.title) ? -1 : (a.title> b.title) ? 1: 0
+            })
             /*let allCategory = await Category.find({userInfo: req.user._id})
                 .populate({
                     path: "tagInfo",

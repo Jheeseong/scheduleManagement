@@ -22,6 +22,7 @@ const LogController = {
         try {
           let logs = await Log.find({userInfo: req.user._id})
               .populate('creator')
+              .sort({createDate: -1})
               .exec();
 
           res.json({logs: logs, findLogSuccess: true, message: "로그를 찾았습니다."})

@@ -39,21 +39,23 @@ function categoryList() {
         url: 'category/findAllCategory',
         dataType: "json",
         success: function (res) {
-            console.log(res.categories)
             let str = ''
             res.categories.map((category) => {
-                str += '<li class="categoryRow">' +
-                    '<div>' +
+                str += '<div class="categoryRow">' +
                     '<div class="categoryContent">' +
-                    '<span class="categoryTitle">'+ category.title +'</span>' +
+                    '<div class="categoryTitle"><span>'+ category.title +'</span></div>' +
+                    '<div class="categoryBottom">' +
                     '<div class="categoryTag">'
-                category.tagInfo.map((tag) => {
-                    str+= '<span>'+ tag.content +'</span>'
+                category.tagInfo.map((tag, index) => {
+                    str+= '<span>'+ tag.content +'</span>';
+                    index++
                 })
                 str += '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</li>'
+                    '<div class="categoryCreator">' +
+                    '<img class="userImage" src="'+ category.creator.image +'">' +
+                    '<p>'+ category.creator.name+'</p>' +
+                    '</div></div></div>' +
+                    '</div>'
             })
 
             categoryList.innerHTML = str;
