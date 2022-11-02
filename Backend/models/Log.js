@@ -7,11 +7,13 @@ const LogSchema = mongoose.Schema({
     content: {
         type: String
     },
-    beforeName: {
-        type: String
-    },
-    afterName: {
-        type: String
+    name: {
+        beforeName: {
+            type: String
+        },
+        afterName: {
+            type: String
+        }
     },
     check: {
         type: Boolean,

@@ -175,6 +175,8 @@ const CategoryController = {
 
             let schedules = []
 
+            let allCategory = []
+
             await Promise.all(categories.map(async (res) => {
                 /*let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
                 res.color = colorCode*/
@@ -185,6 +187,7 @@ const CategoryController = {
                             match: {userInfo: res.creator}}
                     })
                     .exec();
+                allCategory.push(findCategory)
                 let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
                     findCategory.tagInfo.map((tag) => {
                         tag.scheduleInfo.map((result) => {
@@ -216,7 +219,7 @@ const CategoryController = {
                     })
                 })
             })*/
-            res.json({schedules: schedules, categories: categories, scheduleFind: true, message: "일정을 찾았습니다."})
+            res.json({schedules: schedules, categories: allCategory, scheduleFind: true, message: "일정을 찾았습니다."})
         } catch (err) {
             console.log(err)
         }

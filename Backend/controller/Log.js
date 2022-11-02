@@ -6,8 +6,8 @@ const LogController = {
             const log = new Log({
                 type: param.type,
                 content: param.content,
-                beforeName: param.beforeName,
-                afterName: param.afterName,
+                "name.beforeName": param.beforeName,
+                "name.afterName": param.afterName,
                 createDate: new Date(),
                 creator: param.creator,
                 userInfo: param.userInfo,

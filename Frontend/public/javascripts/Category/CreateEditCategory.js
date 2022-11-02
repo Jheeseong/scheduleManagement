@@ -84,6 +84,7 @@ function openUpdateCategoryModal(id) {
         success: function (res) {
             categoryTop.innerText = '카테고리 편집';
             document.getElementById('categoryName').value = res.category.title;
+            tagListDiv.innerHTML = ''
             res.category.tagInfo.map((result) => {
                 tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + result.content + '"  onclick="AddUserDeleteTag(\'' + result.content + '\')">' +
                     '<span class="AddUserTagValue" id="AddUserTagValue" value="' + result.content +'">' + result.content + '</span>' +
@@ -94,6 +95,7 @@ function openUpdateCategoryModal(id) {
                 document.getElementById('userCheckbox').checked = true;
                 userModal.classList.add('show');
             }
+            AdduserMid.innerHTML = ''
             res.category.userInfo.map((result) => {
                 AdduserMid.innerHTML += '<div class ="addUserDiv ' + result.name + '" value = "'+ result._id + '">' +
                     '<div>' +
