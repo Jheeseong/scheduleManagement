@@ -37,11 +37,20 @@ function findScheduleList() {
     let scheduleList = document.querySelector('.scheduleList')
     let user = document.getElementById('userElement').value
 
+    const today = new Date()
     $.ajax({
         type: 'POST',
-        url: 'schedule/findByUser/',
+        url: 'schedule/findDate',
+        data: {year: today.getFullYear(),
+                month: today.getMonth(),
+                day: today.getDay()
+        },
         dataType: "json",
         success: function (res) {
+            document.querySelector('.visibleCol > .content__top > .content__title').innerHTML =
+                '<i class="fa-solid fa-clipboard-list" style="color: #CE9462"></i>\n' +
+                '오늘 나의 일정'
+
             let complete = '';
             let incomplete = '';
 
@@ -145,6 +154,7 @@ function findLog() {
             logList.innerHTML = str;
         },
         error: function (err) {
+            window.alert("로그 불러오기 실패")
             console.log(err)
         }
 
@@ -153,14 +163,21 @@ function findLog() {
 
 function categoryList() {
     const categoryList = document.querySelector('.categoryList')
+    const today = new Date();
+
     $.ajax({
         type: 'POST',
-        url: 'category/findAllCategory',
+        url: 'category/find/todayCategoryList',
+        data: {
+            year: today.getFullYear(),
+            month: today.getMonth(),
+            day: today.getDay()
+        },
         dataType: "json",
         success: function (res) {
             let str = ''
             res.categories.map((category) => {
-                str += '<div class="categoryRow">' +
+                str += '<div class="categoryRow" onclick="categoryInSchedule(\'' + category._id + '\', \'' + category.creator._id + '\')">' +
                     '<div class="categoryContent">' +
                     '<div class="categoryTitle"><span>' + category.title + '</span></div>' +
                     '<div class="categoryBottom">' +
@@ -179,8 +196,66 @@ function categoryList() {
             categoryList.innerHTML = str;
         },
         error: function (err) {
+            window.alert("카테고리 불러오기 실패")
+            console.log(err)
         }
 
+    })
+}
+
+function categoryInSchedule(id, creator) {
+    let complete = '';
+    let incomplete = '';
+    const today = new Date()
+
+    $.ajax({
+        type: 'POST',
+        url: 'category/findDate',
+        data: {id: id, creator: creator,
+            year: today.getFullYear(),
+            month: today.getMonth(),
+            day: today.getDay()
+        },
+        dataType: "json",
+        async: false,
+        success: function (res) {
+            document.querySelector('.visibleCol > .content__top > .content__title').innerHTML =
+                '<i class="fa-solid fa-clipboard-list" style="color: #CE9462"></i>\n' +
+                '오늘 공유 일정'
+
+            res.schedules.map((schedule,index) => {
+                let cbClasses;
+                schedule.status == true ? cbClasses = 'cb checked' : cbClasses = 'cb';
+                let str = '';
+                str += '<div class="scheduleRow" draggable="true" id="scheduleRow' + index + '">';
+                str += '<div class="scheduleTitle">';
+                str += '<div class="' + cbClasses + '" id="cb' + index + '" value="\'' + schedule._id + '\'"><i class="fa-solid fa-check fa-2xs"></i></div>' + schedule.title;
+                str += '</div>';
+                str += '<div>';
+                str += '<i class="fa-regular fa-calendar"></i> ' + setDate(schedule.startDate) + ' ~ ' + setDate(schedule.endDate);
+                str += '</div>';
+                str += '</div>';
+
+                if (schedule.status == true) {
+                    complete += str;
+                } else {
+                    incomplete += str;
+                }
+            })
+
+            const selectCategory = document.querySelector('.selectCategory')
+            selectCategory.innerHTML =
+                '<div>선택 카테고리</div>' +
+                '<span>' + res.category.title +'</span>'
+
+            document.querySelector('.scheduleList.incomplete').innerHTML = incomplete;
+            document.querySelector('.scheduleList.complete').innerHTML = complete;
+            draggable();
+        },
+        error: function (err) {
+            window.alert("일정 불러오기 실패")
+            console.log(err)
+        }
     })
 }
 

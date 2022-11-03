@@ -123,6 +123,10 @@ body{
     width: 100%;
     top: 15%;
 }
+.visibleCol > .content__top > div:not(.content__title){
+    display: flex;
+    justify-content: space-between;
+}
 
 .visibleCol .content__mid{
     position: relative;
@@ -269,6 +273,26 @@ body{
     border-radius: 6px;
     width: 90%;
     cursor: pointer;
+}
+.MyScheduleReload{
+    cursor: pointer;
+    margin: 12px 25px 0 0;
+}
+.selectCategory{
+    display: flex;
+    align-items: center;
+}
+.selectCategory > span{
+    color: #0098fe;
+    margin-right: 8px;
+    font-size: 15px;
+
+}
+.selectCategory > div{
+    font-weight: normal;
+    color: #a8a8a8;
+    font-size: 15px;
+    margin-right: 8px;
 }
 
 

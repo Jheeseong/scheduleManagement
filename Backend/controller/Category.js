@@ -160,7 +160,7 @@ const CategoryController = {
                 })
             })
 
-            res.json({schedules: schedules, scheduleFind: true, message: "일정을 찾았습니다."})
+            res.json({schedules: schedules, category: mySchedule, scheduleFind: true, message: "일정을 찾았습니다."})
         } catch (err) {
             console.log(err)
             return res.status(400).json({scheduleFind: false, message: "스케줄을 찾지 못하였습니다.", err: err})
@@ -192,9 +192,9 @@ const CategoryController = {
                 let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
                     findCategory.tagInfo.map((tag) => {
                         tag.scheduleInfo.map((result) => {
-                            if (!schedules.includes(result)) {
-                                let schedule = result
-                                schedule.color = colorCode
+                            let schedule = result
+                            schedule.color = colorCode
+                            if (!schedules.includes(schedule)) {
                                 schedules.push(schedule);
                             }
                         })
@@ -203,27 +203,80 @@ const CategoryController = {
             allCategory.sort(function (a,b) {
                 return(a.title < b.title) ? -1 : (a.title> b.title) ? 1: 0
             })
-            /*let allCategory = await Category.find({userInfo: req.user._id})
+            res.json({schedules: schedules, categories: allCategory, scheduleFind: true, message: "일정을 찾았습니다."})
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    findCategoryDate: async (req, res) => {
+        try{
+            const date = new Date(req.body.year, req.body.month, req.body.day, 0,0,0)
+
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay() + 1,0 ,0 ,0)
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay(),0 ,0 ,0)
+
+            let mySchedule = await Category.findOne({_id: req.body.id})
                 .populate({
                     path: "tagInfo",
                     populate: {path: "scheduleInfo",
-                                match: {userInfo: categories}}
+                        match: {$and: [{userInfo: req.body.creator},
+                                {'startDate':{$lt: startDateValue}},
+                                {'endDate':{$gte: endDateValue}}]}}
                 })
                 .exec();
 
-            console.log(allCategory)
-            let schedules = [];
+            let schedules = []
+            mySchedule.tagInfo.map((res) => {
+                res.scheduleInfo.map((result) => {
+                    if (!schedules.includes(result)) {
+                        schedules.push(result)
+                    }
+                })
+            })
 
-            allCategory.map((firstRes) => {
-                firstRes.tagInfo.map((secondRes) => {
-                    secondRes.scheduleInfo.map((result) => {
-                        if (!schedules.includes(result)) {
-                            schedules.push(result);
+            res.json({schedules: schedules, category: mySchedule, scheduleFind: true, message: "일정을 찾았습니다."})
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    findTodayCategoryList: async (req, res) => {
+        try {
+            const date = new Date(req.body.year, req.body.month, req.body.day, 0,0,0)
+
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay() + 1,0 ,0 ,0)
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay(),0 ,0 ,0)
+
+            let todayCategory = []
+
+            let shareCategories = await Category.find({userInfo: req.user._id})
+                .exec();
+
+            await Promise.all(shareCategories.map(async (shareCategory) => {
+                let category = await Category.findOne({_id: shareCategory._id})
+                    .populate('creator')
+                    .populate({
+                        path: 'tagInfo',
+                        populate: {
+                            path: 'scheduleInfo',
+                            match: {
+                                $and: [{userInfo: shareCategory.creator},
+                                    {'startDate': {$lt: startDateValue}},
+                                    {'endDate': {$gte: endDateValue}}]
+                            }
                         }
                     })
+                    .exec()
+
+                category.tagInfo.map((tag) => {
+                    if (tag.scheduleInfo.length != 0) {
+                        todayCategory.push(category)
+                        return;
+                    }
                 })
-            })*/
-            res.json({schedules: schedules, categories: allCategory, scheduleFind: true, message: "일정을 찾았습니다."})
+            }))
+
+
+            res.json({categories: todayCategory, scheduleFind: true, message: "카테고리를 찾았습니다."})
         } catch (err) {
             console.log(err)
         }

@@ -26,6 +26,6 @@ router.post('/findTagByContent', checkLogIn, tagController.findTagScheduleByCont
 
 router.post('/updateStatus/:id', checkLogIn, scheduleController.updateStatus)
 
-
+router.post('/findDate', checkLogIn, scheduleController.findScheduleDate)
 
 module.exports = router;

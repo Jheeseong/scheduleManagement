@@ -119,6 +119,24 @@ const ScheduleController = {
             res.status(400).json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
         }
     },
+    findScheduleDate: async (req, res) => {
+        try {
+            const date = new Date(req.body.year, req.body.month, req.body.day, 0,0,0)
+
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay() + 1,0 ,0 ,0)
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay(),0 ,0 ,0)
+
+            let schedules = await Schedule
+                .find({$and: [{userInfo: req.user._id},
+                        {'startDate':{$lt: startDateValue}},
+                        {'endDate':{$gte: endDateValue}}]})
+                .exec();
+
+            res.json({schedule: schedules, findScheduleSuccess: true, message: '일정을 찾았습니다.'})
+        } catch (err) {
+            res.status(400).json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
+        }
+    },
     deleteSchedule: async (req, res) => {
         try {
             let schedule = await Schedule.findOne({_id: req.params.id})

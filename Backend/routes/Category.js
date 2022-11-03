@@ -19,4 +19,8 @@ router.post('/myCategory/mySchedule', checkLogIn, categoryController.findMyCateg
 
 router.post('/findAllCategory', checkLogIn, categoryController.findAllCategory)
 
+router.post('/findDate', checkLogIn, categoryController.findCategoryDate)
+
+router.post('/find/todayCategoryList', checkLogIn, categoryController.findTodayCategoryList)
+
 module.exports = router;
