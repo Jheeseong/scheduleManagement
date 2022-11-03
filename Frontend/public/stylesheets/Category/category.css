@@ -78,6 +78,9 @@
     width: 15px;
     height: 15px;
 }
+.modal_category_body_mid > div > div > .categoryName{
+    width: 246px;
+}
 .modal_adduser_body {
     display: none;
 }

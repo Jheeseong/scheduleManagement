@@ -197,9 +197,8 @@ function categoryList() {
                     '<div class="categoryTitle"><span>' + category.title + '</span></div>' +
                     '<div class="categoryBottom">' +
                     '<div class="categoryTag">'
-                category.tagInfo.map((tag, index) => {
+                category.tagInfo.map((tag) => {
                     str += '<span>' + tag.content + '</span>';
-                    index++
                 })
                 str += '</div>' +
                     '<div class="categoryCreator">' +
