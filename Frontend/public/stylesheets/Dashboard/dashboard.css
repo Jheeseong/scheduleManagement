@@ -12,6 +12,7 @@ body{
 /* 스크롤 */
 .scrollBox{
     width: 90%;
+    overflow-x: hidden;
     overflow-y: hidden;
     height: inherit;
 }
@@ -19,10 +20,12 @@ body{
     overflow-y: auto;
     overflow-y: overlay;
 }
+/* 내브바 카카오, 네이버 로고 */
 .platformLogo{
     width: 30px;
     height: 30px;
 }
+
 .wrapper{
     height: 90%;
 }
@@ -77,7 +80,7 @@ body{
     width: 100%;
     height: 15%;
 }
-.content__title, .content__top__add, content__subtitle{
+.content__title, .content__top__btn, content__subtitle{
     font-weight: bold;
     text-align: left;
     line-height: 300%;
@@ -85,9 +88,12 @@ body{
 .content__title{
     padding-left: 20px;
 }
-.content__top__add{
+.content__top__btn{
     display: none;
     padding-right: 20px;
+}
+.content__top__btn i {
+    cursor: pointer;
 }
 .content__subtitle{
     display: flex;
@@ -105,11 +111,29 @@ body{
 .content__subtitle:hover{
     background-color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
+    outline: none !important;
+}
+
+/* 메모 영역 */
+.memoTextDiv{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.memoText{
+    width: 97%;
+    height: 23vh;
+    background-color: inherit;
+    border: none;
+    resize: none;
+}
+.memoText:focus{
+    outline: none;
 }
 .fa-plus{
     cursor: pointer;
 }
-.content:hover .content__top__add{
+.content:hover .content__top__btn{
     display: block;
 }
 .content__mid{
@@ -196,7 +220,10 @@ body{
     justify-content: center;
     align-items: center;
     margin: 20px 20px 40px 20px;
+}
+.notepad{
     background-color: #FFF7D1;
+    box-shadow: 2px 2px 4px 1px #cccccc;
 }
 
 /* 활동 로그 */
