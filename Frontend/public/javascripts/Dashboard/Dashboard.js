@@ -4,69 +4,34 @@ document.addEventListener('DOMContentLoaded', function () {
     findScheduleList();
 })
 
-function draggable2(){
-    const list = document.querySelectorAll('.scheduleList');
+function draggable(){
+    const lists = document.querySelectorAll('.scheduleList');
+    let startArea;
+    let endArea;
 
-    list.forEach((row) => {
-        row.addEventListener('dragend', () => {
+    lists.forEach((list) => {
+        console.log(list)
+        list.addEventListener('dragstart', (e) => {
+            console.log(e.target.parentNode)
+            startArea = e.target.parentNode;
+
         })
-        new Sortable(row, {
+        list.addEventListener('dragend', (e) => {
+            console.log(e.target.parentNode)
+            endArea = e.target.parentNode;
+            if(startArea != endArea){
+                eventCb = document.querySelector('#' + e.target.id + ' .cb');
+                toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
+            }
+
+        })
+        new Sortable(list, {
             group: "shared",
             animation: 150,
             ghostClass: "blue-background-class"
         });
     });
-
 }
-/* 일정 드래그 기능을 활성화하는 함수 */
-function draggable() {
-    /* 일정 드래그 */
-    const draggedSchedules = document.querySelectorAll('.scheduleRow');
-    const rowContainers = document.querySelectorAll('.scheduleList');
-
-    draggedSchedules.forEach(draggedSchedule => {
-        draggedSchedule.addEventListener("dragstart", () => {
-            draggedSchedule.classList.add("dragging");
-        });
-
-        draggedSchedule.addEventListener("dragend", () => {
-            draggedSchedule.classList.remove("dragging");
-        });
-    });
-    rowContainers.forEach(rowContainer => {
-        rowContainer.addEventListener("dragover", e => {
-            e.preventDefault();
-            const afterElement = getDragAfterElement(rowContainer, e.clientX);
-            const draggable1 = document.querySelector(".dragging");
-            if (afterElement === undefined) {
-                rowContainer.appendChild(draggable1);
-            } else {
-                rowContainer.insertBefore(draggable1, afterElement);
-            }
-        });
-    });
-}
-
-function getDragAfterElement(container, x) {
-    const draggableElements = [
-        ...container.querySelectorAll(".scheduleRow:not(.dragging)"),
-    ];
-
-    return draggableElements.reduce(
-        (closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = x - box.left - box.width / 2;
-            // console.log(offset);
-            if (offset < 0 && offset > closest.offset) {
-                return {offset: offset, element: child};
-            } else {
-                return closest;
-            }
-        },
-        {offset: Number.NEGATIVE_INFINITY},
-    ).element;
-}
-
 
 function findScheduleList() {
     let scheduleList = document.querySelector('.scheduleList')
@@ -84,9 +49,9 @@ function findScheduleList() {
                 let cbClasses;
                 res.schedule[i].status == true ? cbClasses = 'cb checked' : cbClasses = 'cb';
                 let str = '';
-                str += '<div class="scheduleRow" draggable="true">';
+                str += '<div class="scheduleRow" draggable="true" id="scheduleRow' + i + '">';
                 str += '<div class="scheduleTitle">';
-                str += '<div class="' + cbClasses + '" id="cb' + i + '" onclick="toggleCb(this, \'' + res.schedule[i]._id + '\')"><i class="fa-solid fa-check fa-2xs"></i></div>' + res.schedule[i].title;
+                str += '<div class="' + cbClasses + '" id="cb' + i + '" value="\'' + res.schedule[i]._id + '\'" onclick="toggleCb(this, \'' + res.schedule[i]._id + '\', \'check\')"><i class="fa-solid fa-check fa-2xs"></i></div>' + res.schedule[i].title;
                 str += '</div>';
                 str += '<div>';
                 str += '<i class="fa-regular fa-calendar"></i> ' + setDate(res.schedule[i].startDate) + ' ~ ' + setDate(res.schedule[i].endDate);
@@ -102,7 +67,7 @@ function findScheduleList() {
 
             document.querySelector('.scheduleList.incomplete').innerHTML = incomplete;
             document.querySelector('.scheduleList.complete').innerHTML = complete;
-            draggable2();
+            draggable();
         },
         error: function (err) {
             console.log(err)
@@ -111,7 +76,8 @@ function findScheduleList() {
     })
 }
 
-function toggleCb(cb, id) {
+function toggleCb(cb, id, method) {
+    console.log('cb : ' + cb + '\nid : ' + id)
     let selectedRow = cb.parentElement.parentElement;
     let completed = document.querySelector('.complete.scheduleList');
     let incompleted = document.querySelector('.incomplete.scheduleList');
@@ -119,14 +85,16 @@ function toggleCb(cb, id) {
     cb.classList.toggle('checked');
 
     if (cb.classList.contains('checked')) {
-        selectedRow.remove();
-        completed.appendChild(selectedRow);
-
+        if(method == 'check'){
+            selectedRow.remove();
+            completed.appendChild(selectedRow);
+        }
         status = true;
     } else {
-        selectedRow.remove();
-        incompleted.appendChild(selectedRow);
-
+        if(method == 'check'){
+            selectedRow.remove();
+            incompleted.appendChild(selectedRow);
+        }
         status = false;
     }
 
