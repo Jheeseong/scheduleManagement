@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/stylesheets/Dashboard/dashboard.css">
     <script defer src="/javascripts/navbar.js"></script>
     <script defer src="/javascripts/Dashboard/Dashboard.js"></script>
+    <script defer src="/javascripts/Dashboard/ScheduleCategory.js"></script>
 
 </head>
 <body>
@@ -60,38 +61,23 @@
                             <i class="fa-solid fa-file-lines" style="color: #FFA500FF"></i>
                              메모
                         </div>
-                        <div class="content__top__add" onclick="">
-                            <i class="fa-solid fa-plus" onclick=""></i>
+                        <div class="content__top__btn" onclick="">
+                            <i class="fa-solid fa-chevron-left" onclick="findMemoList()"></i>
+                            <i class="fa-solid fa-check fa-lg" onclick="saveMemo()" style="color: #19CE60; margin-left: 10px;"></i>
+                            <!--<i class="fa-solid fa-plus" onclick=""></i>-->
                         </div>
                     </div>
                     <div class="content__mid">
                         <div class="notepad">
-                            <div class="scrollBox">
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
+                            <div class="scrollBox" onclick="/*document.getElementsByClassName('memoText')[0].focus()*/">
+                                <div class="memoList">
+                                    <div class="memoRow">
+
+                                    </div>
+                                </div>
+                                <!--<div class="memoTextDiv">
+                                    <textarea class="memoText"></textarea>
+                                </div>-->
                             </div>
                         </div>
                     </div>

@@ -2,35 +2,50 @@ document.addEventListener('DOMContentLoaded', function () {
     findLog()
     categoryList()
     findScheduleList();
+    findMemoList();
 })
 
-function draggable(){
-    const lists = document.querySelectorAll('.scheduleList');
-    let startArea;
-    let endArea;
+function findMemoList(){
+    $.ajax({
+        type: 'POST',
+        url: 'memo/findMemoList/',
+        dataType: "json",
+        success: function (memos) {
+            console.log(memos.memo)
+            let notepad = document.querySelector('.notepad');
+            let memoList = document.querySelector('.memoList');
+            notepad.style.backgroundColor = 'inherit';
+            notepad.style.boxShadow = 'none';
 
-    lists.forEach((list) => {
-        console.log(list)
-        list.addEventListener('dragstart', (e) => {
-            console.log(e.target.parentNode)
-            startArea = e.target.parentNode;
-
-        })
-        list.addEventListener('dragend', (e) => {
-            console.log(e.target.parentNode)
-            endArea = e.target.parentNode;
-            if(startArea != endArea){
-                eventCb = document.querySelector('#' + e.target.id + ' .cb');
-                toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
+            for(let i = 0; i < memos.memo.length; i++){
+                memoList += memos.memo[i].content;
+                console.log(memos.memo[i].content)
             }
+            },
+        error: function (err) {
+            console.log(err)
+        }
+    })
 
-        })
-        new Sortable(list, {
-            group: "shared",
-            animation: 150,
-            ghostClass: "blue-background-class"
-        });
-    });
+}
+
+function saveMemo(){
+    let content = document.querySelector('.memoText').value
+    let scheduleInfo;
+    console.log(content)
+    $.ajax({
+        type: 'POST',
+        url: 'memo/saveMemo/',
+        data: {content: content,
+               scheduleInfo: scheduleInfo},
+        dataType: "json",
+        success: function (memos) {
+            console.log(memos)
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
 }
 
 function findScheduleList() {
@@ -74,6 +89,33 @@ function findScheduleList() {
         }
 
     })
+}
+
+function draggable(){
+    const lists = document.querySelectorAll('.scheduleList');
+    let startArea;
+    let endArea;
+
+    lists.forEach((list) => {
+        console.log(list)
+        list.addEventListener('dragstart', (e) => {
+            console.log(e.target.parentNode)
+            startArea = e.target.parentNode;
+        })
+        list.addEventListener('dragend', (e) => {
+            console.log(e.target.parentNode)
+            endArea = e.target.parentNode;
+            if(startArea != endArea){
+                eventCb = document.querySelector('#' + e.target.id + ' .cb');
+                toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
+            }
+        })
+        new Sortable(list, {
+            group: "shared",
+            animation: 150,
+            ghostClass: "blue-background-class"
+        });
+    });
 }
 
 function toggleCb(cb, id, method) {
