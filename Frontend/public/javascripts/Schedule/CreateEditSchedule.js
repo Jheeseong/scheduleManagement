@@ -49,7 +49,6 @@ function openListModal(selectedEventList, infoDate) {
     document.querySelector('.modal_schedule_body_top').innerHTML = '<span>'+ date.getFullYear() +'년 ' + (date.getMonth() + 1) +'월 '+ date.getDate()+'일 일정 목록' +'</span>'
     /* 일정 생성 시 오늘 날짜를 인자로  */
     document.querySelector('.scheduleAdd__div').setAttribute('onclick', 'openCreateModal(\'' + infoDate + '\')')
-
     let tbodyTag = document.getElementById('scheduleTbody');
 
     let str = '';
@@ -412,6 +411,9 @@ function openEditModal(scheduleId) {
 function setTime(date) {
     let date1 = new Date(date + ':00');
     let newDate = new Date(date1.getTime() - new Date().getTimezoneOffset() * 120000).toISOString().slice(0, -8);
+    console.log(date)
+    console.log(date1)
+    console.log(newDate)
     return newDate;
 }
 

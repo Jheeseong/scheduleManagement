@@ -46,29 +46,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="content">
+                <div class="content content--memo">
                     <div class="content__top">
                         <div class="content__title">
                             <i class="fa-solid fa-file-lines" style="color: #FFA500FF"></i>
                              메모
                         </div>
-                        <div class="content__top__btn" onclick="">
-                            <i class="fa-solid fa-chevron-left" onclick="findMemoList()"></i>
+                        <div class="content__top__btn">
+                            <i class="fa-solid fa-chevron-left" onclick="showMemoList()" style="margin-left: 10px;"></i>
+                            <i class="fa-solid fa-trash" onclick="deleteMemo()" style="margin-left: 10px;"></i>
                             <i class="fa-solid fa-check fa-lg" onclick="saveMemo()" style="color: #19CE60; margin-left: 10px;"></i>
-                            <!--<i class="fa-solid fa-plus" onclick=""></i>-->
+                            <i class="fa-solid fa-plus" onclick="showMemoText();" style="display: none"></i>
                         </div>
                     </div>
                     <div class="content__mid">
                         <div class="notepad">
                             <div class="scrollBox" onclick="/*document.getElementsByClassName('memoText')[0].focus()*/">
                                 <div class="memoList">
-                                    <div class="memoRow">
-
-                                    </div>
                                 </div>
-                                <!--<div class="memoTextDiv">
+                                <div class="memoTextDiv" style="display: none">
                                     <textarea class="memoText"></textarea>
-                                </div>-->
+                                </div>
                             </div>
                         </div>
                     </div>

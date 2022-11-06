@@ -42,29 +42,54 @@ const memoController = {
             return res.status(400).json({memoSuccess: false, message:"메모 등록 실패",err: err})
         }
     },
-    /*findMemoDetail: async (req, res) => {
+    findMemoDetail: async (req, res) => {
         try {
-            const id = req.params.id;
-            let user = await User.findOne({_id: id})
+            let memo = await Memo.findOne({_id: req.params.id})
                 .exec();
-            res.json({user: user, finduser: true})
+            res.json({memo: memo, findmemo: true})
         } catch (err) {
             console.log(err)
-            res.json({finduser: false, err: err})
+            res.json({findmemo: false, err: err})
         }
-    },*/
-    /*updateMemo: async (req, res) => {
+    },
+    updateMemo: async (req, res) => {
         try {
-            const id = req.params._id;
-            const userId = req.user._id;
-            let user = await User.findOne({_id: userId, memo:{_id: id}})
+            let memo = await Memo.findOne({_id: req.params.id})
                 .exec();
-            res.json({memo: user.memo, finduser: true})
+            if (memo) {
+                console.log(memo)
+
+                let result = await Memo.findOneAndUpdate({_id: req.params.id},
+                    {
+                        $set: {
+                            content: req.body.content,
+                            updateDate: Date.now() + 3*6*1000
+                        }
+                    }, {new: true});
+
+                res.json({memoUpdate: true, message: "메모 편집 완료"});
+            } else {
+                res.json({memoUpdate: false, message: "메모를 찾을 수 없습니다."});
+            }
         } catch (err) {
             console.log(err)
-            res.json({memo: false, err: err})
+            return res.status(400).json({memoSuccess: false, message:"메모 등록 실패",err: err})
         }
-    },*/
+    },
+    deleteMemo: async (req, res) => {
+        try {
+            let memo = await Memo.findOne({_id: req.params.id})
+                .exec();
+
+            await Memo.deleteOne({_id: req.params.id});
+
+            console.log(memo)
+
+            res.json({memoDelete: true, message: "메모 삭제 완료"})
+        } catch (err) {
+            return res.status(400).json({memoDelete: false, message: "메모 삭제를 실패하였습니다.", err: err})
+        }
+    },
 }
 
 module.exports = memoController;

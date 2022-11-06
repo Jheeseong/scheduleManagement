@@ -223,8 +223,19 @@ body{
     margin: 20px 20px 40px 20px;
 }
 .notepad{
+    height: 90%;
+    padding-top: 10px;
     background-color: #FFF7D1;
     box-shadow: 2px 2px 4px 1px #cccccc;
+}
+.memoRow{
+    width: 85%;
+    height: calc(1rem + 3px);
+    background-color: #FFF7D1;
+    padding: 10px 15px;
+    box-shadow: 2px 2px 0px 0px #eeeeee;
+    margin-bottom: 5px;
+    overflow-y: hidden;
 }
 
 /* 활동 로그 */
@@ -392,6 +403,12 @@ body{
     width: 16px;
     height: 16px;
     border-radius: 50px;
+}
+.MyScheduleReload{
+    display: none;
+}
+.contentCol:hover .MyScheduleReload{
+    display: block;
 }
 
 
