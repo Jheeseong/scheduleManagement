@@ -5,45 +5,116 @@ document.addEventListener('DOMContentLoaded', function () {
     findMemoList();
 })
 
-function findMemoList(){
+function findMemoList() {
+    showMemoList()
+
     $.ajax({
         type: 'POST',
         url: 'memo/findMemoList/',
         dataType: "json",
         success: function (memos) {
-            console.log(memos.memo)
-            let notepad = document.querySelector('.notepad');
             let memoList = document.querySelector('.memoList');
-            notepad.style.backgroundColor = 'inherit';
-            notepad.style.boxShadow = 'none';
-
-            for(let i = 0; i < memos.memo.length; i++){
-                memoList += memos.memo[i].content;
-                console.log(memos.memo[i].content)
+            memoList.innerHTML = '';
+            for (let i = 0; i < memos.memo.length; i++) {
+                let memoRow = document.createElement('div');
+                memoRow.classList.add('memoRow');
+                memoRow.setAttribute('value', memos.memo[i]._id)
+                memoRow.setAttribute('onclick', 'memoDetail(this)')
+                memoRow.innerText = memos.memo[i].content;
+                memoList.appendChild(memoRow)
             }
-            },
+        },
         error: function (err) {
             console.log(err)
         }
     })
-
 }
-
-function saveMemo(){
-    let content = document.querySelector('.memoText').value
-    let scheduleInfo;
-    console.log(content)
+function memoDetail(el){
+    let memoId = el.getAttribute('value')
     $.ajax({
         type: 'POST',
-        url: 'memo/saveMemo/',
-        data: {content: content,
-               scheduleInfo: scheduleInfo},
+        url: 'memo/findMemoDetail/' + memoId,
         dataType: "json",
-        success: function (memos) {
-            console.log(memos)
+        success: function (result) {
+            showMemoText(memoId, result.memo.content)
         },
         error: function (err) {
             console.log(err)
+        }
+    })
+}
+function showMemoList(){
+    let notepad = document.querySelector('.notepad');
+    let icons = document.querySelectorAll('.content--memo i.fa-chevron-left, .content--memo i.fa-check, .content--memo i.fa-trash')
+    document.querySelector('.memoList').style.display = 'block';
+    document.querySelector('.memoTextDiv').style.display = 'none';
+    document.querySelector('.memoText').value = '';
+    notepad.style.backgroundColor = 'inherit';
+    notepad.style.boxShadow = 'none';
+    icons.forEach(function (i) {
+        i.style.display = 'none';
+    })
+    icons[2].setAttribute('onclick', 'saveMemo()')
+    document.querySelector('.content--memo .fa-plus').style.display = 'inline-block';
+}
+function showMemoText(id, content){
+    document.querySelector('.memoList').style.display = 'none';
+    document.querySelector('.memoTextDiv').style.display = 'block';
+    document.querySelector('.notepad').style.backgroundColor = '#FFF7D1';
+
+    let selector;
+    id ? selector = '.content--memo i.fa-chevron-left, .content--memo i.fa-check, .content--memo i.fa-trash' : selector = '.content--memo i.fa-chevron-left, .content--memo i.fa-check'
+
+    let icons = document.querySelectorAll(selector)
+    icons.forEach(function (i) {
+        i.style.display = 'inline-block';
+    })
+    document.querySelector('.content--memo .fa-plus').style.display = 'none';
+
+    if(id){
+        icons[1].setAttribute('onclick', 'deleteMemo(\'' + id + '\')')
+        icons[2].setAttribute('onclick', 'saveMemo(\'' + id + '\')')
+        document.querySelector('.memoTextDiv textarea').value = content;
+    }
+}
+
+function saveMemo(id) {
+    let content = document.querySelector('.memoText').value
+    let url;
+    id ? url = 'memo/updateMemo/' + id : url = 'memo/saveMemo/';
+    console.log('id: ' + id)
+    console.log('url: ' + url)
+    console.log(content)
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: {
+            content: content,
+        },
+        dataType: "json",
+        success: function (result) {
+            console.log(result)
+            findMemoList()
+        },
+        error: function (err) {
+            console.log(err)
+            alert(err)
+        }
+    })
+}
+
+function deleteMemo(id){
+    $.ajax({
+        type: 'POST',
+        url: 'memo/deleteMemo/' + id,
+        dataType: "json",
+        success: function (result) {
+            console.log(result)
+            findMemoList()
+        },
+        error: function (err) {
+            console.log(err)
+            alert(err)
         }
     })
 }
@@ -56,9 +127,10 @@ function findScheduleList() {
     $.ajax({
         type: 'POST',
         url: 'schedule/findDate',
-        data: {year: today.getFullYear(),
-                month: today.getMonth(),
-                day: today.getDay()
+        data: {
+            year: today.getFullYear(),
+            month: today.getMonth(),
+            day: today.getDay()
         },
         dataType: "json",
         success: function (res) {
@@ -100,21 +172,19 @@ function findScheduleList() {
     })
 }
 
-function draggable(){
+
+function draggable() {
     const lists = document.querySelectorAll('.scheduleList');
     let startArea;
     let endArea;
 
     lists.forEach((list) => {
-        console.log(list)
         list.addEventListener('dragstart', (e) => {
-            console.log(e.target.parentNode)
             startArea = e.target.parentNode;
         })
         list.addEventListener('dragend', (e) => {
-            console.log(e.target.parentNode)
             endArea = e.target.parentNode;
-            if(startArea != endArea){
+            if (startArea != endArea) {
                 eventCb = document.querySelector('#' + e.target.id + ' .cb');
                 toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
             }
@@ -136,13 +206,13 @@ function toggleCb(cb, id, method) {
     cb.classList.toggle('checked');
 
     if (cb.classList.contains('checked')) {
-        if(method == 'check'){
+        if (method == 'check') {
             selectedRow.remove();
             completed.appendChild(selectedRow);
         }
         status = true;
     } else {
-        if(method == 'check'){
+        if (method == 'check') {
             selectedRow.remove();
             incompleted.appendChild(selectedRow);
         }
@@ -253,7 +323,8 @@ function categoryInSchedule(id, creator) {
     $.ajax({
         type: 'POST',
         url: 'category/findDate',
-        data: {id: id, creator: creator,
+        data: {
+            id: id, creator: creator,
             year: today.getFullYear(),
             month: today.getMonth(),
             day: today.getDay()
@@ -265,7 +336,7 @@ function categoryInSchedule(id, creator) {
                 '<i class="fa-solid fa-clipboard-list" style="color: #CE9462"></i>\n' +
                 '오늘 공유 일정'
 
-            res.schedules.map((schedule,index) => {
+            res.schedules.map((schedule, index) => {
                 let cbClasses;
                 schedule.status == true ? cbClasses = 'cb checked' : cbClasses = 'cb';
                 let str = '';
@@ -288,7 +359,7 @@ function categoryInSchedule(id, creator) {
             const selectCategory = document.querySelector('.selectCategory')
             selectCategory.innerHTML =
                 '<div>선택 카테고리</div>' +
-                '<span>' + res.category.title +'</span>'
+                '<span>' + res.category.title + '</span>'
 
             document.querySelector('.scheduleList.incomplete').innerHTML = incomplete;
             document.querySelector('.scheduleList.complete').innerHTML = complete;

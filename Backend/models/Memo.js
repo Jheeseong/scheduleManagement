@@ -13,6 +13,9 @@ const MemoSchema = mongoose.Schema({
     createDate: {
         type: Date,
         default: () => Date.now() + 3*6*1000
+    },
+    updateDate: {
+        type: Date
     }
 })
 
