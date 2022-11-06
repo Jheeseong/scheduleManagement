@@ -45,6 +45,8 @@ function closeModal(event, modal) {
 }
 
 function openListModal(selectedEventList, infoDate) {
+    const date = new Date(infoDate)
+    document.querySelector('.modal_schedule_body_top').innerHTML = '<span>'+ date.getFullYear() +'년 ' + (date.getMonth() + 1) +'월 '+ date.getDate()+'일 일정 목록' +'</span>'
     /* 일정 생성 시 오늘 날짜를 인자로  */
     document.querySelector('.scheduleAdd__div').setAttribute('onclick', 'openCreateModal(\'' + infoDate + '\')')
 

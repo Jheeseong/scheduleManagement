@@ -2,15 +2,114 @@ let allCnt
 let tagArr = [];
 var myBarChart
 var myChart
+var scheduleChart
+
+function scheduleChartLib(res) {
+    if (scheduleChart != null) {
+        scheduleChart.destroy();
+    }
+
+    let selectScheduleArr = []
+
+    for (let i = 0; i < res.length; i++) {
+        let scheduleArr = new Object()
+
+        let find = selectScheduleArr.find(v => v.status === res[i].status)
+        if (find === undefined) {
+            scheduleArr.status = res[i].status;
+            scheduleArr.count = 1;
+
+            scheduleArr = JSON.stringify(scheduleArr);
+            selectScheduleArr.push(JSON.parse(scheduleArr));
+        } else {
+            find.count += 1;
+        }
+    }
+
+    let scheduleStatus = ['완료', '미완료']
+    let scheduleCnt = [0,0]
+
+    selectScheduleArr.map((schedule) => {
+        if (schedule.status === true) {
+            scheduleCnt[0] = schedule.count;
+        } else {
+            scheduleCnt[1] = schedule.count;
+        }
+    })
+    const chartCenter = document.querySelector('.chartCenter')
+    chartCenter.innerHTML = '<span>'+ (scheduleCnt[0]/(scheduleCnt[0]+scheduleCnt[1]))*100 +'%</span>'
+
+    var context = document
+        .getElementById('scheduleChart')
+
+    scheduleChart = new Chart(context, {
+        type: 'doughnut', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            labels: scheduleStatus,
+            datasets: [
+                { //데이터
+                    label: 'scheduleChart', //차트 제목
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    data: scheduleCnt,
+                    backgroundColor: [
+                        //색상
+                        '#00D28C',
+                        '#0098fe'
+                    ],
+                    hoverOffset: 20,
+                    borderColor: [],
+                    borderWidth: 0 //경계선 굵기
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio :false,
+            radius: '90%',
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        generateLabels: function (scheduleChart) {
+                            let str = '';
+
+                            for(let i = 0; i < scheduleChart.data.labels.length; i++){
+                                str += '<div class="legend"><div class="label" style="background-color: ' + scheduleChart.data.datasets[0].backgroundColor[i] + '"></div>' + scheduleChart.data.labels[i] + '</div>';
+                            }
+
+                            document.getElementById('legendDiv').innerHTML = str;
+                        },
+                    },
+                    htmlLegend:{
+                        containerID: 'legendDiv'
+                    },
+                },
+            },
+        },
+    });
+}
+
 function setBarChart(tagData) {
     const tagNameArr = [];
     const tagCntArr = [];
+    const etcTagName = [];
+    let etcTagCnt = 0;
     tagArr = []
-    tagData.map((result) => {
-        tagNameArr.push(result.content)
-        tagCntArr.push(result.count)
-        tagArr.push(result)
+    tagData.map((result, index) => {
+        if (index < 7) {
+            tagNameArr.push(result.content);
+            tagCntArr.push(result.count);
+
+        } else {
+            etcTagName.push(result.content)
+            etcTagCnt += result.count
+        }
+        tagArr.push(result);
+        index++
     })
+    if (tagData.length > 7) {
+        tagNameArr.push('기타');
+        tagCntArr.push(etcTagCnt)
+    }
 
     var context = document
         .getElementById('myBarChart')
@@ -48,8 +147,13 @@ function setBarChart(tagData) {
                     var label = myBarChart.data.labels[firstPoint.index];
                     var value = myBarChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
                     console.log(label +" : "+ value);
+                    if (label === '기타') {
+                        console.log('기타입니다.')
+                        onclickChart(etcTagName);
+                    } else {
+                        onclickChart(label)
+                    }
 
-                    /*findScheduleByTag();*/
                 }
             },
             plugins: {
@@ -98,8 +202,11 @@ function setChart(tagData) {
 
         totalCnt += tagData.selectScheduleTag[i].count;
     }
-    tagNameArr.push('기타')
-    tagCntArr.push(etcTagCnt)
+    if (tagData.selectScheduleTag.length > 7) {
+        tagNameArr.push('기타');
+        tagCntArr.push(etcTagCnt)
+    }
+
 
     for (let i = 0; i < tagCntArr.length; i++) {
         tagCntPer.push(((tagCntArr[i] / totalCnt) * 100).toFixed(1) + '(' + tagCntArr[i] + ')')
@@ -144,37 +251,12 @@ function setChart(tagData) {
                     var label = myChart.data.labels[firstPoint.index];
                     var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
                     console.log(label +" : "+ value);
-
-                    $.ajax({
-                        type: 'POST',
-                        url: 'schedule/findTagByContent/',
-                        data: {content: label},
-                        dataType: 'json',
-                        success: function (res) {
-                            /*그래프에서 클릭한 태그가 포함되어 있는 스케줄을 불러오는 함수*/
-                            updateScheduleList(res.selectTag.scheduleInfo)
-
-                            const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle')
-                            scheduleContentTop.innerHTML =
-                                '<div>선택 태그</div>' +
-                                '<span>' + res.selectTag.content +'</span>'
-
-                            let selectTagArr = []
-
-                            tagArr.map((result) => {
-                                if (result.content === res.selectTag.content) {
-                                    selectTagArr.push(result)
-                                }
-                            })
-                            /*그래프에서 클릭한 태그를 불러오는 함수*/
-                            updateTagList(selectTagArr)
-
-                        },
-                        error: function (err) {
-                            window.alert("일정을 찾지 못하였습니다.")
-                            console.log(err)
-                        }
-                    })
+                    if (label === '기타') {
+                        console.log('기타입니다.')
+                        onclickChart(etcTagName);
+                    } else {
+                        onclickChart(label)
+                    }
                 }
             },
             radius: '90%',
@@ -227,4 +309,37 @@ function openEtc() {
     } else {
         etcList.style.display = 'none';
     }
+}
+
+function onclickChart(label) {
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/findTagByContent/',
+        data: {content: label},
+        dataType: 'json',
+        success: function (res) {
+            /*그래프에서 클릭한 태그가 포함되어 있는 스케줄을 불러오는 함수*/
+            updateScheduleList(res.selectTag.scheduleInfo)
+
+            const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle')
+            scheduleContentTop.innerHTML =
+                '<div>선택 태그</div>' +
+                '<span>' + res.selectTag.content +'</span>'
+
+            let selectTagArr = []
+
+            tagArr.map((result) => {
+                if (result.content === res.selectTag.content) {
+                    selectTagArr.push(result)
+                }
+            })
+            /*그래프에서 클릭한 태그를 불러오는 함수*/
+            updateTagList(selectTagArr)
+
+        },
+        error: function (err) {
+            window.alert("일정을 찾지 못하였습니다.")
+            console.log(err)
+        }
+    })
 }

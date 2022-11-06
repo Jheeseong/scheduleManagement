@@ -56,12 +56,29 @@ const TagController = {
     },
     findTagScheduleByContent: async (req, res) => {
         try {
-            let tags = await Tag.findOne({content: req.body.content})
-                .populate({
-                    path: "scheduleInfo",
-                    match: {userInfo: req.user._id}})
-                .exec();
-            res.json({selectTag: tags, findTagSuccess: true, message: "태그를 찾았습니다."})
+            if (req.body.content.length === 1) {
+                let tags = await Tag.findOne({content: req.body.content})
+                    .populate({
+                        path: "scheduleInfo",
+                        match: {userInfo: req.user._id}
+                    })
+                    .exec();
+                res.json({selectTag: tags, findTagSuccess: true, message: "태그를 찾았습니다."});
+
+            } else {
+                let tagArr = []
+                await Promise.all(req.body.content.map(async (tag) => {
+                    let tags = await Tag.findOne({content: tag})
+                        .populate({
+                            path: "scheduleInfo",
+                            match: {userInfo: req.user._id}
+                        })
+                        .exec();
+                    tagArr.push(tags)
+                }))
+                console.log(tagArr)
+                res.json({selectTag: tagArr, findTagSuccess: true, message: "태그를 찾았습니다."})
+            }
         } catch (err) {
             console.log(err)
             res.status(400).json({findTagSuccess: false, message: "태그를 찾지 못하였습니다.", error: err})

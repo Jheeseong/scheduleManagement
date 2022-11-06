@@ -5,6 +5,6 @@ const LogController = require('../controller/Log')
 
 /* GET home page. */
 
-router.post('/findLog',checkLogIn, LogController.findMyLog);
+router.post('/findLog/:page',checkLogIn, LogController.findMyLog);
 
 module.exports = router;

@@ -20,16 +20,21 @@ const LogController = {
     },
     findMyLog: async (req, res) => {
         try {
-          let logs = await Log.find({userInfo: req.user._id})
-              .populate('creator')
-              .sort({createDate: -1})
-              .exec();
+            let page = req.params.page
 
-          res.json({logs: logs, findLogSuccess: true, message: "로그를 찾았습니다."})
-        } catch (err) {
-            console.log(err)
-            res.status(400).json({findLogSuccess: false, err: err, message: "로그를 찾지 못하였습니다."})
-        }
+            let skipCnt = (page - 1) * 20;
+            let logs = await Log.find({userInfo: req.user._id})
+                  .populate('creator')
+                  .sort({createDate: -1})
+                  .skip(skipCnt)
+                  .limit(20)
+                  .exec();
+
+              res.json({logs: logs, findLogSuccess: true, message: "로그를 찾았습니다."})
+            } catch (err) {
+                console.log(err)
+                res.status(400).json({findLogSuccess: false, err: err, message: "로그를 찾지 못하였습니다."})
+            }
     }
 }
 

@@ -91,7 +91,7 @@
 .sharedCategory{
     display: none;
 }
-.categoryRow{
+.categoryList > .categoryRow{
     width: calc(100% - 40px);
     display: flex;
     justify-content: space-between;

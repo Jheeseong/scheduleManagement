@@ -42,15 +42,17 @@ function applyCalendar(eventList) {
         selectable: false,
         dayMaxEventRows: true,
         moreLinkClick: function(info){
-            console.log(calendar)
             let infoDate = info.date.toISOString().slice(0, 16)
             let selectedEventList = [];
 
             for (let i = 0; i < eventList.length; i++) {
-                let startDay = new Date(eventList[i].start).getDate().toString().split('T')
-                let today = new Date(info.date).getDate().toString().split('T')
-                let endDay = new Date(eventList[i].end).getDate().toString().split('T')
+                let eventStartDay = new Date(eventList[i].start)
+                let eventEndDay = new Date(eventList[i].end)
+                let startDay = new Date(eventStartDay.getFullYear(), eventStartDay.getMonth(), eventStartDay.getDate(),9,0,0).toISOString()
+                let today = new Date(info.date).toISOString()
+                let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),9,0,0).toISOString()
 
+                console.log(today)
                 if (startDay <= today && today <= endDay) {
                     selectedEventList.push(eventList[i]);
                 }
@@ -61,14 +63,16 @@ function applyCalendar(eventList) {
         },
 
         dateClick: function (info) {
-            console.log(info.date)
             let infoDate = info.date.toISOString().slice(0, 16)
             let selectedEventList = [];
 
             for (let i = 0; i < eventList.length; i++) {
-                let startDay = new Date(eventList[i].start).getDate().toString().split('T')
-                let today = new Date(info.dateStr).getDate().toString().split('T')
-                let endDay = new Date(eventList[i].end).getDate().toString().split('T')
+                let eventStartDay = new Date(eventList[i].start)
+                let eventEndDay = new Date(eventList[i].end)
+                let startDay = new Date(eventStartDay.getFullYear(), eventStartDay.getMonth(), eventStartDay.getDate(),9,0,0).toISOString()
+                let today = new Date(info.dateStr).toISOString()/*.getDate().toString().split('T')*/
+                let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),9,0,0).toISOString()
+
 
                 if (startDay <= today && today <= endDay) {
                     selectedEventList.push(eventList[i]);

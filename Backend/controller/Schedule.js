@@ -121,11 +121,12 @@ const ScheduleController = {
     },
     findScheduleDate: async (req, res) => {
         try {
-            const date = new Date(req.body.year, req.body.month, req.body.day, 0,0,0)
+            let date = new Date()
 
-            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay() + 1,0 ,0 ,0)
-            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay(),0 ,0 ,0)
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9 ,0,0).toISOString()
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1,9,0,0).toISOString()
 
+            console.log("today: " + date + " startDate: " + startDateValue + " endDate: " + endDateValue)
             let schedules = await Schedule
                 .find({$and: [{userInfo: req.user._id},
                         {'startDate':{$lt: startDateValue}},
@@ -134,6 +135,7 @@ const ScheduleController = {
 
             res.json({schedule: schedules, findScheduleSuccess: true, message: '일정을 찾았습니다.'})
         } catch (err) {
+            console.log(err)
             res.status(400).json({findScheduleSuccess: false, err: err, message: "일정을 찾지 못하였습니다."})
         }
     },
@@ -189,7 +191,7 @@ const ScheduleController = {
                 })
             })
             selectScheduleTag.sort((a, b) => {
-                return a[1] - b[1];
+                return b.count - a.count;
             })
             console.log(selectScheduleTag)
             let scheduleCnt = await Schedule.find({userInfo: req.user._id}).count().exec();

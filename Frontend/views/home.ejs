@@ -8,9 +8,13 @@
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/Dashboard/dashboard.css">
+    <link rel="stylesheet" href="/stylesheets/Schedule/calendar.css">
     <script defer src="/javascripts/navbar.js"></script>
     <script defer src="/javascripts/Dashboard/Dashboard.js"></script>
     <script defer src="/javascripts/Dashboard/ScheduleCategory.js"></script>
+    <script defer src="/javascripts/TagStatistics/Chart.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
 
 </head>
 <body>
@@ -28,30 +32,17 @@
                     </div>
                     <div class="content__mid">
                         <div class="scrollBox">
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
-                            <div>1</div>
+                            <div>
+                                <!--차트가 그려질 부분-->
+                                <div class="scheduleChart">
+                                    <canvas id="scheduleChart"></canvas>
+                                    <div class="chartCenterBack">
+                                        <div class="chartCenter">
+                                        </div>
+                                    </div>
+                                    <div id="legendDiv" class="legendDiv"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,14 +98,6 @@
                         <div class="scheduleContent">
                             <div class="scrollBox">
                                 <div class="scheduleList incomplete">
-                                    <div class="scheduleRow">
-                                        <div>
-                                            <input type="checkbox"> 대시보드 페이지
-                                        </div>
-                                        <div>
-                                            <i class="fa-regular fa-calendar"></i> 2222-22-22 ~ 3333-33-33
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,14 +114,6 @@
                         <div class="scheduleContent">
                             <div class="scrollBox">
                                 <div class="scheduleList complete">
-                                    <div class="scheduleRow">
-                                        <div>
-                                            <input type="checkbox"> 대시보드 페이지
-                                        </div>
-                                        <div>
-                                            <i class="fa-regular fa-calendar"></i> 2222-22-22 ~ 3333-33-33
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +125,7 @@
                     <div class="content__top">
                         <div class="content__title">
                             <i class="fa-solid fa-folder" style="color: #FFD664"></i>
-                             카테고리
+                             공유 카테고리
                         </div>
                     </div>
                     <div class="content__mid">
@@ -175,6 +150,9 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modalDiv">
+    <%- include('./ScheduleDetail.ejs')%>
 </div>
 </body>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js" integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

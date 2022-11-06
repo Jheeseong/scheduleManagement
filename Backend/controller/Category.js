@@ -194,26 +194,38 @@ const CategoryController = {
                         tag.scheduleInfo.map((result) => {
                             let schedule = result
                             schedule.color = colorCode
-                            if (!schedules.includes(schedule)) {
+                            schedules.push(schedule)
+                            /*if (!schedules.includes(schedule)) {
                                 schedules.push(schedule);
-                            }
+                            }*/
                         })
                     })
             }))
+
+            const filteredArr = schedules.reduce((acc, current) => {
+                const x = acc.find(item => item.id === current.id);
+                if (!x) {
+                    return acc.concat([current]);
+                } else {
+                    return acc;
+                }
+            }, []);
+
             allCategory.sort(function (a,b) {
                 return(a.title < b.title) ? -1 : (a.title> b.title) ? 1: 0
             })
-            res.json({schedules: schedules, categories: allCategory, scheduleFind: true, message: "일정을 찾았습니다."})
+            res.json({schedules: filteredArr, categories: allCategory, scheduleFind: true, message: "일정을 찾았습니다."})
         } catch (err) {
             console.log(err)
+            return res.status(400).json({scheduleFind: false, message: "스케줄을 찾지 못하였습니다.", err: err})
         }
     },
     findCategoryDate: async (req, res) => {
         try{
-            const date = new Date(req.body.year, req.body.month, req.body.day, 0,0,0)
+            let date = new Date()
 
-            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay() + 1,0 ,0 ,0)
-            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay(),0 ,0 ,0)
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1,9 ,0,0).toISOString()
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9,0,0).toISOString()
 
             let mySchedule = await Category.findOne({_id: req.body.id})
                 .populate({
@@ -237,14 +249,15 @@ const CategoryController = {
             res.json({schedules: schedules, category: mySchedule, scheduleFind: true, message: "일정을 찾았습니다."})
         } catch (err) {
             console.log(err)
+            return res.status(400).json({categoryFind: false, message: "카테고리를 찾지 못하였습니다.", err: err})
         }
     },
     findTodayCategoryList: async (req, res) => {
         try {
-            const date = new Date(req.body.year, req.body.month, req.body.day, 0,0,0)
+            const date = new Date()
 
-            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay() + 1,0 ,0 ,0)
-            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDay(),0 ,0 ,0)
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1,9 ,0,0).toISOString()
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9,0,0).toISOString()
 
             let todayCategory = []
 
@@ -270,15 +283,24 @@ const CategoryController = {
                 category.tagInfo.map((tag) => {
                     if (tag.scheduleInfo.length != 0) {
                         todayCategory.push(category)
-                        return;
                     }
                 })
             }))
 
+            const filteredArr = todayCategory.reduce((acc, current) => {
+                const x = acc.find(item => item.id === current.id);
+                if (!x) {
+                    return acc.concat([current]);
+                } else {
+                    return acc;
+                }
+            }, []);
 
-            res.json({categories: todayCategory, scheduleFind: true, message: "카테고리를 찾았습니다."})
+
+            res.json({categories: filteredArr, scheduleFind: true, message: "카테고리를 찾았습니다."})
         } catch (err) {
             console.log(err)
+            return res.status(400).json({categoryFind: false, message: "카테고리를 찾지 못하였습니다.", err: err})
         }
     }
 }
