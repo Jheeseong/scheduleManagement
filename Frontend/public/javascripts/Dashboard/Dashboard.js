@@ -231,17 +231,6 @@ function RemoveDraggable(){
         sortable.options.group.name = ''
         scheduleCheck = true;
     });
-
-    lists.forEach((list) => {
-        console.log(list)
-        list.addEventListener('dragstart', dragStartEvent)
-        list.addEventListener('dragend', dragEndEvent)
-        new Sortable(list, {
-            group: "shared",
-            animation: 150,
-            ghostClass: "blue-background-class"
-        });
-    });
 }
 
 function toggleCb(cb, id, method) {
