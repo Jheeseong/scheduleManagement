@@ -65,6 +65,9 @@ function updateScheduleList(schedules) {
             `<td>${date}</td>` +
             '</tr>'
     })
+    if(schedules.length == 0){
+        document.querySelector('.ScheduleContent__mid').innerHTML = '<div class="emptyMessageDiv">일정이 없습니다.</div>'
+    }
 }
 /*내가 만든 스케줄에 포함되어있는 태그를 불러오는 함수*/
 function findMyTag() {
@@ -146,6 +149,10 @@ function updateTagList(tags) {
             `<td>${result.count + " / " + allCnt}</td>` +
             '</tr>'
     })
+    if(tags.length == 0){
+        document.querySelector('.tagContent__mid').innerHTML = '<div class="emptyMessageDiv">태그가 없습니다.</div>'
+        document.querySelector('.content--chart .content__mid').innerHTML = '<div class="emptyMessageDiv">태그가 없습니다.</div>'
+    }
 }
 
 function focusTr(event){

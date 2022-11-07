@@ -224,8 +224,16 @@
     display: block;
     text-align: right;
 }
-.scheduleTableDiv{
+.modal_schedule_body_mid .scheduleTableDiv{
+    display: flex;
+    height: 100%;
     overflow: auto;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv{
+    display: none;
 }
 .scheduleTable{
     width: 100%;

@@ -40,6 +40,9 @@ function closeModal(event, modal) {
 
         /* 체크박스 및 카카오맵 모달 해제 */
         mapModal.classList.remove('show');
+        
+        /* 빈값일 때 메세지 display 변경 */
+        document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'none'
     }
 
 }
@@ -61,6 +64,9 @@ function openListModal(selectedEventList, infoDate) {
         str += '</tr>';
     }
     tbodyTag.innerHTML = str;
+    if(selectedEventList.length == 0){
+        document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'flex'
+    }
 
     listModal.classList.add('show')
     if (listModal.classList.contains('show')) {

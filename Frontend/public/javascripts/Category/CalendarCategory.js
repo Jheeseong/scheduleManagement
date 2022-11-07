@@ -20,6 +20,9 @@ function findMyCategory() {
                     '</div>' +
                     '</div>'
             })
+            if(!res.length){
+                myCategory.innerHTML = '<div class="emptyMessageDiv">My 카테고리가 없습니다.</div>'
+            }
         },
         error: function (err) {
             window.alert("나의 카테고리를 불러오지 못하였습니다!!!")
@@ -71,6 +74,9 @@ function findShareCategory() {
                         `<div class="categoryRow__user__category" onclick=\'applySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>`
                 }
             })
+            if(!res.length){
+                sharedCategory.innerHTML = '<div class="emptyMessageDiv">공유받은 카테고리가 없습니다.</div>'
+            }
         },
         error: function (err) {
             window.alert("공유 카테고리를 불러오지 못하였습니다!!!")
