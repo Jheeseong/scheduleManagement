@@ -23,6 +23,12 @@ function findMemoList() {
                 memoRow.innerText = memos.memo[i].content;
                 memoList.appendChild(memoRow)
             }
+            if(memos.memo.length == 0){
+                let emptyMessageDiv = document.createElement('div');
+                emptyMessageDiv.classList.add('emptyMessageDiv')
+                emptyMessageDiv.innerText = '등록된 메모가 없습니다.'
+                memoList.appendChild(emptyMessageDiv)
+            }
         },
         error: function (err) {
             console.log(err)
@@ -157,7 +163,6 @@ function findScheduleList() {
                 const selectCategory = document.querySelector('.selectCategory')
                 selectCategory.innerHTML = ''
             }
-
             document.querySelector('.scheduleList.incomplete').innerHTML = incomplete;
             document.querySelector('.scheduleList.complete').innerHTML = complete;
             draggable();
@@ -223,6 +228,17 @@ function RemoveDraggable(){
         console.log(list)
         list.removeEventListener('dragstart',dragStartEvent)
         list.removeEventListener('dragend',dragEndEvent)
+    });
+
+    lists.forEach((list) => {
+        console.log(list)
+        list.addEventListener('dragstart', dragStartEvent)
+        list.addEventListener('dragend', dragEndEvent)
+        new Sortable(list, {
+            group: "shared",
+            animation: 150,
+            ghostClass: "blue-background-class"
+        });
     });
 }
 
@@ -308,9 +324,9 @@ function findLog(page) {
                 }
 
                 str += '<div class = "logRow">' +
-                    '<div>' +
+                    '<div style="width: 100%">' +
                     '<img class = "userImage" src="' + log.creator.image + '">' +
-                    '<div><div class="logMessage">';
+                    '<div class="logBody"><div class="logMessage">';
                 if (log.name.beforeName === log.name.afterName) {
                     str += '<span><strong>' + log.creator.name + "</strong>님이 <strong>" + log.name.beforeName + "</strong> " + log.content + "하였습니다." + '</span>';
 
@@ -320,15 +336,19 @@ function findLog(page) {
                 str += '</div>' +
                     '<div class="logBottom">' +
                     '<span>' + logTime + '</span>' +
-                    '</div></div></div>' +
                     '<div class="logType">' +
                     '<span>' + log.type + '</span>' +
                     '</div>' +
+                    '</div></div></div>' +
+
                     '</div>'
             });
 
             if (res.logs.length == 20) {
                 str += '<div class="viewMore" onclick="findLog(\'' + page + '\')">더 보기</div>'
+            }
+            if(res.logs.length == 0){
+                str = '<div class="emptyMessageDiv">활동 로그가 없습니다.</div>'
             }
 
             logList.innerHTML += str;
@@ -372,7 +392,9 @@ function categoryList() {
                     '</div></div></div>' +
                     '</div>'
             })
-
+            if(res.categories.length == 0){
+                str = '<div class="emptyMessageDiv">공유받은 카테고리가 없습니다.</div>'
+            }
             categoryList.innerHTML = str;
         },
         error: function (err) {

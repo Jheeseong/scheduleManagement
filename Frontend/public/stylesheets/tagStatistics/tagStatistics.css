@@ -210,6 +210,15 @@ tr:nth-child(odd):not(thead tr){
     background-color: rgba(66, 152, 254, .3);
 }
 
+.emptyMessageDiv{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8e8e8e;
+}
+
 /* slide */
 #slider {
     position: relative;

@@ -115,6 +115,17 @@ body{
 }
 
 /* 메모 영역 */
+.memoList{
+    height: 100%;
+}
+.emptyMessageDiv{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8e8e8e;
+}
 .memoTextDiv{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -257,7 +268,6 @@ body{
 }
 .logList{
     padding-left: 20px;
-    width: 100%;
     height: 100%;
 }
 
@@ -272,22 +282,31 @@ body{
     align-items: center;
     border-bottom: 1px solid #cccccc
 }
+.logBody{
+    width: 100%;
+}
+.logMessage{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
 .logRow > div:not(.logType) {
     display: flex;
     align-items: center;
 }
 .logBottom{
+    width: 100%;
     padding-top: 5px;
     display: flex;
+    justify-content: space-between;
     font-size: 14px;
     color: #8e8e8e;
 }
 .logType{
-    display: flex;
-    width: 100px;
-    justify-content: flex-end;
-    padding-right: 15px;
-    font-size: 15px;
+    color: #00D28C;
+    font-weight: bold;
 }
 .logList > .viewMore {
     display: flex;
@@ -404,14 +423,6 @@ body{
     height: 16px;
     border-radius: 50px;
 }
-.MyScheduleReload{
-    display: none;
-}
-.contentCol:hover .MyScheduleReload{
-    display: block;
-}
-
-
 
 /* 체크박스 커스텀 */
 .cb{

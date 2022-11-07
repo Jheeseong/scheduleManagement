@@ -223,3 +223,11 @@
 .AddUserTagListDiv .AddUserAutoTagDiv:hover > .AddUserDeleteTagValue{
     display: flex;
 }
+.emptyMessageDiv{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8e8e8e;
+}

@@ -224,8 +224,8 @@ const CategoryController = {
         try{
             let date = new Date()
 
-            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1,9 ,0,0).toISOString()
-            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9,0,0).toISOString()
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9 ,0,0).toISOString()
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1,9,0,0).toISOString()
 
             let mySchedule = await Category.findOne({_id: req.body.id})
                 .populate({
@@ -256,8 +256,8 @@ const CategoryController = {
         try {
             const date = new Date()
 
-            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1,9 ,0,0).toISOString()
-            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9,0,0).toISOString()
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9 ,0,0).toISOString()
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1,9,0,0).toISOString()
 
             let todayCategory = []
 
