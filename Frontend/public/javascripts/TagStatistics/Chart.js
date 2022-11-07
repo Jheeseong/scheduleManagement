@@ -56,7 +56,6 @@ function scheduleChartLib(res) {
                         '#00D28C',
                         '#0098fe'
                     ],
-                    hoverOffset: 20,
                     borderColor: [],
                     borderWidth: 0 //경계선 굵기
                 }
@@ -139,6 +138,7 @@ function setBarChart(tagData) {
             ]
         },
         options: {
+            maintainAspectRatio :false,
             onClick: (evt) => {
                 const points = myBarChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
 
@@ -146,10 +146,8 @@ function setBarChart(tagData) {
                     const firstPoint = points[0];
                     var label = myBarChart.data.labels[firstPoint.index];
                     var value = myBarChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-                    console.log(label +" : "+ value);
                     if (label === '기타') {
-                        console.log('기타입니다.')
-                        onclickChart(etcTagName);
+                        onclickEtcChart(etcTagName);
                     } else {
                         onclickChart(label)
                     }
@@ -250,15 +248,14 @@ function setChart(tagData) {
                     const firstPoint = points[0];
                     var label = myChart.data.labels[firstPoint.index];
                     var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-                    console.log(label +" : "+ value);
                     if (label === '기타') {
-                        console.log('기타입니다.')
-                        onclickChart(etcTagName);
+                        onclickEtcChart(etcTagName);
                     } else {
                         onclickChart(label)
                     }
                 }
             },
+            maintainAspectRatio :false,
             radius: '90%',
             plugins: {
                 legend: {
@@ -311,30 +308,81 @@ function openEtc() {
     }
 }
 
+function onclickEtcChart(label) {
+    $.ajax({
+        type: 'POST',
+        url: 'schedule/findEtcTag',
+        data: {content: label},
+        dataType: 'json',
+        success: function (res) {
+            let scheduleArr = []
+            let selectTagArr = [];
+
+            let str = ''
+            str += '<div>선택 태그</div>'
+
+            res.selectTag.map((tag) => {
+
+                str += '<span>' + tag.content + '</span>';
+
+                tagArr.map((result) => {
+                    if (result.content === tag.content) {
+                        selectTagArr.push(result)
+                    }
+                });
+
+                tag.scheduleInfo.map((schedule) => {
+                    scheduleArr.push(schedule)
+                })
+            })
+            const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle');
+
+            scheduleContentTop.innerHTML = str;
+
+            const filteredArr = scheduleArr.reduce((acc, current) => {
+                const x = acc.find(item => item._id === current._id);
+                if (!x) {
+                    return acc.concat([current]);
+                } else {
+                    return acc;
+                }
+            }, []);
+
+            updateScheduleList(filteredArr);
+
+            updateTagList(selectTagArr)
+        },
+        error: function (err) {
+            window.alert("일정을 찾지 못하였습니다.")
+            console.log(err)
+        }
+    })
+}
+
 function onclickChart(label) {
     $.ajax({
         type: 'POST',
-        url: 'schedule/findTagByContent/',
+        url: 'schedule/findTagByContent',
         data: {content: label},
         dataType: 'json',
         success: function (res) {
             /*그래프에서 클릭한 태그가 포함되어 있는 스케줄을 불러오는 함수*/
-            updateScheduleList(res.selectTag.scheduleInfo)
+            updateScheduleList(res.selectTag.scheduleInfo);
 
-            const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle')
+            const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle');
             scheduleContentTop.innerHTML =
                 '<div>선택 태그</div>' +
-                '<span>' + res.selectTag.content +'</span>'
+                '<span>' + res.selectTag.content + '</span>';
 
-            let selectTagArr = []
+            let selectTagArr = [];
 
             tagArr.map((result) => {
                 if (result.content === res.selectTag.content) {
                     selectTagArr.push(result)
                 }
-            })
+            });
             /*그래프에서 클릭한 태그를 불러오는 함수*/
-            updateTagList(selectTagArr)
+            updateTagList(selectTagArr);
 
         },
         error: function (err) {

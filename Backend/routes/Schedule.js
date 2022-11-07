@@ -24,6 +24,8 @@ router.post('/findTag/:id', checkLogIn, tagController.findTagById)
 
 router.post('/findTagByContent', checkLogIn, tagController.findTagScheduleByContent)
 
+router.post('/findEtcTag', checkLogIn, tagController.findEtcTagScheduleByContent)
+
 router.post('/updateStatus/:id', checkLogIn, scheduleController.updateStatus)
 
 router.post('/findDate', checkLogIn, scheduleController.findScheduleDate)

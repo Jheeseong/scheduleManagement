@@ -1,7 +1,8 @@
+let scheduleCheck = false;
 document.addEventListener('DOMContentLoaded', function () {
     findLog(1)
     categoryList()
-    findScheduleList();
+    findScheduleList(scheduleCheck);
     findMemoList();
 })
 
@@ -119,6 +120,8 @@ function deleteMemo(id){
     })
 }
 
+
+
 function findScheduleList() {
     let scheduleList = document.querySelector('.scheduleList')
     let user = document.getElementById('userElement').value
@@ -169,60 +172,59 @@ function findScheduleList() {
     })
 }
 
+let sortable;
 
 function draggable() {
     const lists = document.querySelectorAll('.scheduleList');
     let startArea;
     let endArea;
 
-    const dragStartEvent =  (e) => {
-        console.log(e.target.parentNode)
+    /*const dragStartEvent =  (e) => {
         startArea = e.target.parentNode;
     }
 
     const dragEndEvent =  (e) => {
-        console.log(e.target.parentNode)
         endArea = e.target.parentNode;
         if(startArea != endArea){
             eventCb = document.querySelector('#' + e.target.id + ' .cb');
             toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
         }
-    }
+    }*/
     lists.forEach((list) => {
         console.log(list)
-        list.addEventListener('dragstart', dragStartEvent)
-        list.addEventListener('dragend', dragEndEvent)
-        new Sortable(list, {
-            group: "shared",
-            animation: 150,
-            ghostClass: "blue-background-class"
-        });
+        /*list.addEventListener('dragstart', dragStartEvent)
+        list.addEventListener('dragend', dragEndEvent)*/
+        if (scheduleCheck === false) {
+            sortable = new Sortable(list, {
+                group: "shared",
+                animation: 150,
+                ghostClass: "blue-background-class",
+                onStart: (evt) => {
+                    startArea = evt.to
+                },
+                onEnd: (evt) => {
+                    endArea = evt.to
+                    if(startArea != endArea){
+                        eventCb = document.querySelector('#' + evt.item.id + ' .cb');
+                        toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
+                    }
+                }
+            });
+        } else {
+            /*list.addEventListener('dragstart', dragStartEvent)
+            list.addEventListener('dragend', dragEndEvent)*/
+            sortable.options.group.name = 'shared'
+        }
     });
 }
 
 function RemoveDraggable(){
     const lists = document.querySelectorAll('.scheduleList');
-    let startArea;
-    let endArea;
-
-    const dragStartEvent =  (e) => {
-        console.log(e.target.parentNode)
-        startArea = e.target.parentNode;
-    }
-
-    const dragEndEvent =  (e) => {
-        console.log(e.target.parentNode)
-        endArea = e.target.parentNode;
-        if(startArea != endArea){
-            eventCb = document.querySelector('#' + e.target.id + ' .cb');
-            toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
-        }
-    }
 
     lists.forEach((list) => {
         console.log(list)
-        list.removeEventListener('dragstart',dragStartEvent)
-        list.removeEventListener('dragend',dragEndEvent)
+        sortable.options.group.name = ''
+        scheduleCheck = true;
     });
 }
 
