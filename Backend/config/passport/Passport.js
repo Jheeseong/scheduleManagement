@@ -7,7 +7,7 @@ const APILogin = {
         passport.use('naver', new NaverStrategy({
                 clientID: 'BVv6U8x0QoAKfDCQ7oEd',
                 clientSecret: 'glzBGj6Nb2',
-                callbackURL: 'http://localhost:3000/login/auth/naver/callback'
+                callbackURL: '/login/auth/naver/callback'
             },
             function(accessToken, refreshToken, profile, done) {
                 User.findOne({
@@ -51,7 +51,7 @@ const APILogin = {
     kakao: () => {
         passport.use('kakao', new KakaoStrategy({
                 clientID: '941ab44d8d5922a8de9febca39bd28f2',
-                callbackURL: 'http://localhost:3000/login/auth/kakao/callback'
+                callbackURL: '/login/auth/kakao/callback'
             },
             function(accessToken, refreshToken, profile, done) {
                 User.findOne({
