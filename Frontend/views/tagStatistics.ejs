@@ -17,7 +17,7 @@
 <%- include ('layout/navbar.ejs') %>
 <div class="wrapper">
     <div class="wrapper__form">
-        <div class="content">
+        <div class="content" style="width: 40%">
             <div class="content--chart">
                 <div class="content__top tagChart__top">
                     <div>태그 현황</div>
@@ -29,8 +29,6 @@
                     </div>
                 </div>
                 <div class="content__mid">
-
-
                     <div class="myChartDiv">
                         <div style="width: 320px; height: 100%; ">
                             <div id="slider">
@@ -40,13 +38,13 @@
                                     <div id="overflow" style="">
                                         <div class="inner" style="">
                                             <div class="slide slide_1">
-                                                <div class="slide-content">
+                                                <div class="slide-content" >
                                                     <!--차트가 그려질 부분-->
-                                                    <canvas id="myChart" style="height: 95%"></canvas>
+                                                    <canvas id="myChart" width="175"></canvas>
                                                 </div>
                                             </div>
                                             <div class="slide slide_2">
-                                                <div class="slide-content" style="height: 143px; margin-top: 55px">
+                                                <div class="slide-content">
                                                     <!--차트가 그려질 부분-->
                                                     <canvas id="myBarChart"></canvas>
                                                 </div>
@@ -110,7 +108,7 @@
             </div>
         </div>
         <div class="verticalLine"></div>
-        <div class="content" style="flex-direction: column">
+        <div class="content" style="width: 60%">
             <div class="content--schedule">
                 <div class="content__top scheduleContent__top">
                     <div>
@@ -128,10 +126,10 @@
                 <div class="content__mid ScheduleContent__mid">
                     <table class="myScheduleListTable theadTable">
                         <colgroup>
-                            <col width="15%"/>
-                            <col width="15%"/>
+                            <col width="10%"/>
                             <col width="20%"/>
-                            <col width="50%"/>
+                            <col width="30%"/>
+                            <col width="40%"/>
                         </colgroup>
                         <thead>
                         <tr>
@@ -145,10 +143,10 @@
                     <div class="tableDiv">
                         <table class="myScheduleListTable" id="myScheduleListTable">
                             <colgroup>
-                                <col width="15%"/>
-                                <col width="15%"/>
+                                <col width="10%"/>
                                 <col width="20%"/>
-                                <col width="50%"/>
+                                <col width="30%"/>
+                                <col width="40%"/>
                             </colgroup>
                             <tbody class="tr_MyScheduleList" id="tr_MyScheduleList">
                             </tbody>

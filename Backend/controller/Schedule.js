@@ -61,13 +61,14 @@ const ScheduleController = {
                     }
                     return tags._id;
                 }));
-
+                console.log('status: ' + req.body.status)
                 let result = await Schedule.findOneAndUpdate({_id: req.params.id},
                     {
                         $set: {
                             startDate: req.body.startDate,
                             endDate: req.body.endDate,
                             title: req.body.title,
+                            status: req.body.status,
                             content: req.body.content,
                             priority: req.body.priority,
                             address: req.body.address,

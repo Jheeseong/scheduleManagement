@@ -20,7 +20,7 @@ function findMyCategory() {
                     '</div>' +
                     '</div>'
             })
-            if(!res.length){
+            if(res.categories.length == 0){
                 myCategory.innerHTML = '<div class="emptyMessageDiv">My 카테고리가 없습니다.</div>'
             }
         },
@@ -74,7 +74,7 @@ function findShareCategory() {
                         `<div class="categoryRow__user__category" onclick=\'applySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>`
                 }
             })
-            if(!res.length){
+            if(res.categories.length == 0){
                 sharedCategory.innerHTML = '<div class="emptyMessageDiv">공유받은 카테고리가 없습니다.</div>'
             }
         },
