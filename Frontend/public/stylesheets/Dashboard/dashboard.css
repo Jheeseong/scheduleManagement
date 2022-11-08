@@ -391,7 +391,7 @@ body{
 .scheduleChart{
     display: flex;
     width: 322px;
-    height: 200px;
+    height: 175px;
     justify-content: center
 }
 .chartCenterBack{
@@ -399,7 +399,7 @@ body{
 }
 .chartCenter{
     position: absolute;
-    top: 84px;
+    top: 72px;
     right: 115px;
     display: flex;
     font-size: 30px;

@@ -21,7 +21,11 @@ function onlyMySchedule() {
                 eventData.id = schedule[i]._id;
                 eventData.address = schedule[i].address;
                 eventData.tags = schedule[i].tagInfo;
-                eventData.color = '#25a0c5'
+                if (schedule[i].status === false) {
+                    eventData.color = '#0098fe';
+                } else {
+                    eventData.color = '#00D28C';
+                }
                 eventList.push(eventData);
                 eventData = {}
             }

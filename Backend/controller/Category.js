@@ -189,11 +189,10 @@ const CategoryController = {
                     })
                     .exec();
                 allCategory.push(findCategory)
-                let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)
+                /*let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16)*/
                     findCategory.tagInfo.map((tag) => {
                         tag.scheduleInfo.map((result) => {
                             let schedule = result
-                            schedule.color = colorCode
                             schedules.push(schedule)
                             /*if (!schedules.includes(schedule)) {
                                 schedules.push(schedule);

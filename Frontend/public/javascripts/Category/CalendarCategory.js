@@ -128,6 +128,11 @@ function applySchedule(id, creator) {
                 eventData.end = result.endDate.split('Z')[0];
                 eventData.id = result._id;
                 eventData.address = result.address
+                if (result.status === false) {
+                    eventData.color = '#0098fe';
+                } else {
+                    eventData.color = '#00D28C';
+                }
                 eventData.tags = result.tagInfo;
                 eventList.push(eventData);
                 eventData = {}
@@ -191,7 +196,11 @@ function allCategory(){
                 eventData.id = result._id;
                 eventData.address = result.address;
                 eventData.tags = result.tagInfo;
-                eventData.color = result.color;
+                if (result.status === false) {
+                    eventData.color = '#0098fe';
+                } else {
+                    eventData.color = '#00D28C';
+                }
                 eventList.push(eventData);
                 eventData = {}
             })
