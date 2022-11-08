@@ -410,6 +410,8 @@ body{
 /*차트 legend css*/
 .legendDiv{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .legend{
     width: 70px;

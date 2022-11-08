@@ -91,7 +91,7 @@
 .sharedCategory{
     display: none;
 }
-.categoryList > .categoryRow{
+.categoryList > .categoryRow, .allCategoryRow{
     width: calc(100% - 40px);
     display: flex;
     justify-content: space-between;
@@ -108,19 +108,19 @@
     cursor: pointer;
     background-color: #E1F8F0;
 }
-.categoryRow__user{
+.categoryRow__user, .allCategoryRow__user{
     cursor: pointer;
     width: calc(100% - 15px);
 }
-.categoryRow__user__name{
+.categoryRow__user__name, .allCategoryRow__user__name{
     padding: 10px 0;
 }
-.categoryRow__user__category{
+.categoryRow__user__category, .allCategoryRow__user__category{
     width: 100%;
     padding: 10px 0 10px 24px;
     font-size: 14px;
 }
-.categoryRow__user__category:hover{
+.categoryRow__user__category:hover, .allCategoryRow__user__category:hover{
     cursor: pointer;
     background-color: #E1F8F0;
 }
@@ -196,12 +196,17 @@
 .scheduleTag:focus{
     outline: none;
 }
+.creatorUser {
+    display: flex;
+    align-items: center;
+    gap: 12px
+}
 
 .modal_schedule_body_mid input[type='checkbox']{
     width: 15px;
     height: 15px;
 }
-.modal_schedule_body_mid > div{
+.modal_schedule_body_mid > div {
     width: 100%;
     padding: 10px 0;
     position: relative;
@@ -210,7 +215,7 @@
     align-items: center;
 }
 .modal_schedule_body_mid > div:last-child{
-    margin-top: 25px;
+    margin-top: 15px;
 }
 .modal_schedule_body_mid > div > label{
     font-size: 14px;

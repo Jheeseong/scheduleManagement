@@ -20,7 +20,7 @@ function findMyCategory() {
                     '</div>' +
                     '</div>'
             })
-            if(!res.length){
+            if(res.categories.length == 0){
                 myCategory.innerHTML = '<div class="emptyMessageDiv">My 카테고리가 없습니다.</div>'
             }
         },
@@ -74,7 +74,7 @@ function findShareCategory() {
                         `<div class="categoryRow__user__category" onclick=\'applySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>`
                 }
             })
-            if(!res.length){
+            if(res.categories.length == 0){
                 sharedCategory.innerHTML = '<div class="emptyMessageDiv">공유받은 카테고리가 없습니다.</div>'
             }
         },
@@ -90,6 +90,16 @@ function findShareCategory() {
 /* 공유함에서 사용자 클릭 시 */
 function sharedCategoryList(creator){
     let categoryList = document.querySelector(`.categoryRow__user__categoryList.${creator}`);
+    if(categoryList.style.display == 'none'){
+        categoryList.style.display = 'block';
+    }
+    else if(categoryList.style.display == 'block'){
+        categoryList.style.display = 'none';
+    }
+}
+
+function allCategoryList(creator) {
+    let categoryList = document.querySelector(`.allCategoryRow__user__categoryList.${creator}`);
     if(categoryList.style.display == 'none'){
         categoryList.style.display = 'block';
     }
@@ -144,6 +154,32 @@ function allCategory(){
         dataType: "json",
         async: false,
         success: function (res) {
+            const allCategory = document.querySelector('.allCategory')
+            const creator = [];
+
+            allCategory.innerHTML = ''
+
+            res.categories.map((result) => {
+                if (!creator.includes(result.creator._id)) {
+                    creator.push(result.creator._id);
+                    allCategory.innerHTML +=
+                        '<div class="allCategoryRow ' + result.creator.name + '">' +
+                        '<div class="allCategoryRow__user">' +
+                        '<div class="allCategoryRow__user__name" onclick="allCategoryList(\''+ result.creator.name +'\')">' + result.creator.name + '</div>' +
+                        '<div class="allCategoryRow__user__categoryList ' + result.creator.name +'" style="display: none">' +
+                        `<div class="allCategoryRow__user__category" onclick=\'applySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>` +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                } else {
+                    const allCategoryList = document.querySelector(`.allCategoryRow__user__categoryList.${result.creator.name}`)
+                    allCategoryList.innerHTML +=
+                        `<div class="allCategoryRow__user__category" onclick=\'applySchedule("${result._id}", "${result.creator._id}")\' >${result.title}</div>`
+                }
+            })
+            if(res.categories.length == 0){
+                allCategory.innerHTML = '<div class="emptyMessageDiv">공유받은 카테고리가 없습니다.</div>'
+            }
 
             const schedules = res.schedules;
             console.log(res)

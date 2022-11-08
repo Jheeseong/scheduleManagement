@@ -37,7 +37,7 @@ function scheduleChartLib(res) {
         }
     })
     const chartCenter = document.querySelector('.chartCenter')
-    chartCenter.innerHTML = '<span>'+ (scheduleCnt[0]/(scheduleCnt[0]+scheduleCnt[1]))*100 +'%</span>'
+    chartCenter.innerHTML = '<span>'+ ((scheduleCnt[0]/(scheduleCnt[0]+scheduleCnt[1]))*100).toFixed(0) +'%</span>'
 
     var context = document
         .getElementById('scheduleChart')
@@ -273,9 +273,10 @@ function setChart(tagData) {
                                     }
                                     str += '</div>'
                                 } else {
-                                    str += '<div class="legend"><div class="label" style="background-color: ' + myChart.data.datasets[0].backgroundColor[i] + '"></div>' + myChart.data.labels[i] + '</div>';
+                                    str += '<div class="legend"><div class="label" style="background-color: ' + myChart.data.datasets[0].backgroundColor[i] + '"></div>' + myChart.data.labels[i] + " " + ((tagCntArr[i] / totalCnt)*100).toFixed(1) + "%" + '</div>';
                                 }
                             }
+                            console.log(myChart)
 
                             document.getElementById('legendDiv').innerHTML = str;
                         },

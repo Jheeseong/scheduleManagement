@@ -48,6 +48,19 @@ function closeModal(event, modal) {
 }
 
 function openListModal(selectedEventList, infoDate) {
+
+    function getDate(dateValue) {
+        const years = dateValue.substring(0,4)
+        const month = dateValue.substring(5,7)
+        const date = dateValue.substring(8,10)
+        const ampm = parseInt(dateValue.substring(11,13)) >= 12 ? 'pm' : 'am';
+        const hours = parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;
+        const minutes = dateValue.substring(14,16)
+        const customDate = `${years}-${month}-${date}. ${ampm} ${hours}:${minutes}`;
+
+        return customDate;
+    }
+
     const date = new Date(infoDate)
     document.querySelector('.modal_schedule_body_top').innerHTML = '<span>'+ date.getFullYear() +'년 ' + (date.getMonth() + 1) +'월 '+ date.getDate()+'일 일정 목록' +'</span>'
     /* 일정 생성 시 오늘 날짜를 인자로  */
@@ -59,8 +72,8 @@ function openListModal(selectedEventList, infoDate) {
         str += '<tr>';
         str += '<td><input id="statusCb" type="checkbox" onchange="updateStatus(\'' + selectedEventList[i].id + '\', this)"></td>';
         str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + selectedEventList[i].title + '</td>';
-        str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + selectedEventList[i].start.substring(0, 10) + ' ' + selectedEventList[i].start.substring(11, 16) + '</td>';
-        str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + selectedEventList[i].end.substring(0, 10) + ' ' + selectedEventList[i].end.substring(11, 16) + '</td>';
+        str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + getDate(selectedEventList[i].start) + '</td>';
+        str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + getDate(selectedEventList[i].end) + '</td>';
         str += '</tr>';
     }
     tbodyTag.innerHTML = str;
@@ -210,6 +223,10 @@ function openDetailModal(scheduleId) {
         = '<label>주소</label>'
         + '<div id="scheduleAddr" class="scheduleAddr"></div>'
 
+    document.getElementsByClassName('scheduleCreator')[0].innerHTML
+        = '<label>생성자</label>'
+        + '<div id="scheduleCreator" class="scheduleCreator"></div>'
+
     /* 버튼 div */
     let scheduleBtnDiv = document.getElementsByClassName('scheduleBtnDiv')[1]
     scheduleBtnDiv.innerHTML = '<button class="btn-empty" onclick="closeModal(this, \'edit\')">닫기</button>'
@@ -223,16 +240,28 @@ function openDetailModal(scheduleId) {
             console.log('creator : ' + res.schedule.userInfo)
             console.log('user : ' + document.getElementById('userElement').value)
 
-            if (res.schedule.userInfo == document.getElementById('userElement').value) {
+            if (res.schedule.userInfo._id == document.getElementById('userElement').value) {
                 scheduleBtnDiv.innerHTML
                     += '<button class="saveBtn btn-red" onclick="deleteSchedule(\'' + scheduleId + '\')">삭제</button>'
                     + '<button class="saveBtn" onclick="openEditModal(\'' + scheduleId + '\')">편집</button>'
             }
 
+            function getDate(dateValue) {
+                const years = dateValue.substring(0,4)
+                const month = dateValue.substring(5,7)
+                const date = dateValue.substring(8,10)
+                const ampm = parseInt(dateValue.substring(11,13)) >= 12 ? 'PM' : 'AM';
+                const hours = parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;
+                const minutes = dateValue.substring(14,16)
+                const customDate = `${years}-${month}-${date} ${ampm} ${hours}:${minutes}`;
+
+                return customDate;
+            }
+
 
             /* 시작일, 종료일 */
-            document.getElementById('startDate').innerText = res.schedule.startDate.substring(0, 16);
-            document.getElementById('endDate').innerText = res.schedule.endDate.substring(0, 16);
+            document.getElementById('startDate').innerText = getDate(res.schedule.startDate)
+            document.getElementById('endDate').innerText = getDate(res.schedule.endDate)
 
             /* 일정제목 */
             document.getElementById('scheduleName').innerText = res.schedule.title;
@@ -245,6 +274,12 @@ function openDetailModal(scheduleId) {
 
             /* 태그입력란 */
             document.getElementById('scheduleTag').style.display = 'none';
+
+            document.getElementById('scheduleCreator').innerHTML =
+                '<div class="creatorUser">' +
+                '<img class="userImage" src="'+ res.schedule.userInfo.image +'">' +
+                '<div class="userName">'+ res.schedule.userInfo.name +'</div>' +
+                '</div>'
 
             /* 주소 사용 여부 */
             if (!res.schedule.address == '') {
@@ -322,6 +357,9 @@ function openCreateModal(infoDate) {
 
     /* 태그 검색하는 함수 */
     tagSearch()
+
+    /*생성자*/
+    document.getElementsByClassName('scheduleCreator')[0].innerHTML = ''
 
     /* 태그입력란 */
     document.getElementById('scheduleTag').style.display = 'flex';

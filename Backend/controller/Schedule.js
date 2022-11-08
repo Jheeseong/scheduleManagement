@@ -100,6 +100,7 @@ const ScheduleController = {
         try {
             let findSchedule = await Schedule.findOne({_id: req.params.id})
                 .populate('tagInfo')
+                .populate('userInfo')
                 .exec();
 
             res.json({schedule: findSchedule, findScheduleSuccess: true})

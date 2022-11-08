@@ -143,7 +143,14 @@ function findScheduleList() {
 
             let complete = '';
             let incomplete = '';
-            scheduleChartLib(res.schedule)
+
+            scheduleChartLib(res.schedule);
+
+            const scheduleChart = document.querySelector('.scheduleChart')
+            if (res.schedule.length === 0) {
+                scheduleChart.innerHTML = '<div class="emptyMessageDiv">오늘 일정이 없습니다.</div>'
+            }
+
             for (let i = 0; i < res.schedule.length; i++) {
                 let cbClasses;
                 res.schedule[i].status == true ? cbClasses = 'cb checked' : cbClasses = 'cb';
@@ -409,6 +416,12 @@ function categoryInSchedule(id, creator) {
         async: false,
         success: function (res) {
             scheduleChartLib(res.schedules)
+
+            const scheduleChart = document.querySelector('.scheduleChart')
+            if (res.schedules.length === 0) {
+                scheduleChart.innerHTML = '<div class="emptyMessageDiv">오늘 일정이 없습니다.</div>'
+            }
+
             document.querySelector('.visibleCol > .content__top > .content__title').innerHTML =
                 '<i class="fa-solid fa-clipboard-list" style="color: #CE9462"></i>\n' +
                 '오늘 공유 일정'
