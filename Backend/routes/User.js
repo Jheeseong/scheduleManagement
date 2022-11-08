@@ -3,7 +3,7 @@ const router = express.Router();
 const checkLogIn = require('../config/passport/Middleware').checkLogIn
 const menuColor = require("../controller/User/menuColor");
 const userController = require("../controller/User/User")
-const memoController = require("../controller/memo")
+const memoController = require("../controller/Memo")
 
 router.post('/menuColor', checkLogIn, menuColor.changeMenuColor)
 

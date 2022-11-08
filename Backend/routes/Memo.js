@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const checkLogIn = require('../config/passport/Middleware').checkLogIn
-const memoController = require("../controller/memo")
+const memoController = require("../controller/Memo")
 
 router.post('/findMemoList', checkLogIn, memoController.findMemoList)
 

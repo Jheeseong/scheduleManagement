@@ -47,7 +47,7 @@ mongoose.connect(config.mongoURI, {
 const indexRouter = require('./Backend/routes/index')
 const loginRouter = require('./Backend/routes/login')
 const scheduleRouter = require('./Backend/routes/Schedule')
-const userRouter = require('./Backend/routes/user');
+const userRouter = require('./Backend/routes/User');
 const categoryRouter = require('./Backend/routes/Category')
 const logRouter = require('./Backend/routes/Log')
 const memoRouter = require('./Backend/routes/Memo')
