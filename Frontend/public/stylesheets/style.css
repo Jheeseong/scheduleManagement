@@ -1,260 +1,314 @@
 /* 폰트 */
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
 }
 
 * {
-  font-family: "Pretendard-Regular";
+    font-family: "Pretendard-Regular";
 }
 
 /* layout */
-html{
-  width: 100vw;
-  max-width: 100%;
-  height: 100vh;
-  background-color: rgb(243, 243, 243);
-}
-body{
-  width: 100%;
-  height: 100%;
-  margin: 0;
+html {
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    background-color: rgb(243, 243, 243);
 }
 
-.wrapper{
-  width: 100%;
-  height: 92%; /* navbar height == 8% */
-  transition: all 0.3s ease-in-out;
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
-.wrapper__form{
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+
+.wrapper {
+    width: 100%;
+    height: 92%; /* navbar height == 8% */
+    transition: all 0.3s ease-in-out;
 }
-.wrapper__form > div{
-  padding: 10px;
+
+.wrapper__form {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.wrapper__form > div {
+    padding: 10px;
 }
 
 /* button */
-button{
-  background-color: #0098fe;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 10px;
-  margin: 10px;
-  transition: all 0.3s;
+button {
+    background-color: #0098fe;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 10px;
+    transition: all 0.3s;
 }
-.btn-empty{
-  background-color: inherit;
-  color: #6D6F6D;
-  border: 1px solid #a8a8a8;
+
+.btn-empty {
+    background-color: inherit;
+    color: #6D6F6D;
+    border: 1px solid #a8a8a8;
 }
-.btn-gray{
-   background-color: #ECECEF;
-   color: #a8a8a8;
-   border: 1px solid #a8a8a8;
- }
-.btn-red{
-  background-color: #EA4335;
-  color: white;
+
+.btn-gray {
+    background-color: #ECECEF;
+    color: #a8a8a8;
+    border: 1px solid #a8a8a8;
 }
-button:hover{
-  cursor: pointer;
-  opacity: 0.7;
+
+.btn-red {
+    background-color: #EA4335;
+    color: white;
+}
+
+button:hover {
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 /* navbar */
-.navbar{
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 28%;
-  background-color: #526CE1;
+.navbar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 28%;
+    background-color: #526CE1;
+    transition: all 0.3s ease-in-out;
 }
-.infoBox{
-  width: 540px;
-  height: 180px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.infoBox__top{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 60%;
- border-top-right-radius: 25px;
- border-top-left-radius: 25px;
-  background-color: rgba(255, 255, 255, 0.3);
-}
-.infoBox__bottom{
-  width: 100%;
-  height: 40%;
-  border-bottom-right-radius: 25px;
-  border-bottom-left-radius: 25px;
-  background-color: rgba(255, 255, 255, 0.6);
-}
-.navbar > div > div > ul{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  color: #222222;
-  list-style: none;
+.minNav{
+    height: 13%;
 }
 
-.navbar li{
-  padding-left: 4%;
-  padding-right: 4%;
-  text-align: center;
+.infoBox {
+    width: 540px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.navbar a{
-  color: #222222;
-  text-decoration: none;
-}
-.navbar a:visited{
-  color: #222222;
+.infoBox__top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60%;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
-.userInfo{
-  font-size: 24px;
-  font-weight: bold;
-  color: #222222;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.infoBox__bottom {
+    width: 100%;
+    height: 40%;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.6);
 }
-.userDropDown{
-  cursor: pointer;
+
+.navbar > div > div > ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    color: #222222;
+    list-style: none;
 }
-.colorDiv{
-  width: 100px;
-  height: 30px;
-  background-color: #a8a8a8;
-  border-radius: 4px;
-  position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  right: 20px;
-  bottom: 20px;
-  cursor: pointer;
+
+.navbar li {
+    padding-left: 4%;
+    padding-right: 4%;
+    text-align: center;
 }
-.colorDiv:hover{
-  opacity: .5;
+
+.navbar a {
+    color: #222222;
+    text-decoration: none;
 }
-.colorBtn{
-  color: white;
+
+.navbar a:visited {
+    color: #222222;
 }
-#subMenu{
-  position: sticky;
-  top: 28%;
-  height: 0px;
-  background-color: inherit;
-  border-radius: 10px;
-  transition: all 0.5s;
-  z-index: 2;
+
+.userInfo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-#subMenu ul{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.userDropDown {
+    cursor: pointer;
 }
-#subMenu li{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0;
-  text-align: center;
-  background-color: white;
-  color: #222222;
-  cursor: pointer;
-  border: 1px solid #cfcfcf;
-  border-radius: 10px;
+
+.colorDiv {
+    width: 100px;
+    height: 30px;
+    background-color: #a8a8a8;
+    border-radius: 4px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 20px;
+    bottom: 20px;
+    cursor: pointer;
 }
-#subMenu li > div:not(.colorRow, .colorHead){
-  width: 100%;
+
+.colorDiv:hover {
+    opacity: .5;
 }
-#subMenu li > div:hover:not(.colorRow, .colorHead){
-  background-color: #8e8e8e;
-  opacity: 0.5;
+
+.colorBtn {
+    color: white;
 }
-#subMenu ul li:first-child{
-  width: 150px;
-  height: 25px;
-  display: none;
-  position: absolute;
-  top: -150px;
-  right: calc(50% - 240px);
+
+#subMenu {
+    position: sticky;
+    top: 28%;
+    height: 0px;
+    background-color: inherit;
+    border-radius: 10px;
+    transition: all 0.5s;
+    z-index: 2;
 }
-#subMenu ul li:last-child{
-  width: 250px;
-  height: 350px;
-  display: none;
-  position: absolute;
-  top: 10px;
-  right: 1%;
-  padding: 5px;
+
+#subMenu ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.userSub__logout{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.userSub, .bgSub {
+    position: absolute;
+    left: 10px;
+    top: 30px;
+    font-weight: normal;
+    font-size: 14px;
+    width: 100px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px 5px;
+    text-align: center;
+    background-color: white;
+    color: #222222;
+    cursor: pointer;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    z-index: 2;
 }
-.colorHead{
-  font-size: 14px;
-  font-weight: bold;
-  width: 200px;
-  height: 30px;
-  text-align: left;
-  padding-left: 20px;
-  cursor: default;
+.bgSub{
+    width: 150px;
+    position: absolute;
+    display: none;
+    top: calc(100% + 5px);
+    left: calc(92% - 170px);
 }
-.colorRow{
-  display: flex;
-  justify-content: center;
-  cursor: default;
+.userSub__logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.colorRow div{
-  margin: 10px 15px 10px 15px;
-  border-radius: 100px;
-  width: 40px;
-  height: 40px;
-  background-color: darkslateblue;
+
+.colorHead {
+    font-size: 14px;
+    font-weight: bold;
+    width: 200px;
+    height: 30px;
+    text-align: left;
+    padding: 15px 0 0 20px;
+    cursor: default;
 }
-.colorRow div:hover{
-  cursor: pointer;
-  opacity: 0.5;
+
+.colorRow {
+    display: flex;
+    justify-content: center;
+    cursor: default;
 }
+
+.colorRow div {
+    margin: 10px 15px 10px 15px;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    background-color: darkslateblue;
+}
+
+.colorRow div:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+.minNav .userSub{
+    top: 40px;
+    left: -70px;
+}
+.minNav .bgSub{
+    bottom: -510px;
+    left: calc(92% - 320px);
+}
+/*#subMenu li > div:not(.colorRow, .colorHead) {
+    width: 100%;
+}
+
+#subMenu li > div:hover:not(.colorRow, .colorHead) {
+    background-color: #8e8e8e;
+    opacity: 0.5;
+}*/
+
+/*#subMenu ul li:first-child {
+    width: 150px;
+    height: 25px;
+    display: none;
+    position: absolute;
+    top: -150px;
+    right: calc(50% - 240px);
+}
+
+#subMenu ul li:last-child {
+    width: 250px;
+    height: 350px;
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 1%;
+    padding: 5px;
+}*/
+
+
 
 /* 스크롤바 */
 ::-webkit-scrollbar {
-  width: 6px; /* THIS WILL RESET THE DEFAULT SCORLLBAR STYLING */
-  height: 10px;
+    width: 6px; /* THIS WILL RESET THE DEFAULT SCORLLBAR STYLING */
+    height: 10px;
 }
 
 /* TO STYLE THE SCROLLBAR TRACK */
 ::-webkit-scrollbar-track {
-  background-color: #e3e3e3; /* THIS WILL SET THE COLOR OF THE SCROLLBAR TRACK */
-  border-radius: 10px;
+    background-color: #e3e3e3; /* THIS WILL SET THE COLOR OF THE SCROLLBAR TRACK */
+    border-radius: 10px;
 }
 
 /* TO STYLE THE SCROLLBAR THUMB */
 ::-webkit-scrollbar-thumb {
-  background-color: #a9a9a9;
-  border-radius: 10px;
+    background-color: #a9a9a9;
+    border-radius: 10px;
 }

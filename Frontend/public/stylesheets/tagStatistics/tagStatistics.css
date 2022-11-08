@@ -2,9 +2,6 @@ html{
     background-color: white;
     height: 95%;
 }
-#mainMenu{
-    min-height: 200px;
-}
 .wrapper{
     height: 65%;
     min-height: 460px;

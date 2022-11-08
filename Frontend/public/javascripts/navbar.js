@@ -2,7 +2,6 @@
 //서브메뉴 닫는 이벤트리스너
 document.getElementsByClassName('wrapper')[0].addEventListener('mousedown', closeSub);
 document.getElementById('mainMenu').addEventListener('mousedown', closeSub);
-document.getElementById('subMenu').addEventListener('mousedown', closeSub);
 
 
 //서브메뉴 닫는 함수
@@ -21,7 +20,7 @@ function closeSub(event){
 function userSub() {
     document.getElementsByClassName('bgSub')[0].style.display = 'none';
 
-    let userSub = document.getElementsByClassName('userSub')[0];
+    let userSub = document.querySelector('.userSub');
     if (userSub.style.display == 'flex') {
         userSub.style.display = 'none';
     }
@@ -84,10 +83,9 @@ function minimize(){
     const bgSub = document.getElementById('bgSub');
     const menuTabBox = document.getElementsByClassName('infoBox__bottom')[0];
 
-    wrapper.style.height = '79%'
+    mainMenu.classList.add('minNav')
+    wrapper.style.height = '87%'
 
-    mainMenu.style.transition = 'all 0.3s ease-in-out';
-    mainMenu.style.height = '100px';
 
     menuTabBox.style.borderRadius = '25px';
     userInfo.style.borderRadius = '0px';
@@ -105,9 +103,9 @@ function minimize(){
 
     userInfo.remove();
     mainMenu.appendChild(userInfo)
+    let wrapperHeight = document.querySelector('.wrapper').offsetHeight
+    calendar.setOption('height', wrapperHeight * 1.1)
 
-    bgSub.style.top = '-165px'
-    bgSub.style.right = '118px'
 
 
 }
