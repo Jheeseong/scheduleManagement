@@ -41,7 +41,8 @@ function closeModal(event, modal) {
         /* 체크박스 및 카카오맵 모달 해제 */
         mapModal.classList.remove('show');
         
-        /* 빈값일 때 메세지 display 변경 */
+        /* 빈값일 때 메세지 및 테이블 display 변경 */
+        document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'table'
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'none'
     }
 
@@ -70,14 +71,16 @@ function openListModal(selectedEventList, infoDate) {
     let str = '';
     for (let i = 0; i < selectedEventList.length; i++) {
         str += '<tr>';
-        str += '<td><input id="statusCb" type="checkbox" onchange="updateStatus(\'' + selectedEventList[i].id + '\', this)"></td>';
         str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + selectedEventList[i].title + '</td>';
         str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + getDate(selectedEventList[i].start) + '</td>';
         str += '<td onclick="openDetailModal(\'' + selectedEventList[i].id + '\')">' + getDate(selectedEventList[i].end) + '</td>';
         str += '</tr>';
     }
     tbodyTag.innerHTML = str;
+    /* 해당 날짜에 일정이 없을 때 */
     if(selectedEventList.length == 0){
+        console.log(123)
+        document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'none'
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'flex'
     }
 
@@ -114,6 +117,8 @@ function updateStatus(id, cb){
 }
 /* 일정 목록 정렬 */
 function sortList(item, order) {
+    console.log('item: ' + item)
+    console.log('order: ' + order)
     /* tr 배열 */
     let rows = document.querySelectorAll('.scheduleTable tbody tr')
     /* 정렬을 위한 배열 */
@@ -121,6 +126,7 @@ function sortList(item, order) {
     for (let i = 0; i < rows.length; i++) {
         arr.push(rows[i])
     }
+
     let condition
     arr.sort((a, b) => {
         switch (item) {
@@ -149,7 +155,6 @@ function sortList(item, order) {
     for (let i = 0; i < arr.length; i++) {
         onclick = arr[i].getAttribute('onclick');
         str += '<tr onclick="' + onclick + '">' + arr[i].innerHTML + '</tr>'
-        console.log('tr : ' + str)
     }
     document.querySelector('#scheduleTbody').innerHTML = str;
 
@@ -208,6 +213,11 @@ function openDetailModal(scheduleId) {
         = '<label>일정 제목</label>'
         + '<div id="scheduleName" class="scheduleName"></div>';
 
+    /* 일정상태 */
+    document.getElementsByClassName('scheduleStatusDiv')[0].innerHTML
+        = '<label>일정 상태</label>'
+        + '<div id="scheduleStatus" class="scheduleStatus"></div>';
+
     /* 일정내용 */
     document.getElementsByClassName('scheduleContentDiv')[0].innerHTML
         = '<label>일정 내용</label>'
@@ -265,6 +275,9 @@ function openDetailModal(scheduleId) {
 
             /* 일정제목 */
             document.getElementById('scheduleName').innerText = res.schedule.title;
+
+            /* 일정상태 */
+            document.getElementById('scheduleStatus').innerText = res.schedule.status ? '완료' : '미완료';
 
             /* 일정내용 */
             document.getElementById('scheduleContent').innerText = res.schedule.content;
@@ -343,6 +356,14 @@ function openCreateModal(infoDate) {
         = '<label>일정 제목</label>'
         + '<input type="text" id="scheduleName" class="scheduleName">';
 
+    /* 일정상태 */
+    document.getElementsByClassName('scheduleStatusDiv')[0].innerHTML
+        = '<label>일정 상태</label>'
+        + '<select type="text" id="scheduleStatus" class="scheduleStatus">' +
+        '<option value="false">미완료</option>' +
+        '<option value="true">완료</option>' +
+        '</select>';
+
     /* 일정내용 */
     document.getElementsByClassName('scheduleContentDiv')[0].innerHTML
         = '<label>일정 내용</label>'
@@ -412,8 +433,11 @@ function openEditModal(scheduleId) {
             document.getElementById('endDate').type = 'datetime-local';
             document.getElementById('endDate').value = res.schedule.endDate.substring(0, 16);
 
-            /* 제목, 내용, 우선순위, 주소 */
+            /* 제목, 상태, 내용, 우선순위, 주소 */
             document.getElementById('scheduleName').value = res.schedule.title;
+            let statusOptions = document.getElementById('scheduleStatus').children;
+            console.log('status: ' + res.schedule.status)
+            res.schedule.status ? statusOptions[1].selected = true : statusOptions[0].selected = true;
             document.getElementById('scheduleContent').value = res.schedule.content;
             document.getElementById('schedulePriority').value = res.schedule.priority;
             document.getElementById('addrInput').value = res.schedule.address;
@@ -468,17 +492,17 @@ function editSchedule(scheduleId) {
     for (let i = 0; i < tagValue.length; i++) {
         arrayTag.push(tagValue[i].getAttribute('value'))
     }
-
     const schedules = {
         startDate: setTime(document.getElementById('startDate').value),
         endDate: setTime(document.getElementById('endDate').value),
         title: document.getElementById('scheduleName').value,
+        status: document.getElementById('scheduleStatus').value,
         content: document.getElementById('scheduleContent').value,
         priority: document.getElementById('schedulePriority').value,
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
-
+    console.log('status1111111111111111 : ' + schedules.status)
     if (schedules.startDate > schedules.endDate) {
         alert('시작일, 종료일을 다시 확인해주세요.')
         return
@@ -557,11 +581,13 @@ function saveSchedule() {
         startDate: setTime(document.getElementById('startDate').value),
         endDate: setTime(document.getElementById('endDate').value),
         title: document.getElementById('scheduleName').value,
+        status: document.getElementById('scheduleStatus').value,
         content: document.getElementById('scheduleContent').value,
         priority: document.getElementById('schedulePriority').value,
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
+    console.log('status: ' + schedules.status)
     if (schedules.startDate > schedules.endDate) {
         alert('시작일, 종료일을 다시 확인해주세요.')
         return

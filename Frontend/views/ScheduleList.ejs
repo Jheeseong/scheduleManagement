@@ -1,29 +1,35 @@
 <div class="modal_schedule modal_schedule--list">
     <div class="modal_schedule_body">
-        <div class="modal_schedule_body_top">일정 목록</div>
-        <div class="modal_schedule_body_mid">
-            <div class="scheduleAdd">
-                <div class="scheduleAdd__div" onclick="openCreateModal()">
+        <div class="modal_schedule_body_top">
+            일정 목록
+        </div>
+        <div class="scheduleAdd">
+            <div class="scheduleAdd__div" onclick="openCreateModal()">
+                <button class="addBtn">
                     <i class="fa-solid fa-plus"></i>
                     일정 추가
-                </div>
+                </button>
             </div>
+        </div>
+        <div class="modal_schedule_body_mid">
             <div class="scheduleTableDiv">
                 <table class="scheduleTable">
                     <colgroup>
                     </colgroup>
                     <thead>
                     <tr>
-                        <th></th>
-                        <th onclick="sortList('title', 'asc')">일정명 <i class="fa-solid fa-sort fa-2xs"></i></th>
-                        <th onclick="sortList('startDate', 'asc')">시작일 <i class="fa-solid fa-sort fa-2xs"></i></th>
-                        <th onclick="sortList('endDate', 'asc')">종료일 <i class="fa-solid fa-sort fa-2xs"></i></th>
+                        <th onclick="sortList('title', 'asc')"><span>일정명 <i class="fa-solid fa-sort fa-2xs"></i></span>
+                        </th>
+                        <th onclick="sortList('startDate', 'asc')"><span>시작일 <i
+                                        class="fa-solid fa-sort fa-2xs"></i></span></th>
+                        <th onclick="sortList('endDate', 'asc')"><span>종료일 <i
+                                        class="fa-solid fa-sort fa-2xs"></i></span></th>
                     </tr>
                     </thead>
                     <tbody id="scheduleTbody">
                     </tbody>
                 </table>
-                <div class="emptyMessageDiv">해당 날짜에 일정이 없습니다.</div>
+                <div class="emptyMessageDiv" style="display: none">해당 날짜에 일정이 없습니다.</div>
             </div>
         </div>
         <div class="scheduleBtnDiv">

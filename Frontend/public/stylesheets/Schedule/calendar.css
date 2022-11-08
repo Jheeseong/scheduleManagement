@@ -51,8 +51,6 @@
 
 .scheduleAdd > div{
     cursor: pointer;
-    display: inline-block;
-    margin-right: 5%;
 }
 
 .categoryTab{
@@ -135,9 +133,12 @@
     z-index: 3;
     color: #575757;
 }
-/*.modal_schedule--edit {
+.modal_schedule--list .modal_schedule_body{
+    max-height: 554px;
+}
+.modal_schedule--edit {
     background-color: inherit;
-}*/
+}
 .modal_schedule.show {
     display: flex;
     justify-content: center;
@@ -149,8 +150,8 @@
     align-items: center;
     flex-direction: column;
     width: 610px;
-    height: 605px;
-    padding: 30px 40px;
+    height: fit-content;
+    padding: 0 40px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
@@ -166,24 +167,44 @@
     flex-direction: column;
 }
 .modal_schedule_body_top{
-    font-size: 24px;
+    height: 15%;
+    padding: 20px 0;
+    font-size: 18px;
     font-weight: bold;
-    height: 10%;
+    height: fit-content;
+    width: 100%;
+    text-align: center;
 }
 .modal_schedule_body_mid{
     width:100%;
-    height: 90%;
+    height: 85%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow-y: hidden;
 }
-.modal_schedule_body input:not(.scheduleTag), .tagDiv{
+.scheduleAdd{
+    width: 100%;
+    text-align: right;
+    height: 5%;
+}
+.scheduleBtnDiv{
+    height: 10%;
+    bottom: 0px;
+    padding: 20px 0;
+}
+
+.modal_schedule_body input:not(.scheduleTag), .tagDiv, select{
     border: 1px solid rgb(213, 213, 213);
     border-radius: 6px;
     width: 220px;
     height: 30px;
     padding: 5px 16px;
+}
+.modal_schedule_body select, .modal_schedule_body option{
+    width: 254px;
+    height: 40px;
 }
 #schedulePriority{
     padding: 0;
@@ -232,18 +253,38 @@
 .modal_schedule_body_mid .scheduleTableDiv{
     display: flex;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }
-.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv{
-    display: none;
+.modal_schedule_body_mid:hover .scheduleTableDiv{
+    overflow-y: auto;
+    overflow-y: overlay;
+}
+.addBtn{
+    color: inherit;
+    background-color: inherit;
+    margin: 0;
 }
 .scheduleTable{
     width: 100%;
     text-align: center;
     border-collapse: collapse;
+}
+.scheduleTable thead th span{
+    position: relative;
+}
+.scheduleTable .fa-sort{
+    position: absolute;
+    right: -10px;
+    top: 50%;
+}
+.scheduleTable tr{
+    height: 30px;
+}
+.scheduleTable thead tr{
+    height: 40px;
 }
 #scheduleTbody tr:hover{
     background-color: #8e8e8e;

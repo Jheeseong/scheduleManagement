@@ -234,7 +234,7 @@ function setChart(tagData) {
                         '#40A4D8',
                         '#A363D9',
                     ],
-                    hoverOffset: 20,
+                    hoverOffset: 10,
                     borderColor: [],
                     borderWidth: 0 //경계선 굵기
                 }
@@ -255,7 +255,6 @@ function setChart(tagData) {
                     }
                 }
             },
-            maintainAspectRatio :false,
             radius: '90%',
             plugins: {
                 legend: {
