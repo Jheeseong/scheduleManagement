@@ -44,6 +44,17 @@ function findTagSchedule(tagId, event) {
         }
     })
 }
+function stringCut(text) {
+    let title;
+    if (text.length > 10) {
+        title = text.substring(0, 10);
+        title += '...';
+    } else {
+        title = text
+    }
+    return title;
+}
+
 /*ejs에 스케줄 리스트를 작성하는 함수*/
 function updateScheduleList(schedules) {
     const scheduleListCnt = document.querySelector('.scheduleList_cnt')
@@ -60,7 +71,7 @@ function updateScheduleList(schedules) {
         myScheduleTable.innerHTML +=
             '<tr class="MyScheduleList_tr" onclick="findScheduleTag(\'' + result._id + '\', this)">' +
             `<td>${(result.status==false ? "미완료" : "완료")}</td>` +
-            `<td>${result.title}</td>` +
+            `<td>${stringCut(result.title)}</td>` +
             `<td>${result.content}</td>` +
             `<td>${date}</td>` +
             '</tr>'
@@ -117,7 +128,7 @@ function findScheduleTag(scheduleId, event) {
             const tagContentTop = document.querySelector('.tagContent__top > div > .selectTitle')
             tagContentTop.innerHTML =
                 '<div>선택 일정</div>' +
-                '<span>' + res.schedule.title +'</span>'
+                '<span>' + stringCut(res.schedule.title) +'</span>'
         },
         error: function (err) {
             window.alert("스케줄을 찾지 못하였습니다.")
@@ -144,7 +155,7 @@ function updateTagList(tags) {
             '<td><div style="width: 48%;margin: 0 auto;border-radius: 20px;overflow: hidden">' +
             '<span style="display:inline-block; text-align: left; line-height: 19px; height: 66.6%;width: 98%;border-radius: 20px;background-color: #c7c7c7">' +
             '<span style="text-align: center ; display:inline-block; border-radius: 20px;height: 100%;width:'+ ((result.count/allCnt) * 100).toFixed(1) +'%; background-color: #0098fe;line-height: 19px">' +
-            '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; height: 100%; line-height: 19px; min-width: 185px;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
+            '<span class="MemberProgressText" style="color: rgb(255, 255, 255); display: inline-block; text-align: center; height: 100%; line-height: 19px; min-width: 135px;">' + ((result.count/allCnt) * 100).toFixed(1) + '</span>' +
             '</span></span></div></td>' +
             `<td>${result.count + " / " + allCnt}</td>` +
             '</tr>'

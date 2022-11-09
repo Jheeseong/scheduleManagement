@@ -36,7 +36,6 @@ const UserController = {
     saveNavSize: async (req, res) => {
         try {
             const navSize = req.body.navSize
-            console.log(navSize);
             await User.updateOne({userId: req.user.userId}, {$set: {navSize: navSize}})
             res.json({finduser: true})
         } catch (err) {
