@@ -3,6 +3,12 @@ const NaverStrategy = require("passport-naver").Strategy;
 const {User} = require("../../models/User");
 const KakaoStrategy = require("passport-kakao").Strategy;
 const APILogin = {
+    /**
+    * 담당자 : 정희성
+    * 함수 내용 : 네이버 API를 이용하여 회원가입 및 로그인이 가능하도록 해주는 기능
+    * 주요 기능 : NaverStrategy 메서드를 통해 API에 접근하는 기능
+     *          DB에 유저 정보 판단 후 회원가입하거나 로그인해주는 기능
+    **/
     naver: () => {
         passport.use('naver', new NaverStrategy({
                 clientID: 'BVv6U8x0QoAKfDCQ7oEd',
@@ -48,6 +54,12 @@ const APILogin = {
             }
         ))
     },
+    /**
+     * 담당자 : 정희성
+     * 함수 내용 : 카카오 API를 이용하여 회원가입 및 로그인이 가능하도록 해주는 기능
+     * 주요 기능 : kakaoStrategy 메서드를 통해 API에 접근하는 기능
+     *          DB에 유저 정보 판단 후 회원가입하거나 로그인해주는 기능
+     **/
     kakao: () => {
         passport.use('kakao', new KakaoStrategy({
                 clientID: '941ab44d8d5922a8de9febca39bd28f2',

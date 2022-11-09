@@ -1,6 +1,11 @@
 const { Log } = require('../models/Log')
 
 const LogController = {
+    /**
+    * 담당자 : 정희성
+    * 함수 내용 : 일정 혹은 카테고리가 생성, 수정, 삭제 시 로그를 저장하는 함수
+    * 주요 기능 : 일정 혹은 카테고리의 활동 로그를 저장하는 기능
+    **/
     saveLog: async (param) => {
         try {
             const log = new Log({
@@ -18,6 +23,13 @@ const LogController = {
             throw new Error(err)
         }
     },
+    /**
+    * 담당자 : 정희성
+    * 함수 내용 : 활동 로그들을 불러오는 함수
+    * 주요 기능 : 일정 혹은 카테고리의 생성, 변경, 삭제 로그를 불러오는 기능
+     *          카테고리 공유 중인 유저들에게도 로그를 보여주는 기능
+     *          페이징을 통해 한번 당 20개씩 보이도록 하는 기능
+    **/
     findMyLog: async (req, res) => {
         try {
             let page = req.params.page

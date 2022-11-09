@@ -1,3 +1,10 @@
+/**
+* 담당자 : 정희성
+* 함수 내용 : 로그인 라우터
+* 주요 기능 : naver 혹은 kakao로 로그인하는 passport 함수와 url 연결 기능
+ *          isLoggedIn 함수를 통해 이미 로그인 하였는지 여부를 판단하는 기능
+ *          authenticate 메서드를 통해 해달 API에 로그인하는 기능
+**/
 const express = require('express');
 const router = express.Router();
 const isLoggedIn = require('../config/passport/Middleware').isLoggedIn;

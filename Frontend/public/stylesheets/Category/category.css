@@ -55,6 +55,20 @@
     width: 220px;
     height: 30px;
 }
+/*.modal_adduser_button {
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: #0098fe;
+    color: white;
+    border-radius: 6px;
+    padding: 3px 10px 10px 3px;
+}*/
+.modal_adduser_search_button{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .modal_category_body_mid > div{
     width: 100%;
     padding: 10px 0;

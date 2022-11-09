@@ -47,10 +47,12 @@
                         <div class="modal_adduser_body_close">
                             <i class="fa-solid fa-x" onclick="closeAddUserModal()" style="cursor: pointer"></i>
                         </div>
-                        <div class="modal_adduser_search">
-                            <input type="text" class="searchUser" id="searchUser" onkeyup="searchAddUser()" placeholder="이름 혹은 이메일로 검색하세요">
+                        <div class="modal_adduser_search_button">
+                            <div class="modal_adduser_search">
+                                <input type="text" class="searchUser" id="searchUser" onkeyup="searchAddUser()" placeholder="이름 혹은 이메일로 검색하세요">
+                            </div>
+                            <button class="modal_adduser_button" onclick="getCheckboxAddUser()">확인</button>
                         </div>
-                        <div class="modal_adduser_button" onclick="getCheckboxAddUser()">확인</div>
                     </div>
                     <div class="modal_adduser_body_mid">
                         <div class="modal_adduser_userList"></div>

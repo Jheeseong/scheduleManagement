@@ -1,3 +1,8 @@
+/**
+* 담당자 : 정희성, 배도훈
+* 함수 내용 : 활동 로그 스키마
+* 주요 기능 : 생성자 및 공유해중 유저에 유저 스키마 매핑
+**/
 const mongoose = require('mongoose')
 
 const LogSchema = mongoose.Schema({

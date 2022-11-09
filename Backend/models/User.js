@@ -1,3 +1,8 @@
+/**
+* 담당자 : 정희성, 배도훈
+* 함수 내용 : 유저 스키마
+* 주요 기능 : 유저 스키마
+**/
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({

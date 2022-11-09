@@ -1,3 +1,8 @@
+/**
+* 담당자 : 배도훈
+* 함수 내용 :
+* 주요 기능 :
+**/
 const express = require('express');
 const router = express.Router();
 const checkLogIn = require('../config/passport/Middleware').checkLogIn

@@ -5,9 +5,16 @@ const AdduserModal = document.querySelector('.modal_adduser_body')
 /* 배경 클릭 시 모달창 닫는 이벤트리스너 */
 categoryModal.addEventListener('mousedown', closeCategoryModal)
 
+/**
+ * 담당자 : 정희성
+ * 함수 내용 : 카테고리 모달창 외 클릭 시 모달창 종료 함수
+ * 주요 기능 : 카테고리 모달창 종료 기능
+ *          카테고리 내 남아있는 데이터 초기화
+ **/
 function closeCategoryModal(event){
     const tagListDiv = document.querySelector('.AddUserTagListDiv');
     const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');
+    const categoryTag = document.querySelector('.categoryTag')
 
     if(event.currentTarget == event.target){
         categoryModal.classList.remove('show');
@@ -17,17 +24,26 @@ function closeCategoryModal(event){
         document.getElementById('categoryName').value = "";
         tagListDiv.innerHTML = '';
         AdduserMid.innerHTML = '';
+        categoryTag.value = '';
         userModal.classList.remove('show');
     }
 }
 
+/**
+* 담당자 : 정희성
+* 함수 내용 : 카테고리 생성 모달창 실행 함수
+* 주요 기능 : 카테고리 생성 모달창 실행 기능
+ *          저장 클릭 시 작성한 내용으로 카테고리 생성 기능
+ *          닫기 클릭 시 모달창 종료 기능
+ *          불러온 모든 태그들을 localStorage에 저장되는 기능
+**/
 /*카테고리 생성 모달창*/
 function openCategoryModal() {
     const categoryTop = document.querySelector('.modal_category_body_top')
     const categoryBtn = document.querySelector('.categoryBtnDiv');
 
     categoryTop.innerText = '카테고리 생성'
-categoryBtn.innerHTML =
+    categoryBtn.innerHTML =
         '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
         `<button onclick='saveCategory()'>저장</button>`
     $.ajax({
@@ -39,6 +55,7 @@ categoryBtn.innerHTML =
             res.tags.map((result) => {
                 tagList.push(result.content)
             })
+            /*태그들을 localStorage에 저장*/
             localStorage.setItem('content', JSON.stringify(tagList))
         },
         error: function (err) {
@@ -53,13 +70,20 @@ categoryBtn.innerHTML =
         body.style.overflow = 'auto';
     }
 }
-
+/**
+* 담당자 : 정희성
+* 함수 내용 : 카테고리 편집 모달 실행 함수
+* 주요 기능 : 클릭한 카테고리의 정보를 바인딩하는 기능
+ *          수정 클릭 시 작성한 내용으로 수정되는 기능
+ *          불러온 모든 태그를 localStroage에 저장 기능
+**/
 function openUpdateCategoryModal(id) {
     const tagListDiv = document.querySelector('.AddUserTagListDiv');
     const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');
     const categoryBtn = document.querySelector('.categoryBtnDiv');
     const categoryTop = document.querySelector('.modal_category_body_top')
 
+    /*카테고리에 있는 태그를 불러온 후 localStorage에 저장*/
     $.ajax({
         type: 'POST',
         url: 'schedule/tagsearch',
@@ -76,6 +100,7 @@ function openUpdateCategoryModal(id) {
             console.log(err)
         }
     })
+    /*해당 카테고리를 수정 모달에 바인딩*/
     $.ajax({
         type: 'POST',
         url: 'category/findById/' + id,
@@ -90,10 +115,12 @@ function openUpdateCategoryModal(id) {
                     '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
                     '</div>'
             })
+            /*공유 유저가 있을 시 옆에 추가 모달 표시*/
             if (res.category.userInfo.length !== 0) {
                 document.getElementById('userCheckbox').checked = true;
                 userModal.classList.add('show');
             }
+            /*공유 유저 바인딩*/
             AdduserMid.innerHTML = ''
             res.category.userInfo.map((result) => {
                 AdduserMid.innerHTML += '<div class ="addUserDiv ' + result.name + '" value = "'+ result._id + '">' +
@@ -121,7 +148,11 @@ function openUpdateCategoryModal(id) {
         body.style.overflow = 'auto';
     }
 }
-
+/**
+* 담당자 : 정희성
+* 함수 내용 : 공유 유저 모달창 실행 함수
+* 주요 기능 : 공유 유저 모달창 띄어주는 기능
+**/
 /*공유 유저 모달창*/
 function addUserToggle() {
     let userChecked = document.getElementById('userCheckbox').checked;
@@ -133,6 +164,11 @@ function addUserToggle() {
     }
 }
 
+/**
+* 담당자 : 정희성
+* 함수 내용 : 작성된 카테고리 내용을 저장하는 함수
+* 주요 기능 : 작성된 카테고리 내용을 DB에 저장하기위해 해당 url로 전송하는 기능
+**/
 /*카테고리 저장 기능*/
 function saveCategory() {
     const categoryTagValue = document.getElementsByClassName('AddUserTagValue')
@@ -146,6 +182,7 @@ function saveCategory() {
 
     const arrayCategoryUser = [];
 
+    /*체크된 공유 유저의 id 값도 전달*/
     if (userChecked) {
         for (let i = 0; i < categoryUserValue.length; i++) {
             arrayCategoryUser.push(categoryUserValue[i].getAttribute('value'))
@@ -158,7 +195,7 @@ function saveCategory() {
         tagName: arrayCategoryTag,
         userName: arrayCategoryUser
     }
-
+    /*카테고리 저장*/
     $.ajax({
         type: 'POST',
         data: categories,
@@ -175,7 +212,11 @@ function saveCategory() {
         },
     })
 }
-
+/**
+* 담당자 : 정희성
+* 함수 내용 : 카테고리 수정 함수
+* 주요 기능 : 작성된 카테고리 내용으로 수정하기 위해 해당 url로 전송하는 기능
+**/
 /*카테고리 수정 기능*/
 function categoryUpdate(id) {
     const categoryTagValue = document.getElementsByClassName('AddUserTagValue')
@@ -188,7 +229,7 @@ function categoryUpdate(id) {
 
     const categoryUserValue = document.getElementsByClassName('addUserDiv')
     const arrayCategoryUser = [];
-
+    /*체크된 공유 유저 id 값 전달*/
     if (userChecked) {
         for (let i = 0; i < categoryUserValue.length; i++) {
             arrayCategoryUser.push(categoryUserValue[i].getAttribute('value'));
@@ -200,7 +241,7 @@ function categoryUpdate(id) {
         tagName: arrayCategoryTag,
         userName: arrayCategoryUser
     };
-
+    /*카테고리 수정*/
     $.ajax({
         type: 'POST',
         data: categories,
@@ -219,6 +260,13 @@ function categoryUpdate(id) {
 
 }
 
+/**
+* 담당자 : 정희성
+* 함수 내용 : 카테고리 삭제 함수
+* 주요 기능 : 해당 카테고리 삭제 시 confirm을 통해 확인하는 기능
+ *          해당 카테고리를 삭제하는 기능
+ *          삭제 후 reload하는 기능
+**/
 /*카테고리 삭제 기능*/
 function categoryDelete(id) {
     if (window.confirm("정말 카테고리를 삭제하시겠습니까?") === true) {

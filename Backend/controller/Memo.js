@@ -4,6 +4,11 @@ const TagController = require("./Tag");
 const LogController = require("./Log");
 
 const memoController = {
+    /**
+    * 담당자 : 배도훈
+    * 함수 내용 :
+    * 주요 기능 :
+    **/
     findMemoList: async (req, res) => {
         try {
             const userId = req.user._id;
@@ -15,6 +20,11 @@ const memoController = {
             res.json({findmemo: false, err: err})
         }
     },
+    /**
+    * 담당자 : 배도훈
+    * 함수 내용 :
+    * 주요 기능 :
+    **/
     saveMemo: async (req, res) => {
         try {
             const memo = new Memo({
@@ -42,6 +52,11 @@ const memoController = {
             return res.status(400).json({memoSuccess: false, message:"메모 등록 실패",err: err})
         }
     },
+    /**
+    * 담당자 : 배도훈
+    * 함수 내용 :
+    * 주요 기능 :
+    **/
     findMemoDetail: async (req, res) => {
         try {
             let memo = await Memo.findOne({_id: req.params.id})
@@ -52,6 +67,11 @@ const memoController = {
             res.json({findmemo: false, err: err})
         }
     },
+    /**
+    * 담당자 : 배도훈
+    * 함수 내용 :
+    * 주요 기능 :
+    **/
     updateMemo: async (req, res) => {
         try {
             let memo = await Memo.findOne({_id: req.params.id})
@@ -75,6 +95,11 @@ const memoController = {
             return res.status(400).json({memoSuccess: false, message:"메모 등록 실패",err: err})
         }
     },
+    /**
+    * 담당자 : 배도훈
+    * 함수 내용 :
+    * 주요 기능 :
+    **/
     deleteMemo: async (req, res) => {
         try {
             let memo = await Memo.findOne({_id: req.params.id})
