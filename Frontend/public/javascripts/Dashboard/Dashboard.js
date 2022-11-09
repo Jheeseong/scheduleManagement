@@ -444,7 +444,7 @@ function categoryInSchedule(id, creator) {
                 let str = '';
                 str += '<div class="scheduleRow" onclick="detailSchedule(\'' + schedule._id + '\',event)" id="scheduleRow' + index + '">';
                 str += '<div class="scheduleTitle">';
-                str += '<div class="' + cbClasses + '" id="cb' + index + '" value="\'' + schedule._id + '\'"><i class="fa-solid fa-check fa-2xs"></i></div>' + schedule.title;
+                str += '<div class="' + cbClasses + '" id="cb' + index + '" value="\'' + schedule._id + '\'"><i class="fa-solid fa-check fa-2xs"></i></div>' + '<span>' + schedule.title + '</span>';
                 str += '</div>';
                 str += '<div>';
                 str += '<i class="fa-regular fa-calendar"></i> ' + setDate(schedule.startDate) + ' ~ ' + setDate(schedule.endDate);
@@ -458,10 +458,18 @@ function categoryInSchedule(id, creator) {
                 }
             })
 
-            const selectCategory = document.querySelector('.selectCategory')
+            let title;
+            if (res.category.title.length > 10) {
+                title = res.category.title.substring(0, 10);
+                title += '...';
+            } else {
+                title = res.category.title
+            }
+
+            const selectCategory = document.querySelector('.selectCategory');
             selectCategory.innerHTML =
                 '<div>선택 카테고리</div>' +
-                '<span>' + res.category.title + '</span>'
+                '<span>' + title + '</span>'
 
             document.querySelector('.scheduleList.incomplete').innerHTML = incomplete;
             document.querySelector('.scheduleList.complete').innerHTML = complete;

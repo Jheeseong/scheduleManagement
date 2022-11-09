@@ -100,7 +100,7 @@ html, body, .wrapper{
     align-items: center;
     padding: 15px 20px;
 }
-.categoryList > .categoryRow > div:not(.categoryEditDiv, .categoryRow__user) {
+.categoryList > .categoryRow > div:not(.categoryEditDiv, .categoryRow__user, .categoryContent) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

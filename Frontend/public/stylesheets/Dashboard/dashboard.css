@@ -26,8 +26,9 @@ body{
     height: 30px;
 }
 
-.wrapper{
+.wrapper#dashboardWrapper{
     height: 90%;
+    min-width: 1360px;
 }
 .wrapper__form{
     flex-direction: row;
@@ -342,6 +343,13 @@ body{
     font-weight: bold;
     font-size: 16px;
 }
+.categoryTitle > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 130px;
+    height: 20px;
+}
 .categoryBottom{
     height: 60%;
     display: flex;
@@ -388,7 +396,6 @@ body{
     color: #0098fe;
     margin-right: 8px;
     font-size: 15px;
-
 }
 .selectCategory > div{
     font-weight: normal;
