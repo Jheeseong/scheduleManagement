@@ -24,7 +24,6 @@ body{
 }
 
 .wrapper#dashboardWrapper{
-    height: 90%;
     min-width: 1360px;
 }
 .wrapper__form{
