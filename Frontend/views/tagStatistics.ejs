@@ -15,7 +15,7 @@
 </head>
 <body>
 <%- include ('layout/navbar.ejs') %>
-<div class="wrapper">
+<div class="wrapper <% if (user.navSize == 'min') { %>maxWrapper<% } %>">
     <div class="wrapper__form">
         <div class="content" style="width: 40%">
             <div class="content--chart">

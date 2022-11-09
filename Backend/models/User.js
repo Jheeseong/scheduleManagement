@@ -28,6 +28,10 @@ const userSchema = mongoose.Schema({
     },
     menuColor: {
         type: String
+    },
+    navSize: {
+        type: String,
+        default: 'max'
     }
 })
 

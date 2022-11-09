@@ -3,12 +3,11 @@
 document.getElementsByClassName('wrapper')[0].addEventListener('mousedown', closeSub);
 document.getElementById('mainMenu').addEventListener('mousedown', closeSub);
 
-
 //서브메뉴 닫는 함수
-function closeSub(event){
+function closeSub(event) {
     let targetSubDiv = event.currentTarget.querySelectorAll('.fa-chevron-down, .fa-paint-roller, .colorDiv, .iconDiv, .subDiv, .subDiv div, .subDiv i')
-    for(let i = 0; i < targetSubDiv.length; i++){
-        if(event.target == targetSubDiv[i]){
+    for (let i = 0; i < targetSubDiv.length; i++) {
+        if (event.target == targetSubDiv[i]) {
             return;
         }
     }
@@ -23,8 +22,7 @@ function userSub() {
     let userSub = document.querySelector('.userSub');
     if (userSub.style.display == 'flex') {
         userSub.style.display = 'none';
-    }
-    else{
+    } else {
         userSub.style.display = 'flex';
     }
 
@@ -45,67 +43,88 @@ function bgSub() {
     let bgSub = document.getElementsByClassName('bgSub')[0];
     if (bgSub.style.display == 'flex') {
         bgSub.style.display = 'none';
-    }
-    else{
+    } else {
         bgSub.style.display = 'flex';
     }
 }
 
 let colorElement = document.getElementsByClassName('colorElement');
-for(let i = 0; i < colorElement.length; i++){
+for (let i = 0; i < colorElement.length; i++) {
     colorElement[i].addEventListener('click', function () {
         let selectedColor = colorElement[i].getAttribute('value');
         document.getElementsByClassName('navbar')[0].style.backgroundColor = selectedColor;
         $.ajax({
-            type:'post',
-            url:'/user/menuColor',
+            type: 'post',
+            url: '/user/menuColor',
             data: {
-                menuColor : selectedColor
+                menuColor: selectedColor
             },
-            dataType:'json',
-            success : function(data) {
+            dataType: 'json',
+            success: function (data) {
                 console.log(data)
                 console.log("send data !");
             },
-            error : function(err) {
+            error: function (err) {
                 console.log("failed : " + JSON.stringify(err));
             }
         });
     });
 }
 
-function minimize(){
-    const wrapper = document.getElementsByClassName('wrapper')[0];
-    const mainMenu = document.getElementById('mainMenu');
-    const colorBtn = document.getElementsByClassName('colorDiv')[0];
-    const colorIcon = document.getElementsByClassName('fa-paint-roller')[0];
-    const userInfo = mainMenu.firstElementChild.firstElementChild;
-    const bgSub = document.getElementById('bgSub');
-    const menuTabBox = document.getElementsByClassName('infoBox__bottom')[0];
+function navToggle() {
 
-    mainMenu.classList.add('minNav')
-    wrapper.style.height = '87%'
-
-
-    menuTabBox.style.borderRadius = '25px';
-    userInfo.style.borderRadius = '0px';
-    userInfo.style.height = '100%';
-
-    colorBtn.style.width = '50px';
-    colorBtn.style.height = '25px';
-    colorBtn.style.right = '330px';
-    colorBtn.classList.add('fa-xs');
-
-    userInfo.style.position = 'absolute';
-    userInfo.style.right = '0px';
-    userInfo.style.width = '300px';
-    userInfo.firstElementChild.style.width = '100%';
+    const wrapper = document.querySelector('.wrapper');
+    const mainMenu = document.querySelector('#mainMenu');
+    const colorBtn = document.querySelector('.colorDiv');
+    const userInfo = document.querySelector('.infoBox__top');
+    const infoBox = document.querySelector('.infoBox');
+    mainMenu.classList.toggle('minNav')
+    wrapper.classList.toggle('maxWrapper')
+    colorBtn.classList.toggle('fa-xs');
 
     userInfo.remove();
-    mainMenu.appendChild(userInfo)
-    let wrapperHeight = document.querySelector('.wrapper').offsetHeight
-    calendar.setOption('height', wrapperHeight * 1.1)
+    let navSize;
+
+    if (mainMenu.classList.contains('minNav')) {
+        mainMenu.appendChild(userInfo)
+        navSize = 'min'
+    } else {
+        infoBox.prepend(userInfo)
+        navSize = 'max'
+    }
 
 
+    /* 캘린더가 존재할 때 사이즈 재설정하는 함수 */
+    if (document.querySelector('#calendar')) {
+        let wrapperHeight = document.querySelector('html').offsetHeight
+        console.log('wrapperHeight: ' + wrapperHeight)
+        setTimeout(function () {
+            if(navSize == 'min'){
+                calendar.setOption('height', wrapperHeight * 0.8)
+            }else{
+                calendar.setOption('height', wrapperHeight * 0.65)
+            }
+        }, 200)
+    }
 
+    saveNav(navSize);
+}
+
+function saveNav(navSize){
+    console.log('navSize: ' + navSize)
+    $.ajax({
+        type: 'post',
+        url: '/user/navSize',
+        data: {
+            navSize: navSize
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data)
+            console.log("send data !");
+        },
+        error: function (err) {
+            console.log("failed : " + JSON.stringify(err));
+        }
+    });
 }

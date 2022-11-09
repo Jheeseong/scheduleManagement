@@ -1,10 +1,13 @@
 html{
     background-color: white;
-    height: 95%;
+    height: 100%;
 }
 .wrapper{
-    height: 65%;
+    height: 61%;
     min-height: 460px;
+}
+.wrapper.maxWrapper{
+    height: 76%;
 }
 .wrapper__form{
     background-color: white;
