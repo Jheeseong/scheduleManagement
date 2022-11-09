@@ -11,6 +11,7 @@ html, body, .wrapper{
 }
 .category--form{
     width: 20%;
+    min-width: 235px;
     height: 100%;
     padding: 0 20px;
     background-color: white;

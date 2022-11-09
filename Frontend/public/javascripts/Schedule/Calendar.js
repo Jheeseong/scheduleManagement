@@ -90,9 +90,9 @@ function applyCalendar(eventList) {
         },
         //지우면 오늘 날짜로 시작
         headerToolbar: {
-            left: 'prevYear,prev,next,nextYear today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            left: 'title',
+            center: '',
+            right: 'today prevYear,prev,next,nextYear'
         },
         eventClick: function (info) {
             openDetailModal(info.event.id);

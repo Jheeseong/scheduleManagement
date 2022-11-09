@@ -26,8 +26,12 @@ body {
 
 .wrapper {
     width: 100%;
-    height: 92%; /* navbar height == 8% */
+    min-width: 700px;
+    height: 72%; /* navbar height == 28% */
     transition: all 0.3s ease-in-out;
+}
+.wrapper.maxWrapper{
+    height: 87%;
 }
 
 .wrapper__form {
@@ -82,12 +86,14 @@ button:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-width: 700px;
     height: 28%;
     background-color: #526CE1;
     transition: all 0.3s ease-in-out;
 }
 .minNav{
     height: 13%;
+    min-width: 1320px;
 }
 
 .infoBox {
@@ -130,7 +136,7 @@ button:hover {
     list-style: none;
 }
 
-.navbar li {
+.navbar li:not(.bgSub) {
     padding-left: 4%;
     padding-right: 4%;
     text-align: center;
@@ -180,22 +186,6 @@ button:hover {
     color: white;
 }
 
-#subMenu {
-    position: sticky;
-    top: 28%;
-    height: 0px;
-    background-color: inherit;
-    border-radius: 10px;
-    transition: all 0.5s;
-    z-index: 2;
-}
-
-#subMenu ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .userSub, .bgSub {
     position: absolute;
     left: 10px;
@@ -220,8 +210,9 @@ button:hover {
     width: 150px;
     position: absolute;
     display: none;
+    padding: 15px 40px;
     top: calc(100% + 5px);
-    left: calc(92% - 170px);
+    left: calc(100% - 251px);
 }
 .userSub__logout {
     display: flex;
@@ -257,43 +248,35 @@ button:hover {
     cursor: pointer;
     opacity: 0.5;
 }
+/* 작은 내브바 요소 css */
+.minNav{
+    min-height: 95px;
+}
+.minNav .infoBox__top{
+    position: absolute;
+    right: 0px;
+    width: 300px;
+    border-radius: 0px;
+    height: 100%;
+}
+.minNav .infoBox__top ul{
+    width: 100%;
+}
 .minNav .userSub{
     top: 40px;
     left: -70px;
 }
-.minNav .bgSub{
-    bottom: -510px;
-    left: calc(92% - 320px);
+.minNav .infoBox__bottom{
+    border-radius: 25px;
 }
-/*#subMenu li > div:not(.colorRow, .colorHead) {
-    width: 100%;
-}
-
-#subMenu li > div:hover:not(.colorRow, .colorHead) {
-    background-color: #8e8e8e;
-    opacity: 0.5;
-}*/
-
-/*#subMenu ul li:first-child {
-    width: 150px;
+.minNav .colorDiv{
+    width: 50px;
     height: 25px;
-    display: none;
-    position: absolute;
-    top: -150px;
-    right: calc(50% - 240px);
+    right: 330px;
 }
-
-#subMenu ul li:last-child {
-    width: 250px;
-    height: 350px;
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 1%;
-    padding: 5px;
-}*/
-
-
+.minNav .bgSub{
+    left: calc(100% - 380px);
+}
 
 /* 스크롤바 */
 ::-webkit-scrollbar {

@@ -7,6 +7,8 @@ const memoController = require("../controller/Memo")
 
 router.post('/menuColor', checkLogIn, menuColor.changeMenuColor)
 
+router.post('/navSize', checkLogIn, userController.saveNavSize)
+
 router.post('/findAll', checkLogIn, userController.findAllUser)
 
 router.post('/find/:keyword', checkLogIn, userController.findUserByName)
