@@ -232,14 +232,14 @@ body{
 }
 .notepad, .logContent, .category__mid{
     width: 100%;
-    height: 85%;
+    height: 75%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 20px 40px 20px;
 }
 .notepad{
-    height: 85%;
+    height: 88%;
     padding-top: 10px;
     background-color: #FFF7D1;
     box-shadow: 2px 2px 4px 1px #cccccc;
