@@ -129,9 +129,13 @@ function deleteMemo(id){
 
 
 function findScheduleList() {
+    const scheduleChart = document.querySelector('.scheduleChart')
+    const emptyMessageDiv = document.querySelector('.emptyMessageDiv')
     let scheduleList = document.querySelector('.scheduleList')
     let user = document.getElementById('userElement').value
 
+    scheduleChart.style.display = 'flex'
+    emptyMessageDiv.style.display = 'none'
     $.ajax({
         type: 'POST',
         url: 'schedule/findDate',
@@ -146,9 +150,10 @@ function findScheduleList() {
 
             scheduleChartLib(res.schedule);
 
-            const scheduleChart = document.querySelector('.scheduleChart')
+
             if (res.schedule.length === 0) {
-                scheduleChart.innerHTML = '<div class="emptyMessageDiv">오늘 일정이 없습니다.</div>'
+                scheduleChart.style.display = 'none'
+                emptyMessageDiv.style.display = 'flex'
             }
 
             for (let i = 0; i < res.schedule.length; i++) {
@@ -157,7 +162,7 @@ function findScheduleList() {
                 let str = '';
                 str += '<div class="scheduleRow" draggable="true" id="scheduleRow' + i + '" onclick="detailSchedule(\'' + res.schedule[i]._id + '\',event)">';
                 str += '<div class="scheduleTitle">';
-                str += '<div class="' + cbClasses + '" id="cb' + i + '" value="\'' + res.schedule[i]._id + '\'" onclick="toggleCb(this, \'' + res.schedule[i]._id + '\', \'check\')"><i class="fa-solid fa-check fa-2xs"></i></div>' + res.schedule[i].title;
+                str += '<div class="' + cbClasses + '" id="cb' + i + '" value="\'' + res.schedule[i]._id + '\'" onclick="toggleCb(this, \'' + res.schedule[i]._id + '\', \'check\')"><i class="fa-solid fa-check fa-2xs"></i></div>' + '<span>' + res.schedule[i].title + '</span>';
                 str += '</div>';
                 str += '<div>';
                 str += '<i class="fa-regular fa-calendar"></i> ' + setDate(res.schedule[i].startDate) + ' ~ ' + setDate(res.schedule[i].endDate);
@@ -407,6 +412,12 @@ function categoryInSchedule(id, creator) {
     let complete = '';
     let incomplete = '';
     RemoveDraggable()
+
+    const scheduleChart = document.querySelector('.scheduleChart')
+    const emptyMessageDiv = document.querySelector('.emptyMessageDiv')
+
+    scheduleChart.style.display = 'flex'
+    emptyMessageDiv.style.display = 'none'
 
     $.ajax({
         type: 'POST',

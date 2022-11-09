@@ -7,6 +7,7 @@ html, body, .wrapper{
     align-items: center;
     height: 72%;
     color: #222222;
+    min-width: 1100px;
 }
 .category--form{
     width: 20%;
@@ -98,6 +99,13 @@ html, body, .wrapper{
     align-items: center;
     padding: 15px 20px;
 }
+.categoryList > .categoryRow > div:not(.categoryEditDiv, .categoryRow__user) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 150px;
+    height: 20px;
+}
 .categoryEditDiv{
     visibility: hidden;
 }
@@ -116,6 +124,9 @@ html, body, .wrapper{
     padding: 10px 0;
 }
 .categoryRow__user__category, .allCategoryRow__user__category{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: 100%;
     padding: 10px 0 10px 24px;
     font-size: 14px;
@@ -292,6 +303,9 @@ html, body, .wrapper{
     height: 40px;
 }
 .scheduleTable tbody td{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     word-wrap: break-word;
 }
 #scheduleTbody tr:hover{
@@ -318,6 +332,10 @@ html, body, .wrapper{
 }
 .scheduleName{
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+    height: 20px;
 }
 .modal_schedule_body:last-child > div > input{
     width: 75%;

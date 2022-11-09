@@ -221,6 +221,14 @@ body{
     display: flex;
     align-items: center;
     margin-bottom: 3px;
+    gap: 3px
+}
+.scheduleTitle > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 260px;
+    height: 20px;
 }
 .scheduleList .fa-calendar{
     margin-left: 4px;
@@ -393,6 +401,9 @@ body{
     width: 322px;
     height: 175px;
     justify-content: center
+}
+.scheduleChartContent{
+    height: 100%;
 }
 .chartCenterBack{
     position: relative;

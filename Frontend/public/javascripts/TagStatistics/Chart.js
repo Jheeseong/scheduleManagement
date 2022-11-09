@@ -37,7 +37,7 @@ function scheduleChartLib(res) {
         }
     })
     const chartCenter = document.querySelector('.chartCenter')
-    chartCenter.innerHTML = '<span>'+ ((scheduleCnt[0]/(scheduleCnt[0]+scheduleCnt[1]))*100).toFixed(0) +'%</span>'
+    chartCenter.innerHTML = '<span>'+ ((scheduleCnt[0]/(scheduleCnt[0]+scheduleCnt[1]))*100).toFixed(0) +'%</span>';
 
     var context = document
         .getElementById('scheduleChart')

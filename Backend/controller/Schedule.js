@@ -128,7 +128,6 @@ const ScheduleController = {
             const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9 ,0,0).toISOString()
             const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1,9,0,0).toISOString()
 
-            console.log("today: " + date + " startDate: " + startDateValue + " endDate: " + endDateValue)
             let schedules = await Schedule
                 .find({$and: [{userInfo: req.user._id},
                         {'startDate':{$lt: startDateValue}},
