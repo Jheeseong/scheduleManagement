@@ -443,6 +443,7 @@ body{
     color: white;
     margin: 0 3.5px;
     width: 14px;
+    min-width: 14px;
     height: 14px;
     border-radius: 100%;
     background-color: #0098fe;
