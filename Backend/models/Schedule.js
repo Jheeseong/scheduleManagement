@@ -41,7 +41,6 @@ const ScheduleSchema = mongoose.Schema({
 ScheduleSchema.pre('deleteOne', { document: false, query: true}, async function(next) {
     //지워지는 자신을 서치
     const { _id } = this.getFilter()
-    console.log(_id)
     //링크가 되어 있는 키를 맵핑해서 삭제
     await Tag.updateMany({scheduleInfo: _id}, {$pull : {scheduleInfo : _id}});
     next();
