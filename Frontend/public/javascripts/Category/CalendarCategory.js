@@ -117,12 +117,9 @@ function applySchedule(id, creator) {
         dataType: "json",
         async: false,
         success: function (res) {
-            /*console.log(res)*/
             const schedules = res.schedules;
             eventList = [];
-            console.log('schedule : ' + JSON.stringify(schedules));
             schedules.map((result) => {
-                /*console.log(result)*/
                 eventData.title = result.title;
                 eventData.start = result.startDate.split('Z')[0];
                 eventData.end = result.endDate.split('Z')[0];
@@ -139,11 +136,11 @@ function applySchedule(id, creator) {
             })
         },
         error: function (err) {
+            window.alert("일정을 불러오는데 실패하였습니다.")
             console.log(err)
         }
     })
     calendar.removeAllEvents()
-    /*console.log(eventList)*/
     applyCalendar(eventList)
     calendar.render();
 }
@@ -187,7 +184,6 @@ function allCategory(){
             }
 
             const schedules = res.schedules;
-            console.log(res)
             eventList = [];
             schedules.map((result) => {
                 eventData.title = result.title;
@@ -206,6 +202,7 @@ function allCategory(){
             })
         },
         error: function (err) {
+            window.alert("전체카테고리를 찾을 수 없습니다.")
             console.log(err)
         }
     })

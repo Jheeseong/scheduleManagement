@@ -57,7 +57,6 @@ const memoController = {
             let memo = await Memo.findOne({_id: req.params.id})
                 .exec();
             if (memo) {
-                console.log(memo)
 
                 let result = await Memo.findOneAndUpdate({_id: req.params.id},
                     {
@@ -82,8 +81,6 @@ const memoController = {
                 .exec();
 
             await Memo.deleteOne({_id: req.params.id});
-
-            console.log(memo)
 
             res.json({memoDelete: true, message: "메모 삭제 완료"})
         } catch (err) {

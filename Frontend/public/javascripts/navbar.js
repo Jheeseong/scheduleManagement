@@ -61,8 +61,6 @@ for (let i = 0; i < colorElement.length; i++) {
             },
             dataType: 'json',
             success: function (data) {
-                console.log(data)
-                console.log("send data !");
             },
             error: function (err) {
                 console.log("failed : " + JSON.stringify(err));
@@ -97,7 +95,6 @@ function navToggle() {
     /* 캘린더가 존재할 때 사이즈 재설정하는 함수 */
     if (document.querySelector('#calendar')) {
         let wrapperHeight = document.querySelector('html').offsetHeight
-        console.log('wrapperHeight: ' + wrapperHeight)
         setTimeout(function () {
             if(navSize == 'min'){
                 calendar.setOption('height', wrapperHeight * 0.8)
@@ -111,7 +108,6 @@ function navToggle() {
 }
 
 function saveNav(navSize){
-    console.log('navSize: ' + navSize)
     $.ajax({
         type: 'post',
         url: '/user/navSize',
@@ -120,8 +116,6 @@ function saveNav(navSize){
         },
         dataType: 'json',
         success: function (data) {
-            console.log(data)
-            console.log("send data !");
         },
         error: function (err) {
             console.log("failed : " + JSON.stringify(err));

@@ -275,7 +275,6 @@ function setChart(tagData) {
                                     str += '<div class="legend"><div class="label" style="background-color: ' + myChart.data.datasets[0].backgroundColor[i] + '"></div>' + myChart.data.labels[i] + " " + ((tagCntArr[i] / totalCnt)*100).toFixed(1) + "%" + '</div>';
                                 }
                             }
-                            console.log(myChart)
 
                             document.getElementById('legendDiv').innerHTML = str;
                         },

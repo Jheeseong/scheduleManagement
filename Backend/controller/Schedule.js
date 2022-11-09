@@ -51,7 +51,6 @@ const ScheduleController = {
                 .exec();
 
             if (findSchedule) {
-                console.log(findSchedule.tagInfo)
                 await TagController.disconnectSchedule(findSchedule.tagInfo, findSchedule._id);
 
                 const promiseTag = await Promise.all(req.body.tagInfo.map(async (result) => {
@@ -61,7 +60,6 @@ const ScheduleController = {
                     }
                     return tags._id;
                 }));
-                console.log('status: ' + req.body.status)
                 let result = await Schedule.findOneAndUpdate({_id: req.params.id},
                     {
                         $set: {
@@ -147,7 +145,6 @@ const ScheduleController = {
 
             await Schedule.deleteOne({_id: req.params.id});
 
-            console.log(schedule)
 
             const log = {
                 type: "일정",
@@ -194,7 +191,7 @@ const ScheduleController = {
             selectScheduleTag.sort((a, b) => {
                 return b.count - a.count;
             })
-            console.log(selectScheduleTag)
+
             let scheduleCnt = await Schedule.find({userInfo: req.user._id}).count().exec();
             res.json({allScheduleTag: allScheduleTag, selectScheduleTag: selectScheduleTag, scheduleCnt: scheduleCnt, findScheduleSuccess: true})
         } catch (err) {

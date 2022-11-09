@@ -79,7 +79,6 @@ function openListModal(selectedEventList, infoDate) {
     tbodyTag.innerHTML = str;
     /* 해당 날짜에 일정이 없을 때 */
     if(selectedEventList.length == 0){
-        console.log(123)
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'none'
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'flex'
     }
@@ -107,7 +106,6 @@ function updateStatus(id, cb){
         data: {status: status},
         dataType: "json",
         success: function (res) {
-            console.log(res.schedule.status)
         },
         error: function (err) {
             window.alert("일정 상태 변경 실패")
@@ -117,8 +115,6 @@ function updateStatus(id, cb){
 }
 /* 일정 목록 정렬 */
 function sortList(item, order) {
-    console.log('item: ' + item)
-    console.log('order: ' + order)
     /* tr 배열 */
     let rows = document.querySelectorAll('.scheduleTable tbody tr')
     /* 정렬을 위한 배열 */
@@ -140,7 +136,6 @@ function sortList(item, order) {
             :   condition = a.lastElementChild.innerText > b.lastElementChild.innerText;
             break;
         }
-        console.log('condition : ' + condition)
 
         if (order == 'asc') {
             return condition ? 1 : -1;
@@ -148,7 +143,6 @@ function sortList(item, order) {
             return condition ? -1 : 1;
         }
     })
-    console.log(arr[0], arr[1])
 
     let str = ''
     let onclick = ''
@@ -247,8 +241,6 @@ function openDetailModal(scheduleId) {
         url: 'schedule/find/' + scheduleId,
         dataType: "json",
         success: function (res) {
-            console.log('creator : ' + res.schedule.userInfo)
-            console.log('user : ' + document.getElementById('userElement').value)
 
             if (res.schedule.userInfo._id == document.getElementById('userElement').value) {
                 scheduleBtnDiv.innerHTML
@@ -303,7 +295,6 @@ function openDetailModal(scheduleId) {
 
             /* 희성이코드 */
             const tagListDiv = document.querySelector('.tagListDiv');
-            console.log('tag : ' + JSON.stringify(res.schedule));
             tagListDiv.innerHTML = '';
             res.schedule.tagInfo.map((result) => {
                 tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '">' +
@@ -436,7 +427,6 @@ function openEditModal(scheduleId) {
             /* 제목, 상태, 내용, 우선순위, 주소 */
             document.getElementById('scheduleName').value = res.schedule.title;
             let statusOptions = document.getElementById('scheduleStatus').children;
-            console.log('status: ' + res.schedule.status)
             res.schedule.status ? statusOptions[1].selected = true : statusOptions[0].selected = true;
             document.getElementById('scheduleContent').value = res.schedule.content;
             document.getElementById('schedulePriority').value = res.schedule.priority;
@@ -446,7 +436,6 @@ function openEditModal(scheduleId) {
             /* 희성이코드 */
             const tagListDiv = document.querySelector('.tagListDiv');
             tagListDiv.innerHTML = '';
-            console.log('tag : ' + JSON.stringify(res.schedule));
             res.schedule.tagInfo.map((result) => {
                 tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '"  onclick="deleteTag(this)">' +
                     '<span class="tagValue" id="tagValue" value="' + result.content + '">' + result.content + '</span>' +
@@ -479,9 +468,6 @@ function openEditModal(scheduleId) {
 function setTime(date) {
     let date1 = new Date(date + ':00');
     let newDate = new Date(date1.getTime() - new Date().getTimezoneOffset() * 120000).toISOString().slice(0, -8);
-    console.log(date)
-    console.log(date1)
-    console.log(newDate)
     return newDate;
 }
 
@@ -502,7 +488,6 @@ function editSchedule(scheduleId) {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
-    console.log('status1111111111111111 : ' + schedules.status)
     if (schedules.startDate > schedules.endDate) {
         alert('시작일, 종료일을 다시 확인해주세요.')
         return
@@ -587,7 +572,6 @@ function saveSchedule() {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
-    console.log('status: ' + schedules.status)
     if (schedules.startDate > schedules.endDate) {
         alert('시작일, 종료일을 다시 확인해주세요.')
         return
@@ -727,7 +711,6 @@ function readEvents() {
         id: '123123'
     }
     calendar.currentData.calendarOptions.events.push(eventData);
-    /*console.log(calendar.currentData.calendarOptions.events);*/
 
     calendar.refetchEvents();
 }

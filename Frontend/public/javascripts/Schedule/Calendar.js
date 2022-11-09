@@ -13,7 +13,6 @@ function onlyMySchedule() {
         success: function (res) {
             const schedule = res.schedule;
             eventList = [];
-            /*console.log('schedule : ' + JSON.stringify(schedule));*/
             for (let i = 0; i < schedule.length; i++) {
                 eventData.title = schedule[i].title;
                 eventData.start = schedule[i].startDate.split('Z')[0];
@@ -31,7 +30,8 @@ function onlyMySchedule() {
             }
         },
         error: function (err) {
-
+            window.alert("일정을 불러오지 못하였습니다.")
+            console.log(err)
         }
     })
     applyCalendar(eventList)
@@ -56,7 +56,6 @@ function applyCalendar(eventList) {
                 let today = new Date(info.date).toISOString()
                 let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),9,0,0).toISOString()
 
-                console.log(today)
                 if (startDay <= today && today <= endDay) {
                     selectedEventList.push(eventList[i]);
                 }
@@ -82,11 +81,7 @@ function applyCalendar(eventList) {
                     selectedEventList.push(eventList[i]);
                 }
             }
-            console.log(infoDate)
             openListModal(selectedEventList, infoDate);
-            /*console.log('0 : ' + selectedEventList[0].start)*/
-            /*console.log('picked: ' + JSON.stringify(info.dateStr))*/
-            /*console.log('eventList: ' + JSON.stringify(calendar.getEvents()));*/
         },
         //지우면 오늘 날짜로 시작
         headerToolbar: {

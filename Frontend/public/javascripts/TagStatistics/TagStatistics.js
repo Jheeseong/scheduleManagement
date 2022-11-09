@@ -156,7 +156,6 @@ function updateTagList(tags) {
 }
 
 function focusTr(event){
-    console.log(event)
     const trArr = document.querySelectorAll('tr')
     if(event.classList.length){
         if(event.classList.contains('focusedTr')){

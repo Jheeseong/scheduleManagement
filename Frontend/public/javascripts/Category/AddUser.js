@@ -121,7 +121,6 @@ function getCheckboxAddUser()  {
             url: 'user/findById/' + el.value,
             dataType: "json",
             success: function (res) {
-                console.log(res)
                 AdduserMid.innerHTML += '<div class ="addUserDiv ' + res.user.name + '" value = "'+ res.user._id + '">' +
                     '<div>' +
                     '<img class ="userImage" src="' + res.user.image + '">' +

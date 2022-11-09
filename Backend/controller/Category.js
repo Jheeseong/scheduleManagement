@@ -9,7 +9,6 @@ const CategoryController = {
             await Promise.all(req.body.tagName.map(async (result) => {
                 findTag.push(await TagController.findTagByContent(result))
             }))
-            console.log(req.body.userName)
 
             const category = new Category({
                 title: req.body.title,

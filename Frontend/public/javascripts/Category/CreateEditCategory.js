@@ -35,7 +35,6 @@ categoryBtn.innerHTML =
         url: 'schedule/tagsearch',
         dataType: "json",
         success: function (res) {
-            console.log(res)
             const tagList = [];
             res.tags.map((result) => {
                 tagList.push(result.content)
@@ -201,7 +200,6 @@ function categoryUpdate(id) {
         tagName: arrayCategoryTag,
         userName: arrayCategoryUser
     };
-    console.log(categories)
 
     $.ajax({
         type: 'POST',

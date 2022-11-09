@@ -32,6 +32,7 @@ function findMemoList() {
             }
         },
         error: function (err) {
+            window.alert("메로를 찾이못하였습니다.")
             console.log(err)
         }
     })
@@ -46,6 +47,7 @@ function memoDetail(el){
             showMemoText(memoId, result.memo.content)
         },
         error: function (err) {
+            window.alert("메모를 찾지 못하였습니다.")
             console.log(err)
         }
     })
@@ -89,9 +91,6 @@ function saveMemo(id) {
     let content = document.querySelector('.memoText').value
     let url;
     id ? url = 'memo/updateMemo/' + id : url = 'memo/saveMemo/';
-    console.log('id: ' + id)
-    console.log('url: ' + url)
-    console.log(content)
     $.ajax({
         type: 'POST',
         url: url,
@@ -100,7 +99,6 @@ function saveMemo(id) {
         },
         dataType: "json",
         success: function (result) {
-            console.log(result)
             findMemoList()
         },
         error: function (err) {
@@ -116,7 +114,6 @@ function deleteMemo(id){
         url: 'memo/deleteMemo/' + id,
         dataType: "json",
         success: function (result) {
-            console.log(result)
             findMemoList()
         },
         error: function (err) {
@@ -183,6 +180,7 @@ function findScheduleList() {
             draggable();
         },
         error: function (err) {
+            window.alert("일정을 불러오지 못하였습니다.")
             console.log(err)
         }
 
@@ -208,7 +206,6 @@ function draggable() {
         }
     }*/
     lists.forEach((list) => {
-        console.log(list)
         /*list.addEventListener('dragstart', dragStartEvent)
         list.addEventListener('dragend', dragEndEvent)*/
         if (scheduleCheck === false) {
@@ -239,14 +236,12 @@ function RemoveDraggable(){
     const lists = document.querySelectorAll('.scheduleList');
 
     lists.forEach((list) => {
-        console.log(list)
         sortable.options.group.name = ''
         scheduleCheck = true;
     });
 }
 
 function toggleCb(cb, id, method) {
-    console.log('cb : ' + cb + '\nid : ' + id)
     let selectedRow = cb.parentElement.parentElement;
     let completed = document.querySelector('.complete.scheduleList');
     let incompleted = document.querySelector('.incomplete.scheduleList');
@@ -274,7 +269,6 @@ function toggleCb(cb, id, method) {
         dataType: "json",
         async: false,
         success: function (res) {
-            console.log(res.schedule.status)
         },
         error: function (err) {
             window.alert("일정 상태 변경 실패")
@@ -538,9 +532,6 @@ function detailSchedule(scheduleId, event) {
         url: 'schedule/find/' + scheduleId,
         dataType: "json",
         success: function (res) {
-            console.log('creator : ' + res.schedule.userInfo)
-            console.log('user : ' + document.getElementById('userElement').value)
-
             /* 시작일, 종료일 */
             document.getElementById('startDate').innerText = res.schedule.startDate.substring(0, 16);
             document.getElementById('endDate').innerText = res.schedule.endDate.substring(0, 16);
@@ -566,7 +557,6 @@ function detailSchedule(scheduleId, event) {
 
             /* 희성이코드 */
             const tagListDiv = document.querySelector('.tagListDiv');
-            console.log('tag : ' + JSON.stringify(res.schedule));
             tagListDiv.innerHTML = '';
             res.schedule.tagInfo.map((result) => {
                 tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + result.content + '">' +
