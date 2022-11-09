@@ -399,7 +399,7 @@ body{
 .scheduleChart{
     display: flex;
     width: 322px;
-    height: 200px;
+    height: 100%;
     justify-content: center
 }
 .scheduleChartContent{
@@ -410,10 +410,10 @@ body{
 }
 .chartCenter{
     position: absolute;
-    top: 84px;
+    top: 42.5%;
     right: 115px;
     display: flex;
-    font-size: 30px;
+    font-size: 26px;
     width: 90px;
     height: 45px;
     justify-content: center;
