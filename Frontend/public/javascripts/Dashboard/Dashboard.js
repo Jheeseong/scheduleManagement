@@ -1,3 +1,9 @@
+/**
+ * 담당자 : ?
+ * 함수 설명 :
+ * 주요 기능 :
+ */
+
 let scheduleCheck = false;
 document.addEventListener('DOMContentLoaded', function () {
     findLog(1)
@@ -6,9 +12,15 @@ document.addEventListener('DOMContentLoaded', function () {
     findMemoList();
 })
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 메모 목록을 조회하는 함수
+ * 주요 기능 : 메모 목록을 조회
+ */
 function findMemoList() {
+    /** 메모 영역을 목록 형태로 변환 */
     showMemoList()
-
+    /** 메모 목록 조회 API 호출 */
     $.ajax({
         type: 'POST',
         url: 'memo/findMemoList/',
@@ -16,6 +28,7 @@ function findMemoList() {
         success: function (memos) {
             let memoList = document.querySelector('.memoList');
             memoList.innerHTML = '';
+            /** 메모 개수만큼 요소를 생성하여 목록에 추가 */
             for (let i = 0; i < memos.memo.length; i++) {
                 let memoRow = document.createElement('div');
                 memoRow.classList.add('memoRow');
@@ -24,6 +37,7 @@ function findMemoList() {
                 memoRow.innerText = memos.memo[i].content;
                 memoList.appendChild(memoRow)
             }
+            /** 메모가 없으면 메시지 표시 */
             if(memos.memo.length == 0){
                 let emptyMessageDiv = document.createElement('div');
                 emptyMessageDiv.classList.add('emptyMessageDiv')
@@ -32,12 +46,18 @@ function findMemoList() {
             }
         },
         error: function (err) {
-            window.alert("메로를 찾이못하였습니다.")
+            window.alert("등록된 메모가 없습니다")
             console.log(err)
         }
     })
 }
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 메모 상세 조회 함수
+ * 주요 기능 : 메모 클릭 시 해당 메모의 내용을 조회
+ */
 function memoDetail(el){
+    /** 요소의 value 속성에 저장된 id를 파라미터로 받아 상세 조회 API 호출 */
     let memoId = el.getAttribute('value')
     $.ajax({
         type: 'POST',
@@ -52,6 +72,12 @@ function memoDetail(el){
         }
     })
 }
+
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 메모 영역을 목록 형태로 전환하는 함수
+ * 주요 기능 : 메모 영역의 요소들을 목록 형태로 전환
+ */
 function showMemoList(){
     let notepad = document.querySelector('.notepad');
     let icons = document.querySelectorAll('.content--memo i.fa-chevron-left, .content--memo i.fa-check, .content--memo i.fa-trash')
@@ -66,6 +92,11 @@ function showMemoList(){
     icons[2].setAttribute('onclick', 'saveMemo()')
     document.querySelector('.content--memo .fa-plus').style.display = 'inline-block';
 }
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 메모 영역을 글쓰기 형태로 전환하는 함수
+ * 주요 기능 : 메모 영역의 요소들을 글쓰기 형태로 전환
+ */
 function showMemoText(id, content){
     document.querySelector('.memoList').style.display = 'none';
     document.querySelector('.memoTextDiv').style.display = 'block';
@@ -87,9 +118,15 @@ function showMemoText(id, content){
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 작성한 메모를 저장(생성, 수정)하는 함수
+ * 주요 기능 : 메모의 아이디 존재 시 해당 아이디의 메모를 수정하고, 존재하지 않을 시 새로운 메모 생성하는 기능
+ */
 function saveMemo(id) {
     let content = document.querySelector('.memoText').value
     let url;
+    /** 아이디 유무에 따라 상이한 url로 API 통신 */
     id ? url = 'memo/updateMemo/' + id : url = 'memo/saveMemo/';
     $.ajax({
         type: 'POST',
@@ -107,7 +144,11 @@ function saveMemo(id) {
         }
     })
 }
-
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 선택한 메모를 삭제하는 함수
+ * 주요 기능 : 삭제 버튼 클릭 시 선택한 메모를 삭제
+ */
 function deleteMemo(id){
     $.ajax({
         type: 'POST',
@@ -123,8 +164,11 @@ function deleteMemo(id){
     })
 }
 
-
-
+/**
+ * 담당자 : 정희성, 배도훈
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function findScheduleList() {
     const scheduleChart = document.querySelector('.scheduleChart')
     const emptyMessageDiv = document.querySelector('.emptyMessageDiv')
@@ -189,6 +233,11 @@ function findScheduleList() {
 
 let sortable;
 
+/**
+ * 담당자 : 정희성, 배도훈
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function draggable() {
     const lists = document.querySelectorAll('.scheduleList');
     let startArea;
@@ -232,6 +281,11 @@ function draggable() {
     });
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function RemoveDraggable(){
     const lists = document.querySelectorAll('.scheduleList');
 
@@ -241,13 +295,22 @@ function RemoveDraggable(){
     });
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 목록에서 체크박스 클릭 시 토글, status 변경 API를 호출하는 함수
+ * 주요 기능 : 체크박스 클릭 시 체크박스의 색상과 일정의 위치가 변경되고 status 변경 API를 호출
+ */
 function toggleCb(cb, id, method) {
+    /** 변수 저장 : 선택 일정, 완료 영역, 미완료 영역 */
     let selectedRow = cb.parentElement.parentElement;
     let completed = document.querySelector('.complete.scheduleList');
     let incompleted = document.querySelector('.incomplete.scheduleList');
+    /** DB에 저장할 데이터 */
     let status;
-    cb.classList.toggle('checked');
 
+    /** 클래스 토글 */
+    cb.classList.toggle('checked');
+    /** 클래스명 포함 여부에 따라 요소를 제거 및 새 위치에 추가, status 변수에 boolean값 저장 */
     if (cb.classList.contains('checked')) {
         if (method == 'check') {
             selectedRow.remove();
@@ -261,7 +324,7 @@ function toggleCb(cb, id, method) {
         }
         status = false;
     }
-
+    /** 일정 상태 변경 API 호출 */
     $.ajax({
         type: 'POST',
         url: 'schedule/updateStatus/' + id,
@@ -279,6 +342,11 @@ function toggleCb(cb, id, method) {
     scheduleStatusChart()
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function setDate(date) {
     let dateSplitArr = date.split('T');
     let toDate = dateSplitArr[0];
@@ -288,6 +356,11 @@ function setDate(date) {
     return newDate;
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function findLog(page) {
     const logList = document.querySelector('.logList')
     $.ajax({
@@ -358,6 +431,11 @@ function findLog(page) {
     })
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function categoryList() {
     const categoryList = document.querySelector('.categoryList')
     const today = new Date();
@@ -402,6 +480,11 @@ function categoryList() {
     })
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function categoryInSchedule(id, creator) {
     let complete = '';
     let incomplete = '';
@@ -477,6 +560,11 @@ function categoryInSchedule(id, creator) {
     })
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function detailSchedule(scheduleId, event) {
     let targetDiv = event.currentTarget.querySelectorAll('.cb > i, .cb')
     for (let i = 0; i < targetDiv.length; i++) {
@@ -572,7 +660,11 @@ function detailSchedule(scheduleId, event) {
     })
 }
 
-/* 모달창 닫는 함수 */
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function closeModal(event, modal) {
     const editModal = document.querySelector('.modal_schedule--edit')
     if (modal == 'edit') {
@@ -602,6 +694,11 @@ function closeModal(event, modal) {
     localStorage.clear()
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function scheduleStatusChart() {
     $.ajax({
         type: 'POST',

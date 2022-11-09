@@ -1,10 +1,29 @@
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 : 전부 희성이꺼
+ */
+
+/**
+ * 담당자 : 정희성
+ * 변수 설명 : 각각의 모달을 변수에 저장
+ */
 const categoryModal = document.querySelector('.modal_category--createEdit')
 const userModal = document.getElementsByClassName('modal_category_body')[1];
 const AdduserModal = document.querySelector('.modal_adduser_body')
 
-/* 배경 클릭 시 모달창 닫는 이벤트리스너 */
+/**
+ * 담당자 : 정희성
+ * 함수 설명 : 모달창 닫는 이벤트리스너
+ * 주요 기능 : 닫기 버튼 또는 모달 외부 영역 클릭 시 모달창을 닫는 기능
+ */
 categoryModal.addEventListener('mousedown', closeCategoryModal)
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function closeCategoryModal(event){
     const tagListDiv = document.querySelector('.AddUserTagListDiv');
     const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');

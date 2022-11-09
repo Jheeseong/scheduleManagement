@@ -1,3 +1,9 @@
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 : 전부 희성이꺼
+ */
+
 function closeAddUserModal() {
     const addUserList = document.querySelector('.modal_adduser_userList');
     addUserList.innerHTML = ""

@@ -1,22 +1,36 @@
+/**
+ * 담당자 : 배도훈
+ * 변수 설명 : body태그와 모달들을 변수로 저장
+ */
 const body = document.querySelector('body')
 const listModal = document.querySelector('.modal_schedule--list')
 const editModal = document.querySelector('.modal_schedule--edit')
 const mapModal = document.getElementsByClassName('modal_schedule_body')[2];
 
-/* 배경 클릭 시 모달창 닫는 이벤트리스너 */
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 모달창을 닫는 이벤트리스너
+ * 주요 기능 : 배경 클릭 시 모달창 닫는 기능
+ */
 listModal.addEventListener('mousedown', closeModal)
 editModal.addEventListener('mousedown', closeModal)
 
-/* 모달창 닫는 함수 */
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 모달창을 닫는 함수
+ * 주요 기능 : 배경 또는 닫기 버튼 클릭 시 모달창을 닫는 기능
+ */
 function closeModal(event, modal) {
+    /** 닫기 버튼 클릭 시 */
     if (event.currentTarget == event.target) {
+        /** 클릭한 영역에 따라 닫는 모달창 상이 */
         if (modal == 'list') {
             listModal.classList.remove('show');
         } else if (modal == 'edit') {
             editModal.classList.remove('show');
-            /* 타이틀 초기화 */
+
+            /** 모달 타이틀과 내용 초기화 */
             document.getElementsByClassName('modal_schedule_body_top')[1].innerText = '';
-            /* 내용  초기화 */
             const inputTags = document.querySelectorAll('input:not(input[type="hidden"])')
             for (let i = 0; i < inputTags.length; i++) {
                 inputTags[i].value = '';
@@ -24,11 +38,12 @@ function closeModal(event, modal) {
             document.getElementById('endDate').setAttribute('type', 'text');
             document.getElementsByClassName('tagListDiv')[0].innerHTML = '';
             document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML = '';
+        /** 배경 클릭 시 */
         } else {
             listModal.classList.remove('show');
             editModal.classList.remove('show');
 
-            /* 내용  초기화 */
+            /** 내용  초기화 */
             const inputTags = document.querySelectorAll('input:not(input[type="hidden"])')
             for (let i = 0; i < inputTags.length; i++) {
                 inputTags[i].value = '';
@@ -38,18 +53,27 @@ function closeModal(event, modal) {
         }
         localStorage.clear()
 
-        /* 체크박스 및 카카오맵 모달 해제 */
+        /** 체크박스 및 카카오맵 모달 해제 */
         mapModal.classList.remove('show');
         
-        /* 빈값일 때 메세지 및 테이블 display 변경 */
+        /** 빈값일 때 메세지 및 테이블 display 변경 */
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'table'
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'none'
     }
 
 }
 
+/**
+ * 담당자 : 정희성, 배도훈
+ * 함수 설명 : 일정 목록 모달을 여는 함수
+ * 주요 기능 : 캘린더에서 날짜 클릭 시 해당 날짜의 일정 목록을 표시
+ */
 function openListModal(selectedEventList, infoDate) {
-
+    /**
+     * 담당자 : 정희성
+     * 함수 설명 :
+     * 주요 기능 :
+     */
     function getDate(dateValue) {
         const years = dateValue.substring(0,4)
         const month = dateValue.substring(5,7)
@@ -61,13 +85,17 @@ function openListModal(selectedEventList, infoDate) {
 
         return customDate;
     }
-
     const date = new Date(infoDate)
     document.querySelector('.modal_schedule_body_top').innerHTML = '<span>'+ date.getFullYear() +'년 ' + (date.getMonth() + 1) +'월 '+ date.getDate()+'일 일정 목록' +'</span>'
-    /* 일정 생성 시 오늘 날짜를 인자로  */
+
+    /**
+     * 담당자 : 배도훈
+     * 일정 생성 시 오늘 날짜를 인자로 가지는 함수를 onclick으로 지정
+     */
     document.querySelector('.scheduleAdd__div').setAttribute('onclick', 'openCreateModal(\'' + infoDate + '\')')
     let tbodyTag = document.getElementById('scheduleTbody');
 
+    /** 일정 데이터 바인딩 */
     let str = '';
     for (let i = 0; i < selectedEventList.length; i++) {
         str += '<tr>';
@@ -77,7 +105,7 @@ function openListModal(selectedEventList, infoDate) {
         str += '</tr>';
     }
     tbodyTag.innerHTML = str;
-    /* 해당 날짜에 일정이 없을 때 */
+    /** 해당 날짜에 일정이 없을 때 */
     if(selectedEventList.length == 0){
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'none'
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'flex'
@@ -90,39 +118,22 @@ function openListModal(selectedEventList, infoDate) {
         body.style.overflow = 'auto';
     }
 }
-/* 일정 상태 변경 */
-function updateStatus(id, cb){
-    let status;
-    if(cb.checked){
-        status = true;
-    }
-    else{
-        status = false;
-    }
 
-    $.ajax({
-        type: 'POST',
-        url: 'schedule/updateStatus/' + id,
-        data: {status: status},
-        dataType: "json",
-        success: function (res) {
-        },
-        error: function (err) {
-            window.alert("일정 상태 변경 실패")
-            console.log(err)
-        }
-    })
-}
-/* 일정 목록 정렬 */
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 목록 정렬 함수
+ * 주요 기능 : thead의 th 클릭 시 해당 컬럼의 데이터를 기준으로 오름차순, 내림차순 정렬
+ */
 function sortList(item, order) {
-    /* tr 배열 */
+    /** tr 배열 */
     let rows = document.querySelectorAll('.scheduleTable tbody tr')
-    /* 정렬을 위한 배열 */
+    /** 정렬을 위한 배열 */
     let arr = [];
     for (let i = 0; i < rows.length; i++) {
         arr.push(rows[i])
     }
 
+    /** order 변수에 따라 오름차순인지 내림차순인지 결정하여 정렬 */
     let condition
     arr.sort((a, b) => {
         switch (item) {
@@ -144,6 +155,7 @@ function sortList(item, order) {
         }
     })
 
+    /** 정렬한 데이터를 화면에 표시 */
     let str = ''
     let onclick = ''
     for (let i = 0; i < arr.length; i++) {
@@ -152,6 +164,7 @@ function sortList(item, order) {
     }
     document.querySelector('#scheduleTbody').innerHTML = str;
 
+    /** 제목, 시작일, 종료일 중 onclick 속성 함수의 order 인자가 변경될 요소 지정 */
     let target = document.querySelectorAll('.scheduleTable th');
     switch (item) {
         case 'title'
@@ -172,8 +185,12 @@ function sortList(item, order) {
 
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function tagSearch() {
-    /* 희성이코드 */
     $.ajax({
         type: 'POST',
         url: 'schedule/tagsearch',

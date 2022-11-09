@@ -1,7 +1,6 @@
 /**
  * 담당자 : 배도훈
- * 함수 설명 :
- * 주요 기능 :
+ * 설명 : 모든 파일에서 사용하는 공통 css 파일
  */
 
 /* 폰트 */
@@ -176,14 +175,16 @@ button:hover {
     background-color: #a8a8a8;
     border-radius: 4px;
     position: absolute;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     right: 20px;
     bottom: 20px;
     cursor: pointer;
 }
-
+.navbar:hover .colorDiv{
+    display: flex;
+}
 .colorDiv:hover {
     opacity: .5;
 }

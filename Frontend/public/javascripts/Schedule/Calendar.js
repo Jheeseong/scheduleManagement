@@ -4,6 +4,11 @@ let eventData = {};
 document.addEventListener('DOMContentLoaded', function () {
     onlyMySchedule();
 });
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function onlyMySchedule() {
     $.ajax({
         type: 'POST',
@@ -38,6 +43,11 @@ function onlyMySchedule() {
     calendar.render();
 }
 
+/**
+ * 담당자 : 정희성, 배도훈
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function applyCalendar(eventList) {
     var calendarEl = document.getElementById('calendar');
     calendar = new FullCalendar.Calendar(calendarEl, {
