@@ -1,7 +1,7 @@
 /**
  * 담당자 : 배도훈
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 일정 토글 함수
+ * 주요 기능 : 일정 체크박스 토글
  */
 function scheduleToggle(e){
     e.firstElementChild.classList.toggle('closed')
@@ -186,9 +186,9 @@ function toggleCb(cb, id, method) {
 }
 
 /**
- * 담당자 : 정희성
- * 함수 설명 :
- * 주요 기능 :
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 날짜 정리 함수
+ * 주요 기능 : 일정 날짜를 분 단위까지 정리해서 리턴
  */
 function setDate(date) {
     let dateSplitArr = date.split('T');

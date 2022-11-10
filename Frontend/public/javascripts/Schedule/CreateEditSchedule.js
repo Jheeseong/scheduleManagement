@@ -633,6 +633,7 @@ function addrToggle() {
     let addrChecked = document.getElementById('addrCheckbox').checked;
     /** 체크박스 체크되었을 시 */
     if (addrChecked) {
+        mapModal.style.height = editModal.firstElementChild.offsetHeight + 'px';
         mapModal.classList.add('show');
         searchAddr();
     /** 체크박스 체크되지 않았을 시 */
