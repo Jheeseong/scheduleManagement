@@ -6,8 +6,8 @@ const LogController = require("./Log");
 const memoController = {
     /**
     * 담당자 : 배도훈
-    * 함수 내용 :
-    * 주요 기능 :
+    * 함수 내용 : 메모 목록 조회 함수
+    * 주요 기능 : 메모 목록 조회
     **/
     findMemoList: async (req, res) => {
         try {
@@ -22,8 +22,8 @@ const memoController = {
     },
     /**
     * 담당자 : 배도훈
-    * 함수 내용 :
-    * 주요 기능 :
+    * 함수 내용 : 메모 저장 함수
+    * 주요 기능 : 사용자 id와 메모 내용을 저장
     **/
     saveMemo: async (req, res) => {
         try {
@@ -35,17 +35,6 @@ const memoController = {
 
             await memo.save();
 
-            /*const log = {
-                type: "일정",
-                content: "생성",
-                beforeName: req.body.title,
-                afterName: req.body.title,
-                creator: req.user._id,
-                userInfo: req.user._id
-            }
-
-            await LogController.saveLog(log)*/
-
             res.json({memoSuccess: true, message: "메모 등록 완료"});
         } catch (err) {
             console.log(err)
@@ -54,8 +43,8 @@ const memoController = {
     },
     /**
     * 담당자 : 배도훈
-    * 함수 내용 :
-    * 주요 기능 :
+    * 함수 내용 : 메모 상세 조회 함수
+    * 주요 기능 : 메모 상세 조회
     **/
     findMemoDetail: async (req, res) => {
         try {
@@ -69,8 +58,8 @@ const memoController = {
     },
     /**
     * 담당자 : 배도훈
-    * 함수 내용 :
-    * 주요 기능 :
+    * 함수 내용 : 메모 수정 함수
+    * 주요 기능 : 메모 id로 메모를 찾고 내용과 수정일을 업데이트
     **/
     updateMemo: async (req, res) => {
         try {
@@ -97,8 +86,8 @@ const memoController = {
     },
     /**
     * 담당자 : 배도훈
-    * 함수 내용 :
-    * 주요 기능 :
+    * 함수 내용 : 메모 삭제 함수
+    * 주요 기능 : 메모 id로 메모를 찾고 삭제
     **/
     deleteMemo: async (req, res) => {
         try {

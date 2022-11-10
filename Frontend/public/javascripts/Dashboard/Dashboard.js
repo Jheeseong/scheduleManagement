@@ -163,6 +163,3 @@ function deleteMemo(id){
         }
     })
 }
-
-
-

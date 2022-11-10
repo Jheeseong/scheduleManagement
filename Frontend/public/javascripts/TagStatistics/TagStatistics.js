@@ -166,6 +166,11 @@ function updateTagList(tags) {
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정목록, 태그목록에서 클릭한 tr에 하이라이트 효과를 표시하는 함수
+ * 주요 기능 : 클릭한 tr 하이라이트 효과
+ */
 function focusTr(event){
     const trArr = document.querySelectorAll('tr')
     if(event.classList.length){
