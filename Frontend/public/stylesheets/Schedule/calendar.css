@@ -19,7 +19,7 @@ html, body, .wrapper{
     height: 100%;
     padding: 0 20px;
     background-color: white;
-    box-shadow: 1px 1px 5px 1px #8e8e8e;
+    border-right: 2px solid #dfdfdf;
 }
 .fullCalendarDiv{
     height: 100%;
@@ -34,7 +34,6 @@ html, body, .wrapper{
     height: 100%;
     padding: 0 20px;
     background-color: white;
-    box-shadow: 1px 1px 5px 1px #8e8e8e;
 }
 #calendar{
     width: 800px;

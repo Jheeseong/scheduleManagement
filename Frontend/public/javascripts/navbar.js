@@ -105,13 +105,15 @@ function navToggle() {
     const wrapper = document.querySelector('.wrapper');
     const mainMenu = document.querySelector('#mainMenu');
     const colorBtn = document.querySelector('.colorBtn');
+    const navSizeBtn = document.querySelector('.navSizeBtn i');
     const userInfo = document.querySelector('.infoBox__top');
     const infoBox = document.querySelector('.infoBox');
 
     /** 내브바, 내브바 외 영역, 메뉴색변경 버튼 아이콘 토글 */
     mainMenu.classList.toggle('minNav')
     wrapper.classList.toggle('maxWrapper')
-    colorBtn.classList.toggle('fa-xs');
+    navSizeBtn.classList.toggle('fa-caret-down');
+    navSizeBtn.classList.toggle('fa-caret-up');
 
     /** 재배치를 위해 사용자 정보 영역 제거 */
     userInfo.remove();

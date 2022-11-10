@@ -90,12 +90,14 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100%;
     min-width: 700px;
     height: 28%;
     background-color: #526CE1;
     transition: all 0.3s ease-in-out;
 }
+
 .minNav{
     height: 13%;
     min-width: 1320px;
@@ -169,7 +171,7 @@ button:hover {
     cursor: pointer;
 }
 
-.colorDiv {
+.colorDiv, .navSizeBtn {
     width: 100px;
     height: 30px;
     background-color: #a8a8a8;
@@ -178,18 +180,30 @@ button:hover {
     display: none;
     justify-content: center;
     align-items: center;
-    right: 20px;
+    left: 50px;
     bottom: 20px;
     cursor: pointer;
 }
-.navbar:hover .colorDiv{
+.navSizeBtn{
+     justify-content: center;
+     align-items: center;
+     position: absolute;
+     bottom: 20px;
+     left: 10px;
+     display: none;
+     color: #a8a8a8;
+     cursor: pointer;
+     width: 30px;
+     height: 30px;
+}
+.navbar:hover .colorDiv, .navbar:hover .navSizeBtn{
     display: flex;
 }
-.colorDiv:hover {
+.colorDiv:hover, .navSizeBtn:hover {
     opacity: .5;
 }
 
-.colorBtn {
+.colorBtn, .navSizeBtn {
     color: white;
 }
 
@@ -219,7 +233,7 @@ button:hover {
     display: none;
     padding: 15px 40px;
     top: calc(100% + 5px);
-    left: calc(100% - 251px);
+    left: 50px;
 }
 .userSub__logout {
     display: flex;
@@ -266,6 +280,9 @@ button:hover {
     border-radius: 0px;
     height: 100%;
 }
+.minNav .infoBox__bottom{
+    height: 75%;
+}
 .minNav .infoBox__top ul{
     width: 100%;
 }
@@ -275,14 +292,6 @@ button:hover {
 }
 .minNav .infoBox__bottom{
     border-radius: 25px;
-}
-.minNav .colorDiv{
-    width: 50px;
-    height: 25px;
-    right: 330px;
-}
-.minNav .bgSub{
-    left: calc(100% - 380px);
 }
 
 /* 스크롤바 */

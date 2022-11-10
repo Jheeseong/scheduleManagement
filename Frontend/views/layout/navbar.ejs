@@ -8,7 +8,8 @@
       crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <script defer src="/javascripts/jquery-3.6.1.min.js"></script>
 
-<div class="navbar <% if (user.navSize == 'min') { %>minNav<% } %>" id="mainMenu" style="background-color: <%= user.menuColor %>">
+<div class="navbar <% if (user.navSize == 'min') { %>minNav<% } %>" id="mainMenu"
+     style="background-color: <%= user.menuColor %>">
     <div class="infoBox">
         <div class="infoBox__top">
             <ul>
@@ -18,7 +19,7 @@
                     </div>
                     <div style="display: flex; margin-left: 10px; margin-right: 10px">
                         <div style="display: flex; align-items: center"><%- user.name %></div>
-                        <div class="iconDiv" onclick="navToggle()"
+                        <div class="iconDiv"
                              style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.6); margin-left: 10px; padding: 5px; border-radius: 50px;">
                             <% if(user.provider == 'naver'){ %>
                                 <img src="/img/naverLogout.png" alt="img" class="platformLogo"
@@ -56,7 +57,10 @@
         </div>
     </div>
     <div class="colorDiv" onclick="bgSub();">
-        <i class="fa-solid fa-paint-roller colorBtn <% if (user.navSize == 'min') { %>fa-xs<% } %>"></i>
+        <i class="fa-solid fa-paint-roller colorBtn"></i>
+    </div>
+    <div class="navSizeBtn" onclick="navToggle()">
+        <i class="fa-solid <% if (user.navSize == 'min') { %>fa-caret-up<% } %><% if (user.navSize == 'max') { %>fa-caret-down<% } %>"></i>
     </div>
     <li id="bgSub" class="bgSub">
         <div class="colorHead subDiv">메뉴 색상 선택</div>
@@ -86,4 +90,5 @@
             <div class="subDiv colorElement" style="background-color: #B1B2FF" value="#B1B2FF"></div>
         </div>
     </li>
+
 </div>
