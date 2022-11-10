@@ -57,6 +57,7 @@ function findScheduleList() {
                 str += '<div class="scheduleTitle">';
                 str += '<div class="' + cbClasses + '" id="cb' + i + '" value="\'' + res.schedule[i]._id + '\'" onclick="toggleCb(this, \'' + res.schedule[i]._id + '\', \'check\')"><i class="fa-solid fa-check fa-2xs"></i></div>' + '<span>' + res.schedule[i].title + '</span>';
                 str += '</div>';
+                str += '<div class="scheduleContent">' + res.schedule[i].content + '</div>';
                 str += '<div>';
                 str += '<i class="fa-regular fa-calendar"></i> ' + setDate(res.schedule[i].startDate) + ' ~ ' + setDate(res.schedule[i].endDate);
                 str += '</div>';
