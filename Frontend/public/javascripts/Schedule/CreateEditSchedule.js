@@ -67,13 +67,13 @@ function closeModal(event, modal) {
  * 담당자 : 정희성, 배도훈
  * 함수 설명 : 일정 목록 모달을 여는 함수
  * 주요 기능 : 캘린더에서 날짜 클릭 시 해당 날짜의 일정 목록을 표시
+ *            시간 형식을 am/pm으로 변환 - 정희성
+ *            일정 생성 시 오늘 날짜를 인자로 가지는 함수를 onclick으로 지정 - 배도훈
+ *            일정 데이터 바인딩 - 배도훈
+ *            해당 날짜에 일정 없을 때 display 처리 - 배도훈
  */
 function openListModal(selectedEventList, infoDate) {
-    /**
-     * 담당자 : 정희성
-     * 함수 설명 :
-     * 주요 기능 :
-     */
+    /** 시간 형식을 am/pm으로 변환 */
     function getDate(dateValue) {
         const years = dateValue.substring(0,4)
         const month = dateValue.substring(5,7)
@@ -88,10 +88,7 @@ function openListModal(selectedEventList, infoDate) {
     const date = new Date(infoDate)
     document.querySelector('.modal_schedule_body_top').innerHTML = '<span>'+ date.getFullYear() +'년 ' + (date.getMonth() + 1) +'월 '+ date.getDate()+'일 일정 목록' +'</span>'
 
-    /**
-     * 담당자 : 배도훈
-     * 일정 생성 시 오늘 날짜를 인자로 가지는 함수를 onclick으로 지정
-     */
+    /** 일정 생성 시 오늘 날짜를 인자로 가지는 함수를 onclick으로 지정 */
     document.querySelector('.scheduleAdd__div').setAttribute('onclick', 'openCreateModal(\'' + infoDate + '\')')
     let tbodyTag = document.getElementById('scheduleTbody');
 
@@ -105,6 +102,7 @@ function openListModal(selectedEventList, infoDate) {
         str += '</tr>';
     }
     tbodyTag.innerHTML = str;
+
     /** 해당 날짜에 일정이 없을 때 */
     if(selectedEventList.length == 0){
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'none'
@@ -210,61 +208,72 @@ function tagSearch() {
 }
 
 /* 일정 상세 모달 */
+/**
+ * 담당자 : 정희성, 배도훈
+ * 함수 설명 : 일정의 상세내용을 모달창에 표시하는 함수
+ * 주요 기능 : 일정의 상세내용을 모달창에 표시
+ *            각 요소에 데이터 바인딩 - 배도훈
+ *            생성자 바인딩 - 정희성
+ *            일정 내용 조회 API 호출 - 배도훈
+ *            날짜 형식 변환 - 정희성
+ *            태그 영역 - 정희성
+ */
 function openDetailModal(scheduleId) {
-    /* 모달 탑 */
+    /** 모달 탑 */
     document.getElementsByClassName('modal_schedule_body_top')[1].innerHTML = '일정 상세';
 
-    /* 시작일, 종료일 */
+    /** 시작일, 종료일 */
     document.getElementsByClassName('dateDiv')[0].innerHTML
         = '<div id="startDate" clsss="startDate date"></div>'
         + '<div id="endDate" clsss="endDate date"></div>';
 
-    /* 일정제목 */
+    /** 일정제목 */
     document.getElementsByClassName('scheduleNameDiv')[0].innerHTML
         = '<label>일정 제목</label>'
         + '<div id="scheduleName" class="scheduleName"></div>';
 
-    /* 일정상태 */
+    /** 일정상태 */
     document.getElementsByClassName('scheduleStatusDiv')[0].innerHTML
         = '<label>일정 상태</label>'
         + '<div id="scheduleStatus" class="scheduleStatus"></div>';
 
-    /* 일정내용 */
+    /** 일정내용 */
     document.getElementsByClassName('scheduleContentDiv')[0].innerHTML
         = '<label>일정 내용</label>'
         + '<div id="scheduleContent" class="scheduleContent"></div>';
 
-    /* 우선순위 */
+    /** 우선순위 */
     document.getElementsByClassName('schedulePriorityDiv')[0].innerHTML
         = '<label>우선순위</label>'
         + '<div id="schedulePriority" class="schedulePriority"></div>'
 
-    /* 주소 사용 여부 */
+    /** 주소 사용 여부 */
     document.getElementsByClassName('addressDiv')[0].innerHTML
         = '<label>주소</label>'
         + '<div id="scheduleAddr" class="scheduleAddr"></div>'
-
+    /** 생성자 */
     document.getElementsByClassName('scheduleCreator')[0].innerHTML
         = '<label>생성자</label>'
         + '<div id="scheduleCreator" class="scheduleCreator"></div>'
 
-    /* 버튼 div */
+    /** 버튼 div */
     let scheduleBtnDiv = document.getElementsByClassName('scheduleBtnDiv')[1]
     scheduleBtnDiv.innerHTML = '<button class="btn-empty" onclick="closeModal(this, \'edit\')">닫기</button>'
 
-
+    /** 일정의 내용을 조회하는 API 호출 */
     $.ajax({
         type: 'POST',
         url: 'schedule/find/' + scheduleId,
         dataType: "json",
         success: function (res) {
-
+            /** 일정의 생성자가 현재 유저와 동일할 시 삭제, 편집 버튼 생성 */
             if (res.schedule.userInfo._id == document.getElementById('userElement').value) {
                 scheduleBtnDiv.innerHTML
                     += '<button class="saveBtn btn-red" onclick="deleteSchedule(\'' + scheduleId + '\')">삭제</button>'
                     + '<button class="saveBtn" onclick="openEditModal(\'' + scheduleId + '\')">편집</button>'
             }
 
+            /** 날짜를 am/pm 형식으로 변환 */
             function getDate(dateValue) {
                 const years = dateValue.substring(0,4)
                 const month = dateValue.substring(5,7)
@@ -278,39 +287,40 @@ function openDetailModal(scheduleId) {
             }
 
 
-            /* 시작일, 종료일 */
+            /** 시작일, 종료일 */
             document.getElementById('startDate').innerText = getDate(res.schedule.startDate)
             document.getElementById('endDate').innerText = getDate(res.schedule.endDate)
 
-            /* 일정제목 */
+            /** 일정제목 */
             document.getElementById('scheduleName').innerText = res.schedule.title;
 
-            /* 일정상태 */
+            /** 일정상태 */
             document.getElementById('scheduleStatus').innerText = res.schedule.status ? '완료' : '미완료';
 
-            /* 일정내용 */
+            /** 일정내용 */
             document.getElementById('scheduleContent').innerText = res.schedule.content;
 
-            /* 우선순위 */
+            /** 우선순위 */
             document.getElementById('schedulePriority').innerText = res.schedule.priority;
 
-            /* 태그입력란 */
+            /** 태그입력란 */
             document.getElementById('scheduleTag').style.display = 'none';
 
+            /** 생성자 */
             document.getElementById('scheduleCreator').innerHTML =
                 '<div class="creatorUser">' +
                 '<img class="userImage" src="'+ res.schedule.userInfo.image +'">' +
                 '<div class="userName">'+ res.schedule.userInfo.name +'</div>' +
                 '</div>'
 
-            /* 주소 사용 여부 */
+            /** 주소 사용 여부 */
             if (!res.schedule.address == '') {
                 document.getElementById('scheduleAddr').innerText = res.schedule.address;
             } else {
                 document.getElementById('scheduleAddr').innerText = '주소 미등록'
             }
 
-            /* 희성이코드 */
+            /** 태그 영역 */
             const tagListDiv = document.querySelector('.tagListDiv');
             tagListDiv.innerHTML = '';
             res.schedule.tagInfo.map((result) => {
@@ -334,6 +344,11 @@ function openDetailModal(scheduleId) {
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 생성 또는 편집 시 일정 날짜의 전후관계를 성립시키는 함수
+ * 주요 기능 : 일정 시작일과 종료일 선택 시 시작일 이전의 종료일이나 종료일 이후의 시작일은 선택할 수 없도록 제한하는 기능
+ */
 function setMinMaxDate() {
     let startDate = document.getElementById('startDate')
     let endDate = document.getElementById('endDate')
@@ -342,16 +357,21 @@ function setMinMaxDate() {
     endDate.setAttribute('min', startDate.value)
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 생성 모달 표시 함수
+ * 주요 기능 : 일정 생성 모달을 표시
+ */
 function openCreateModal(infoDate) {
-    /* 모달 타이틀 */
+    /** 모달 타이틀 */
     document.getElementsByClassName('modal_schedule_body_top')[1].innerText = '일정 생성'
 
-    /* 시작일, 종료일 */
+    /** 시작일, 종료일 */
     document.getElementsByClassName('dateDiv')[0].innerHTML
         = '<input onfocus="(this.type=\'datetime-local\'), setMinMaxDate()" type="text" id="startDate" clsss="startDate date" placeholder="시작일 선택">'
         + '<input onfocus="(this.type=\'datetime-local\'), setMinMaxDate()" type="input" id="endDate" clsss="endDate date" placeholder="종료일 선택">';
 
-    /* 오늘 날짜 9시간 계산 및 분단위까지 표현 */
+    /** 오늘 날짜 9시간 계산 및 분단위까지 표현 */
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
     let startDate = document.getElementById('startDate');
     let endDate = document.getElementById('endDate');
@@ -359,12 +379,12 @@ function openCreateModal(infoDate) {
     startDate.value = infoDate;
 
 
-    /* 일정제목 */
+    /** 일정제목 */
     document.getElementsByClassName('scheduleNameDiv')[0].innerHTML
         = '<label>일정 제목</label>'
         + '<input type="text" id="scheduleName" class="scheduleName">';
 
-    /* 일정상태 */
+    /** 일정상태 */
     document.getElementsByClassName('scheduleStatusDiv')[0].innerHTML
         = '<label>일정 상태</label>'
         + '<select type="text" id="scheduleStatus" class="scheduleStatus">' +
@@ -372,39 +392,39 @@ function openCreateModal(infoDate) {
         '<option value="true">완료</option>' +
         '</select>';
 
-    /* 일정내용 */
+    /** 일정내용 */
     document.getElementsByClassName('scheduleContentDiv')[0].innerHTML
         = '<label>일정 내용</label>'
         + '<input type="text" id="scheduleContent" class="scheduleContent">';
 
-    /* 우선순위 */
+    /** 우선순위 */
     document.getElementsByClassName('schedulePriorityDiv')[0].innerHTML
         = '<label>우선순위</label>'
         + '<input type="range" id="schedulePriority" class="schedulePriority"\n' +
         'min="0" max="5" step="1" value="3" oninput="document.getElementById(\'value1\').innerHTML=this.value;">'
         + '<span id="value1">3</span>';
 
-    /* 태그 검색하는 함수 */
+    /** 태그 검색하는 함수 */
     tagSearch()
 
-    /*생성자*/
+    /** 생성자 */
     document.getElementsByClassName('scheduleCreator')[0].innerHTML = ''
 
-    /* 태그입력란 */
+    /** 태그입력란 */
     document.getElementById('scheduleTag').style.display = 'flex';
 
-    /* 주소 사용 여부 */
+    /** 주소 사용 여부 */
     document.getElementsByClassName('addressDiv')[0].innerHTML
         = '<label>주소</label>'
         + '<input onclick="addrToggle()" type="checkbox" id="addrCheckbox" class="addrCheckbox">'
         + '<div>주소 사용 여부</div>';
 
-    /* 버튼 div */
+    /** 버튼 div */
     document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML
         = '<button class="btn-empty" onclick="closeModal(this, \'edit\')">닫기</button>'
         + '<button class="saveBtn" onclick="saveSchedule()">완료</button>'
 
-    /* 지도 모달 */
+    /** 지도 모달 */
     document.getElementsByClassName('scheduleAddrInputDiv')[0].innerHTML
         = '<input class="addrInput" id="addrInput" type="text" placeholder="주소를 입력하세요" onkeyup="enterSearchAddr()">'
         + '<button class="btn-gray" onclick="searchAddr()">검색</button>'
@@ -418,30 +438,36 @@ function openCreateModal(infoDate) {
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 편집 모달 표시 함수
+ * 주요 기능 : 일정 편집 모달을 표시
+ */
 function openEditModal(scheduleId) {
-    tagSearch()
+    /** 함수 실행 시 일정 생성 형태로 모달 표시 */
     openCreateModal()
 
-    /* 모달 탑 */
+    /** 모달 탑 */
     document.getElementsByClassName('modal_schedule_body_top')[1].innerHTML = '일정 편집';
 
-    /* 버튼 div */
+    /** 버튼 div */
     document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML
         = '<button class="btn-empty" onclick="openDetailModal(\'' + scheduleId + '\')">취소</button>'
         + '<button class="saveBtn" onclick="editSchedule(\'' + scheduleId + '\')">완료</button>'
 
+    /** 일정을 검색하는 API 호출 */
     $.ajax({
         type: 'POST',
         url: 'schedule/find/' + scheduleId,
         dataType: "json",
         success: function (res) {
 
-            /* 시작일, 종료일 */
+            /** 시작일, 종료일 */
             document.getElementById('startDate').value = res.schedule.startDate.substring(0, 16);
             document.getElementById('endDate').type = 'datetime-local';
             document.getElementById('endDate').value = res.schedule.endDate.substring(0, 16);
 
-            /* 제목, 상태, 내용, 우선순위, 주소 */
+            /** 제목, 상태, 내용, 우선순위, 주소 */
             document.getElementById('scheduleName').value = res.schedule.title;
             let statusOptions = document.getElementById('scheduleStatus').children;
             res.schedule.status ? statusOptions[1].selected = true : statusOptions[0].selected = true;
@@ -450,7 +476,11 @@ function openEditModal(scheduleId) {
             document.getElementById('addrInput').value = res.schedule.address;
             document.getElementById('value1').innerHTML = document.getElementById('schedulePriority').value;
 
-            /* 희성이코드 */
+            /**
+             * 담당자 : 정희성
+             * 함수 설명 :
+             * 주요 기능 :
+             */
             const tagListDiv = document.querySelector('.tagListDiv');
             tagListDiv.innerHTML = '';
             res.schedule.tagInfo.map((result) => {
@@ -459,10 +489,11 @@ function openEditModal(scheduleId) {
                     '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
                     '</div>'
             })
-            /* 주소 사용 여부 및 주소 데이터 유무 확인 */
+            /** 주소 사용 여부 및 주소 데이터 유무 확인 */
             if (document.getElementsByClassName('addrInput')[0].value) {
                 document.getElementsByClassName('addrCheckbox')[0].disabled = false;
                 document.getElementsByClassName('addrCheckbox')[0].checked = true;
+                /** 주소 사용 여부 토글 */
                 addrToggle()
             }
         },
@@ -472,7 +503,9 @@ function openEditModal(scheduleId) {
         }
     })
 
+    /** 태그 검색 함수 */
     tagSearch()
+
     mapModal.classList.remove('show');
     editModal.classList.add('show')
     if (editModal.classList.contains('show')) {
@@ -482,19 +515,31 @@ function openEditModal(scheduleId) {
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 화면의 날짜 데이터를 DB에 한국 시간으로 저장하기 위한 시차 계산 함수
+ * 주요 기능 : 일정 저장 시 날짜 데이터의 시차를 계산
+ */
 function setTime(date) {
     let date1 = new Date(date + ':00');
     let newDate = new Date(date1.getTime() - new Date().getTimezoneOffset() * 120000).toISOString().slice(0, -8);
     return newDate;
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 편집 함수
+ * 주요 기능 : 일정 편집 API를 호출
+ */
 function editSchedule(scheduleId) {
+    /** 태그를 배열로 저장 */
     const tagValue = document.getElementsByClassName('tagValue');
     const arrayTag = [];
 
     for (let i = 0; i < tagValue.length; i++) {
         arrayTag.push(tagValue[i].getAttribute('value'))
     }
+    /** DB에 저장하기 위한 일정 데이터 */
     const schedules = {
         startDate: setTime(document.getElementById('startDate').value),
         endDate: setTime(document.getElementById('endDate').value),
@@ -505,6 +550,7 @@ function editSchedule(scheduleId) {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
+    /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
         alert('시작일, 종료일을 다시 확인해주세요.')
         return
@@ -521,7 +567,7 @@ function editSchedule(scheduleId) {
         alert('태그를 입력해주세요.')
         return
     } else {
-        /* 일정 편집 API 요청 */
+        /** 일정 편집 API 요청 */
         $.ajax({
             type: 'POST',
             url: 'schedule/update/' + scheduleId,
@@ -539,9 +585,14 @@ function editSchedule(scheduleId) {
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 삭제 함수
+ * 주요 기능 : 삭제 버튼 클릭 시 일정 삭제 API 호출
+ */
 function deleteSchedule(scheduleId) {
     if (confirm('일정을 삭제하시겠습니까?')) {
-        /* 일정 삭제 API 요청 */
+        /** 일정 삭제 API 요청 */
         $.ajax({
             type: 'POST',
             url: 'schedule/delete/' + scheduleId,
@@ -558,27 +609,43 @@ function deleteSchedule(scheduleId) {
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 주소 사용 여부 토글 함수
+ * 주요 기능 : 주소 사용 여부 체크박스가 체크되면 카카오맵 모달 표시
+ */
 function addrToggle() {
-    addrChecked = document.getElementById('addrCheckbox').checked;
+    /** 주소 사용 여부 체크박스 체크 */
+    let addrChecked = document.getElementById('addrCheckbox').checked;
+    /** 체크박스 체크되었을 시 */
     if (addrChecked) {
         mapModal.classList.add('show');
         searchAddr();
+    /** 체크박스 체크되지 않았을 시 */
     } else {
         mapModal.classList.remove('show');
         document.getElementById('addrInput').value = '';
     }
+    /** 카카오맵 모달이 표시되면 카카오맵의 사이즈 재조정 */
     if (mapModal.classList.contains('show')) {
         map.relayout();
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 일정 저장 함수
+ * 주요 기능 : 저장 버튼 클릭 시 일정 저장 API 호출
+ */
 function saveSchedule() {
+    /** 태그 목록을 배열로 저장 */
     const tagValue = document.getElementsByClassName('tagValue')
     const arrayTag = [];
 
     for (let i = 0; i < tagValue.length; i++) {
         arrayTag.push(tagValue[i].getAttribute('value'))
     }
+    /** DB에 저장할 일정 데이터 */
     const schedules = {
         startDate: setTime(document.getElementById('startDate').value),
         endDate: setTime(document.getElementById('endDate').value),
@@ -589,6 +656,7 @@ function saveSchedule() {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
+    /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
         alert('시작일, 종료일을 다시 확인해주세요.')
         return
@@ -605,6 +673,7 @@ function saveSchedule() {
         alert('태그를 입력해주세요.')
         return
     } else {
+        /** 일정 생성 API 호출 */
         $.ajax({
             type: 'POST',
             data: schedules,
@@ -621,7 +690,7 @@ function saveSchedule() {
             },
             error: function (err) {
                 if (err) {
-                    window.alert("일정등록을 실패하였습니다!!!!")
+                    window.alert("일정등록을 실패하였습니다.")
                     console.log(err)
                 }
             }
@@ -629,9 +698,12 @@ function saveSchedule() {
     }
 }
 
-/* 태그 input onblur 시 */
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 태그 자동완성 목록을 닫는 함수
+ * 주요 기능 : 태그 입력란에서 focus 해제 시 태그 목록 닫음
+ */
 function ScheduleTagOnblur() {
-    /* mouseup의 타겟이  */
     window.onmouseup = function (e) {
         let targetClass = e.target.classList[0]
         if (targetClass != 'autoTag' && targetClass != 'scheduleTag' && targetClass != 'autoTagList') {
@@ -641,6 +713,11 @@ function ScheduleTagOnblur() {
     }
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 : 태그 검색 함수
+ * 주요 기능 :
+ */
 function searchTag(event) {
     const tags = JSON.parse(localStorage.getItem('content'))
     const str = document.getElementById('scheduleTag').value;
@@ -699,35 +776,11 @@ function searchTag(event) {
         /*tagMotion();*/
     }
 }
-
-/*function tagMotion() {
-    let autoTagDiv = document.getElementsByClassName('autoTagDiv')
-
-    for (let i = 0; i < autoTagDiv.length; i++) {
-        document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseover', function () {
-            document.getElementsByClassName('deleteTagValue')[i].style.display = 'flex';
-        })
-        document.getElementsByClassName('autoTagDiv')[i].addEventListener('mouseleave', function () {
-            document.getElementsByClassName('deleteTagValue')[i].style.display = 'none';
-        })
-    }
-}*/
-
+/**
+ * 담당자 : 정희성
+ * 함수 설명 : 작성 태그 삭제 함수
+ * 주요 기능 : 화면에서 입력한 함수 삭제
+ */
 function deleteTag(selectedTag) {
-    /*document.getElementsByClassName('aaa')[0].remove();*/
     selectedTag.remove();
-    /*tagMotion()*/
-}
-
-/* 캘린더에 일정 바인딩 */
-function readEvents() {
-    let eventData = {
-        title: '취침',
-        start: '2022-08-15',
-        end: '2022-08-15',
-        id: '123123'
-    }
-    calendar.currentData.calendarOptions.events.push(eventData);
-
-    calendar.refetchEvents();
 }

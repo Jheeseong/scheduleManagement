@@ -249,8 +249,8 @@ const ScheduleController = {
     },
     /**
     * 담당자 : 배도훈
-    * 함수 내용 :
-    * 주요 기능 :
+    * 함수 내용 : 일정 상태 수정 함수
+    * 주요 기능 : 일정 id로 일정을 찾아 상태를 수정
     **/
     updateStatus: async (req, res) => {
         try {

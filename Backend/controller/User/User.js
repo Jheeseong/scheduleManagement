@@ -50,8 +50,8 @@ const UserController = {
     },
     /**
     * 담당자 : 배도훈
-    * 함수 내용 :
-    * 주요 기능 :
+    * 함수 내용 : 내브바 사이즈 저장 함수
+    * 주요 기능 : 유저가 설정한 내브바의 사이즈를 저장
     **/
     saveNavSize: async (req, res) => {
         try {

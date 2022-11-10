@@ -4,6 +4,11 @@ var myBarChart
 var myChart
 var scheduleChart
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function scheduleChartLib(res) {
     if (scheduleChart != null) {
         scheduleChart.destroy();
@@ -87,6 +92,11 @@ function scheduleChartLib(res) {
     });
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function setBarChart(tagData) {
     const tagNameArr = [];
     const tagCntArr = [];
@@ -180,6 +190,15 @@ function setBarChart(tagData) {
     });
 }
 
+/**
+ * 담당자 : 정희성, 배도훈
+ * 함수 설명 : pie 차트 생성 함수
+ * 주요 기능 : chart.js 라이브러리를 사용하여 화면에 pie 차트 표시, 설정, 데이터 바인딩
+ *            차트에 표시될 태그 개수가 8개 이상일 시 7개까지는 단일 태그로 표시하고 그 외의 태그는 기타로 표시 - 정희성
+ *            라벨, 범례 기타 처리 - 정희성
+ *            차트 클릭 시 이벤트 - 정희성
+ *            차트 설정, 생성, 저장 - 배도훈
+ */
 function setChart(tagData) {
     const tagNameArr = [];
     const tagCntArr = [];
@@ -189,7 +208,7 @@ function setChart(tagData) {
     let totalCnt = 0;
 
     for (let i = 0; i < tagData.selectScheduleTag.length ; i++) {
-        /*최대 차트 숫자인 8개 이하 시 그래프에 표시*/
+        /** 최대 차트 숫자인 8개 이하 시 그래프에 표시 */
         if (i < 7) {
             tagNameArr.push(tagData.selectScheduleTag[i].content);
             tagCntArr.push(tagData.selectScheduleTag[i].count);
@@ -210,10 +229,12 @@ function setChart(tagData) {
         tagCntPer.push(((tagCntArr[i] / totalCnt) * 100).toFixed(1) + '(' + tagCntArr[i] + ')')
     }
 
+    /** 차트 설정 */
     var context = document
         .getElementById('myChart')
         .getContext('2d');
 
+    /** 차트 생성, 설정 및 변수에 저장 */
     myChart = new Chart(context, {
         type: 'pie', // 차트의 형태
         data: { // 차트에 들어갈 데이터
@@ -221,7 +242,7 @@ function setChart(tagData) {
             datasets: [
                 { //데이터
                     label: 'tagChart', //차트 제목
-                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 여부
                     data: tagCntArr,
                     backgroundColor: [
                         //색상
@@ -241,6 +262,7 @@ function setChart(tagData) {
             ]
         },
         options: {
+            /** 차트 클릭 시 이벤트 */
             onClick: (evt) => {
                 const points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
 
@@ -260,6 +282,7 @@ function setChart(tagData) {
                 legend: {
                     display: true,
                     labels: {
+                        /** 라벨 및 범례 기타 처리 */
                         generateLabels: function (myChart) {
                             let str = '';
 
@@ -298,6 +321,11 @@ function setChart(tagData) {
     });
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function openEtc() {
     let etcList = document.querySelector('.legend__etcList');
     if (etcList.style.display == 'none') {
@@ -307,6 +335,11 @@ function openEtc() {
     }
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function onclickEtcChart(label) {
     $.ajax({
         type: 'POST',
@@ -358,6 +391,11 @@ function onclickEtcChart(label) {
     })
 }
 
+/**
+ * 담당자 : 정희성
+ * 함수 설명 :
+ * 주요 기능 :
+ */
 function onclickChart(label) {
     $.ajax({
         type: 'POST',

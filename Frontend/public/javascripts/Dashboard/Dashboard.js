@@ -1,5 +1,5 @@
 /**
- * 담당자 : ?
+ * 담당자 : 정희성
  * 함수 설명 :
  * 주요 기능 :
  */
@@ -165,7 +165,7 @@ function deleteMemo(id){
 }
 
 /**
- * 담당자 : 정희성, 배도훈
+ * 담당자 : 정희성
  * 함수 설명 :
  * 주요 기능 :
  */
@@ -235,28 +235,15 @@ let sortable;
 
 /**
  * 담당자 : 정희성, 배도훈
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 드래그 관련 기능을 추가하는 함수
+ * 주요 기능 : sortable 라이브러리 적용 및 커스텀
  */
 function draggable() {
     const lists = document.querySelectorAll('.scheduleList');
     let startArea;
     let endArea;
 
-    /*const dragStartEvent =  (e) => {
-        startArea = e.target.parentNode;
-    }
-
-    const dragEndEvent =  (e) => {
-        endArea = e.target.parentNode;
-        if(startArea != endArea){
-            eventCb = document.querySelector('#' + e.target.id + ' .cb');
-            toggleCb(eventCb, eventCb.getAttribute('value').replaceAll('\'', ''), 'drag')
-        }
-    }*/
     lists.forEach((list) => {
-        /*list.addEventListener('dragstart', dragStartEvent)
-        list.addEventListener('dragend', dragEndEvent)*/
         if (scheduleCheck === false) {
             sortable = new Sortable(list, {
                 group: "shared",
@@ -274,8 +261,6 @@ function draggable() {
                 }
             });
         } else {
-            /*list.addEventListener('dragstart', dragStartEvent)
-            list.addEventListener('dragend', dragEndEvent)*/
             sortable.options.group.name = 'shared'
         }
     });
