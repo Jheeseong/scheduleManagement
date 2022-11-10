@@ -10,7 +10,6 @@ const UserController = {
         try {
             let users = await User.find({_id: {$ne: req.user._id}})
                 .exec();
-            console.log(users)
             res.json({user: users, finduser: true})
         } catch (err) {
             res.json({finduser: false, err: err})

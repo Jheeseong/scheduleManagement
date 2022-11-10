@@ -217,22 +217,28 @@ function saveCategory() {
         tagName: arrayCategoryTag,
         userName: arrayCategoryUser
     }
-    /*카테고리 저장*/
-    $.ajax({
-        type: 'POST',
-        data: categories,
-        url: 'category/create',
-        dataType: "json",
+    if (!categories.title) {
+        window.alert("카테고리 제목을 작성해주세요.")
+    } else if (categories.tagName.length === 0) {
+        window.alert("카테고리 태그를 지정해주세요.");
+    } else {
+        /*카테고리 저장*/
+        $.ajax({
+            type: 'POST',
+            data: categories,
+            url: 'category/create',
+            dataType: "json",
 
-        success: function (res) {
-            window.alert(res.message);
-            window.location.reload(true);
-        },
-        error: function (err) {
-            window.alert("카테고리 등록을 실패하였습니다!!!")
-            console.log(err)
-        },
-    })
+            success: function (res) {
+                window.alert(res.message);
+                window.location.reload(true);
+            },
+            error: function (err) {
+                window.alert("카테고리 등록을 실패하였습니다!!!")
+                console.log(err)
+            },
+        });
+    }
 }
 /**
 * 담당자 : 정희성
@@ -263,23 +269,28 @@ function categoryUpdate(id) {
         tagName: arrayCategoryTag,
         userName: arrayCategoryUser
     };
-    /*카테고리 수정*/
-    $.ajax({
-        type: 'POST',
-        data: categories,
-        url: 'category/update/' + id,
-        dataType: "json",
+    if (!categories.title) {
+        window.alert("카테고리 제목을 작성해주세요.")
+    } else if (categories.tagName.length === 0) {
+        window.alert("카테고리 태그를 지정해주세요.");
+    } else {
+        /*카테고리 수정*/
+        $.ajax({
+            type: 'POST',
+            data: categories,
+            url: 'category/update/' + id,
+            dataType: "json",
 
-        success: function (res) {
-            window.alert(res.message);
-            window.location.reload(true);
-        },
-        error: function (err) {
-            window.alert("카테고리 편집을 실패하였습니다!!!")
-            console.log(err)
-        },
-    })
-
+            success: function (res) {
+                window.alert(res.message);
+                window.location.reload(true);
+            },
+            error: function (err) {
+                window.alert("카테고리 편집을 실패하였습니다!!!")
+                console.log(err)
+            },
+        });
+    }
 }
 
 /**
