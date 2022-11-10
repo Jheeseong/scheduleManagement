@@ -53,13 +53,17 @@ function closeCategoryModal(event){
 **/
 /*카테고리 생성 모달창*/
 function openCategoryModal() {
-    const categoryTop = document.querySelector('.modal_category_body_top')
+    const categoryTop = document.querySelector('.modal_category_body_top');
     const categoryBtn = document.querySelector('.categoryBtnDiv');
+    const AddUserTop = document.querySelector('.modal_category_body_Adduser_top > div > span');
+
 
     categoryTop.innerText = '카테고리 생성'
     categoryBtn.innerHTML =
         '<button class="btn-empty" onclick="closeCategoryModal(this)">닫기</button>' +
         `<button onclick='saveCategory()'>저장</button>`
+
+    AddUserTop.innerText = "공유자 " + 0
     $.ajax({
         type: 'POST',
         url: 'schedule/tagsearch',
@@ -94,6 +98,7 @@ function openCategoryModal() {
 function openUpdateCategoryModal(id) {
     const tagListDiv = document.querySelector('.AddUserTagListDiv');
     const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');
+    const AddUserTop = document.querySelector('.modal_category_body_Adduser_top > div > span');
     const categoryBtn = document.querySelector('.categoryBtnDiv');
     const categoryTop = document.querySelector('.modal_category_body_top')
 
@@ -124,7 +129,8 @@ function openUpdateCategoryModal(id) {
             document.getElementById('categoryName').value = res.category.title;
             tagListDiv.innerHTML = ''
             res.category.tagInfo.map((result) => {
-                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + result.content + '"  onclick="AddUserDeleteTag(this)">' +
+                tagListDiv.innerHTML +=
+                    '<div class ="AddUserAutoTagDiv ' + 'tag' + result.content + '"  onclick="AddUserDeleteTag(this)">' +
                     '<span class="AddUserTagValue" id="AddUserTagValue" value="' + result.content +'">' + result.content + '</span>' +
                     '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
                     '</div>'
@@ -136,6 +142,7 @@ function openUpdateCategoryModal(id) {
             }
             /*공유 유저 바인딩*/
             AdduserMid.innerHTML = ''
+            AddUserTop.innerText = '공유자 ' + res.category.userInfo.length
             res.category.userInfo.map((result) => {
                 AdduserMid.innerHTML += '<div class ="addUserDiv ' + result.name + '" value = "'+ result._id + '">' +
                     '<div>' +
@@ -143,6 +150,7 @@ function openUpdateCategoryModal(id) {
                     '<span class = "userName">' + result.name + '</span>' +
                     '</div>' +
                     '<span class = "userEmail">' + (result.email===undefined ? "" : result.email) + '</span>' +
+                    '<i class="fa-solid fa-trash addUserDivDeleteValue" onclick="deleteAddUser(this)"></i>' +
                     '</div>'
             });
             categoryBtn.innerHTML =

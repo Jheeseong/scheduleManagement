@@ -137,6 +137,7 @@ function searchAddUser() {
 **/
 function getCheckboxAddUser()  {
     const AdduserMid = document.querySelector('.modal_category_body_Adduser_mid');
+    const AddUserTop = document.querySelector('.modal_category_body_Adduser_top > div > span');
     // 선택된 목록 가져오기
     const query = 'input[id="adduserCheckbox"]:checked';
     const selectedEls =
@@ -144,6 +145,8 @@ function getCheckboxAddUser()  {
     AdduserMid.innerHTML = "";
     /*공유 유저창 종료*/
     closeAddUserModal()
+    /*공유자 수 바인딩*/
+    AddUserTop.innerText = '공유자 ' + selectedEls.length
     /*선택한 유저의 정보를 찾아와서 바인딩 작업*/
     selectedEls.forEach((el) => {
         $.ajax({
@@ -151,12 +154,14 @@ function getCheckboxAddUser()  {
             url: 'user/findById/' + el.value,
             dataType: "json",
             success: function (res) {
-                AdduserMid.innerHTML += '<div class ="addUserDiv ' + res.user.name + '" value = "'+ res.user._id + '">' +
+                AdduserMid.innerHTML +=
+                    '<div class ="addUserDiv ' + res.user.name + '" value = "'+ res.user._id + '">' +
                     '<div>' +
                     '<img class ="userImage" src="' + res.user.image + '">' +
                     '<span class = "userName">' + res.user.name + '</span>' +
                     '</div>' +
                     '<span class = "userEmail">' + (res.user.email==undefined ? "" : res.user.email) + '</span>' +
+                    '<i class="fa-solid fa-trash addUserDivDeleteValue" onclick="deleteAddUser(this)"></i>' +
                     '</div>'
             },
             error: function (err) {
@@ -167,6 +172,18 @@ function getCheckboxAddUser()  {
             }
         });
     });
+}
+/**
+* 담당자 : 정희성
+* 함수 내용 : 공유 유저 삭제 함수
+* 주요 기능 : 공유 유저 삭제 버튼 클릭 시 삭제 기능
+**/
+function deleteAddUser(addUser) {
+    const AddUserTop = document.querySelector('.modal_category_body_Adduser_top > div > span');
+    const AddUserCnt = document.querySelectorAll('.addUserDiv').length - 1
+    AddUserTop.innerText = "공유자 " + AddUserCnt
+
+    addUser.parentNode.remove()
 }
 /**
 * 담당자 : 정희성
