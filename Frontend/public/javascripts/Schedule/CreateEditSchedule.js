@@ -185,8 +185,9 @@ function sortList(item, order) {
 
 /**
  * 담당자 : 정희성
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 모든 태그를 찾아오는 함수
+ * 주요 기능 : 모든 태그를 찾는 기능
+ *            찾은 태그들을 localStorage에 저장하는 기능
  */
 function tagSearch() {
     $.ajax({
@@ -489,8 +490,10 @@ function openEditModal(scheduleId) {
 
             /**
              * 담당자 : 정희성
-             * 함수 설명 :
-             * 주요 기능 :
+             * 함수 설명 : 일정 내 저장된 태그들을 불러오는 함수
+             * 주요 기능 : 일정 내 태그들 바인딩 기능
+             *            태그위에 커서 올려둘 시 데이터 삭제 버튼 생성
+             *            주소 사용 여부 확인 체크 및 사용 시 지도 모달 띄어주는 기능
              */
             const tagListDiv = document.querySelector('.tagListDiv');
             tagListDiv.innerHTML = '';
@@ -727,7 +730,12 @@ function ScheduleTagOnblur() {
 /**
  * 담당자 : 정희성
  * 함수 설명 : 태그 검색 함수
- * 주요 기능 :
+ * 주요 기능 : localstorage에 저장된 태그를 불러오는 기능
+ *           태그 검색한 단어가 포함된 태그를 불러오는 기능
+ *           검색이 없을 경우 전체 태그를 불러오는 기능
+ *           태그가 포거스 되어 있지 않는 경우 전체 태그리스트 창 종료 기능
+ *           태그 클릭 시 스케줄 태그 목록으로 이동하는 기능
+ *           엔터 시 해당 태그가 스케줄 태그 목록으로 이동하는 기능
  */
 function searchTag(event) {
     const tags = JSON.parse(localStorage.getItem('content'))
@@ -735,6 +743,7 @@ function searchTag(event) {
     const tagList = document.querySelector('.tagList')
     const tagListDiv = document.querySelector('.tagListDiv')
 
+    /*태그 입력란에 입력 시 그 단어가 포함된 태그 표시*/
     if (str.length) {
         tagList.innerHTML =
             '<ul id="autoTagListUl" class="autoTagList"></ul>';
@@ -747,9 +756,11 @@ function searchTag(event) {
                 bool = true;
             }
         });
+        /*아무것도 없을 시 태그 리스트 종료*/
         if (bool == false) {
             tagList.innerHTML = '';
         }
+        /*입력 중이지 않을 경우 전체 태그 표시*/
     } else {
         tagList.innerHTML =
             '<ul id="autoTagListUl" class="autoTagList"></ul>';

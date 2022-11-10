@@ -6,10 +6,12 @@ var scheduleChart
 
 /**
  * 담당자 : 정희성
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 일정 완료율 차트 함수
+ * 주요 기능 : 일정 완료율 계산 후 차트에 바인딩 기능
+ *            완료 일정/전체 일정 계산하여 퍼센트로 계산 기능
  */
 function scheduleChartLib(res) {
+    /*기존의 차트가 나마있는 경우 제거*/
     if (scheduleChart != null) {
         scheduleChart.destroy();
     }
@@ -19,6 +21,7 @@ function scheduleChartLib(res) {
     for (let i = 0; i < res.length; i++) {
         let scheduleArr = new Object()
 
+        /*완료 일정 갯수 및 미완료 일정 갯수 json 생성*/
         let find = selectScheduleArr.find(v => v.status === res[i].status)
         if (find === undefined) {
             scheduleArr.status = res[i].status;
@@ -41,9 +44,11 @@ function scheduleChartLib(res) {
             scheduleCnt[1] = schedule.count;
         }
     })
+    /*차트 가운데 완료율 바인딩*/
     const chartCenter = document.querySelector('.chartCenter')
     chartCenter.innerHTML = '<span>'+ ((scheduleCnt[0]/(scheduleCnt[0]+scheduleCnt[1]))*100).toFixed(0) +'%</span>';
 
+    /*차트 생성*/
     var context = document
         .getElementById('scheduleChart')
 
@@ -73,6 +78,7 @@ function scheduleChartLib(res) {
                 legend: {
                     display: true,
                     labels: {
+                        /*범례 표시*/
                         generateLabels: function (scheduleChart) {
                             let str = '';
 
@@ -94,8 +100,11 @@ function scheduleChartLib(res) {
 
 /**
  * 담당자 : 정희성
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 태그 통계 바 차트 함수
+ * 주요 기능 : 태그 별 사용횟수를 바 차트로 바인딩 기능
+ *            태그 갯수가 7개 초과 시 기타로 표시하는 기능
+ *            차트 클릭 시 해당 태그에 담긴 일정 표시 기능
+ *            범례의 기타 클릭 시 안에 담긴 태그들 표시 기능
  */
 function setBarChart(tagData) {
     const tagNameArr = [];
@@ -104,6 +113,7 @@ function setBarChart(tagData) {
     let etcTagCnt = 0;
     tagArr = []
     tagData.map((result, index) => {
+        /*태그 개수가 7개 초과 시 기타로 분류*/
         if (index < 7) {
             tagNameArr.push(result.content);
             tagCntArr.push(result.count);
@@ -122,7 +132,7 @@ function setBarChart(tagData) {
 
     var context = document
         .getElementById('myBarChart')
-
+    /*차트 생성*/
     myBarChart = new Chart(context, {
         type: 'bar', // 차트의 형태
         data: { // 차트에 들어갈 데이터
@@ -149,6 +159,7 @@ function setBarChart(tagData) {
         },
         options: {
             maintainAspectRatio :false,
+            /*클릭한 태그의 스케줄 리스트 푣시*/
             onClick: (evt) => {
                 const points = myBarChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
 
@@ -156,6 +167,7 @@ function setBarChart(tagData) {
                     const firstPoint = points[0];
                     var label = myBarChart.data.labels[firstPoint.index];
                     var value = myBarChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+                    /*기타 클릭시 기타에 담긴 모든 태그 및 일정 표시*/
                     if (label === '기타') {
                         onclickEtcChart(etcTagName);
                     } else {

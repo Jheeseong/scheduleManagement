@@ -62,10 +62,11 @@ function applyCalendar(eventList) {
         initialView: 'dayGridMonth',
         selectable: false,
         dayMaxEventRows: true,
+        /*캘린더 크기 초과 시 more 처리*/
         moreLinkClick: function(info){
             let infoDate = info.date.toISOString().slice(0, 16)
             let selectedEventList = [];
-
+            /*클릭한 날 포함되어 있는 일정 리스트 불러오기*/
             for (let i = 0; i < eventList.length; i++) {
                 let eventStartDay = new Date(eventList[i].start)
                 let eventEndDay = new Date(eventList[i].end)
@@ -77,11 +78,12 @@ function applyCalendar(eventList) {
                     selectedEventList.push(eventList[i]);
                 }
             }
+            /*클릭 한 날 일정들을 일정리스트 모달에 표시*/
             openListModal(selectedEventList, infoDate);
 
             return 'none';
         },
-
+        /*클릭한 날 포함되어 있는 일정 리스트 불러오기*/
         dateClick: function (info) {
             let infoDate = info.date.toISOString().slice(0, 16)
             let selectedEventList = [];
@@ -106,6 +108,7 @@ function applyCalendar(eventList) {
             center: '',
             right: 'today prevYear,prev,next,nextYear'
         },
+        /*하나의 일정 클릭 시 세부 정보 일정 모달 실행*/
         eventClick: function (info) {
             openDetailModal(info.event.id);
         },
