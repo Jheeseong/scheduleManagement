@@ -394,7 +394,7 @@ function openCreateModal(infoDate) {
     /** 일정제목 */
     document.getElementsByClassName('scheduleNameDiv')[0].innerHTML
         = '<label>일정 제목</label>'
-        + '<input type="text" id="scheduleName" class="scheduleName">';
+        + '<input type="text" id="scheduleName" class="scheduleName" maxlength="200">';
 
     /** 일정상태 */
     document.getElementsByClassName('scheduleStatusDiv')[0].innerHTML
@@ -413,8 +413,8 @@ function openCreateModal(infoDate) {
     document.getElementsByClassName('schedulePriorityDiv')[0].innerHTML
         = '<label>우선순위</label>'
         + '<input type="range" id="schedulePriority" class="schedulePriority"\n' +
-        'min="0" max="5" step="1" value="3" oninput="document.getElementById(\'value1\').innerHTML=this.value;">'
-        + '<span id="value1">3</span>';
+        'min="0" max="5" step="1" value="0" oninput="document.getElementById(\'value1\').innerHTML=this.value;">'
+        + '<span id="value1">0</span>';
 
     /** 태그 검색하는 함수 */
     tagSearch()
