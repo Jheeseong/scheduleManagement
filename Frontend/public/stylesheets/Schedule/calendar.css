@@ -331,13 +331,7 @@ html, body, .wrapper{
     width: 100%;
     margin-bottom: 20px;
 }
-.scheduleName{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 200px;
-    height: 20px;
-}
+
 .modal_schedule_body:last-child > div > input{
     width: 75%;
 }

@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 /**
  * 담당자 : 정희성
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 내가 만든 모든 일정 달력에 바인딩 함수
+ * 주요 기능 : 내가 만든 모든 일정 달력에 바인딩 기능
+ *            일정 상태에 따라 색상 다르게 바인딩 기능
  */
 function onlyMySchedule() {
     $.ajax({
@@ -25,6 +26,7 @@ function onlyMySchedule() {
                 eventData.id = schedule[i]._id;
                 eventData.address = schedule[i].address;
                 eventData.tags = schedule[i].tagInfo;
+                /*일정 상태에 따라 색상 구분*/
                 if (schedule[i].status === false) {
                     eventData.color = '#0098fe';
                 } else {
@@ -39,14 +41,19 @@ function onlyMySchedule() {
             console.log(err)
         }
     })
+    /*달력에 바인딩*/
     applyCalendar(eventList)
+    /*일정 렌더링*/
     calendar.render();
 }
 
 /**
  * 담당자 : 정희성, 배도훈
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 파라미터에 담긴 일정 캘린더 바인딩 함수
+ * 주요 기능 : 풀캘린더 라이브러리를 통한 일정 바인딩 기능 - 정희성 배도훈
+ *            달력 크기 초과 시 more 처리 기능 - 배도훈
+ *            달력 내 일자 클릭 시 해당 날짜의 일정 리스트 불러오기 기능 -배도훈
+ *            달력 내 하나 일정 클릭 시 일정 세부 정보 표시 기능 - 배도훈
  */
 function applyCalendar(eventList) {
     var calendarEl = document.getElementById('calendar');

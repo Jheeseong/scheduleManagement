@@ -264,7 +264,7 @@ function openDetailModal(scheduleId) {
                     += '<button class="saveBtn btn-red" onclick="deleteSchedule(\'' + scheduleId + '\')">삭제</button>'
                     + '<button class="saveBtn" onclick="openEditModal(\'' + scheduleId + '\')">편집</button>'
             }
-
+            /*시간 포맷 지정*/
             function getDate(dateValue) {
                 const years = dateValue.substring(0,4)
                 const month = dateValue.substring(5,7)
@@ -276,6 +276,17 @@ function openDetailModal(scheduleId) {
 
                 return customDate;
             }
+            /*문자 자르기*/
+            function stringCut(text) {
+                let title;
+                if (text.length > 10) {
+                    title = text.substring(0, 10);
+                    title += '...';
+                } else {
+                    title = text
+                }
+                return title;
+            }
 
 
             /* 시작일, 종료일 */
@@ -283,7 +294,7 @@ function openDetailModal(scheduleId) {
             document.getElementById('endDate').innerText = getDate(res.schedule.endDate)
 
             /* 일정제목 */
-            document.getElementById('scheduleName').innerText = res.schedule.title;
+            document.getElementById('scheduleName').innerText = stringCut(res.schedule.title);
 
             /* 일정상태 */
             document.getElementById('scheduleStatus').innerText = res.schedule.status ? '완료' : '미완료';
@@ -297,6 +308,7 @@ function openDetailModal(scheduleId) {
             /* 태그입력란 */
             document.getElementById('scheduleTag').style.display = 'none';
 
+            /*작성자란*/
             document.getElementById('scheduleCreator').innerHTML =
                 '<div class="creatorUser">' +
                 '<img class="userImage" src="'+ res.schedule.userInfo.image +'">' +
