@@ -671,6 +671,7 @@ function saveSchedule() {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
+    console.log(arrayTag)
     /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
         toast('시작일, 종료일을 다시 확인해주세요.')
@@ -684,7 +685,7 @@ function saveSchedule() {
     } else if (!schedules.priority) {
         toast('우선순위를 입력해주세요.')
         return
-    } else if (schedules.tagInfo.length == 0) {
+    } else if (schedules.tagInfo.length === 0) {
         toast('태그를 입력해주세요.')
         return
     } else {
@@ -788,10 +789,10 @@ function searchTag(event) {
             }
             if (tagCheck === false) {
                 let selectedTag = autoTag[i].getAttribute('value');
-                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + selectedTag + '"  onclick="AddUserDeleteTag(this)">' +
-                    '<span class="AddUserTagValue" id="AddUserTagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
-                    '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
-                    '</div>'
+                tagListDiv.innerHTML += '<div class = "autoTagDiv ' + 'tag' + selectedTag + '" onclick="deleteTag(this)">' +
+                    '<span class="tagValue" id="tagValue" value="' + selectedTag + '">' + selectedTag + '</span>' +
+                    '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
+                    '</div>';
             }
             tagList.innerHTML = ''
             document.getElementById('scheduleTag').value = null
