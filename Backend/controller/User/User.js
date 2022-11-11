@@ -23,7 +23,7 @@ const UserController = {
     findUserByName: async (req, res) => {
         try {
             const keyword = req.params.keyword
-            let users = await User.find({$or: [{name: {$regex: keyword}}, {email: {$regex: keyword}}]})
+            let users = await User.find({$and:[{_id: {$ne: req.user._id}}, {$or: [{name: {$regex: keyword}}, {email: {$regex: keyword}}]}]})
                 .exec();
             res.json({user: users, finduser: true})
         } catch (err) {
