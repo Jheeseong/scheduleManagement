@@ -775,14 +775,24 @@ function searchTag(event) {
     }
 
     const autoTag = document.getElementsByClassName('autoTag');
+    let tagCheck = false;
     /* 클릭으로 태그 선택 */
     for (let i = 0; i < autoTag.length; i++) {
         autoTag[i].addEventListener('click', function () {
-            let selectedTag = autoTag[i].getAttribute('value');
-            tagListDiv.innerHTML += '<div class ="autoTagDiv ' + 'tag' + selectedTag + '"  onclick="deleteTag(this)">' +
-                '<span class="tagValue" id="tagValue" value="' + selectedTag + '">' + selectedTag + '</span>' +
-                '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
-                '</div>'
+            //태그 중복 검사
+            for (let j = 0; j < tagListDiv.children.length; j++) {
+                if (tagListDiv.children[j].children[0].getAttribute('value') === autoTag[i].getAttribute('value')) {
+                    window.alert("중복된 태그가 존재합니다.")
+                    tagCheck = true;
+                }
+            }
+            if (tagCheck === false) {
+                let selectedTag = autoTag[i].getAttribute('value');
+                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + selectedTag + '"  onclick="AddUserDeleteTag(this)">' +
+                    '<span class="AddUserTagValue" id="AddUserTagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
+                    '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
+                    '</div>'
+            }
             tagList.innerHTML = ''
             document.getElementById('scheduleTag').value = null
             /*tagMotion();*/
@@ -790,10 +800,19 @@ function searchTag(event) {
     }
     /* 엔터로 태그 선택 또는 등록 */
     if (event.keyCode == 13) {
-        tagListDiv.innerHTML += '<div class = "autoTagDiv ' + 'tag' + str + '" onclick="deleteTag(this)">' +
-            '<span class="tagValue" id="tagValue" value="' + str + '">' + str + '</span>' +
-            '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
-            '</div>'
+        //태그 중복 검사
+        for (let j = 0; j < tagListDiv.children.length; j++) {
+            if (tagListDiv.children[j].children[0].getAttribute('value') === str) {
+                window.alert("중복된 태그가 존재합니다.")
+                tagCheck = true;
+            }
+        }
+        if (tagCheck === false) {
+            tagListDiv.innerHTML += '<div class = "autoTagDiv ' + 'tag' + str + '" onclick="deleteTag(this)">' +
+                '<span class="tagValue" id="tagValue" value="' + str + '">' + str + '</span>' +
+                '<i class="fa-regular fa-circle-xmark deleteTagValue"></i>' +
+                '</div>';
+        }
         tagList.innerHTML = ''
         document.getElementById('scheduleTag').value = null
         /*tagMotion();*/

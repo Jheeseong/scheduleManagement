@@ -244,15 +244,24 @@ function AddUserSearchTag() {
     }
 
     const autoTag = document.getElementsByClassName('AddUserAutoTag');
-
+    let tagCheck = false;
     /*태그리스트에서 태그 하나 클릭 시 해당 태그를 카테고리 태그에 담음*/
     for(let i = 0; i < autoTag.length; i++){
         autoTag[i].addEventListener('click', function () {
-            let selectedTag = autoTag[i].getAttribute('value');
-            tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + selectedTag + '"  onclick="AddUserDeleteTag(this)">' +
-                '<span class="AddUserTagValue" id="AddUserTagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
-                '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
-                '</div>'
+            //태그 중복 검사
+            for (let j = 0; j < tagListDiv.children.length; j++) {
+                if (tagListDiv.children[j].children[0].getAttribute('value') === autoTag[i].getAttribute('value')) {
+                    window.alert("중복된 태그가 존재합니다.")
+                    tagCheck = true;
+                }
+            }
+            if (tagCheck === false) {
+                let selectedTag = autoTag[i].getAttribute('value');
+                tagListDiv.innerHTML += '<div class ="AddUserAutoTagDiv ' + 'tag' + selectedTag + '"  onclick="AddUserDeleteTag(this)">' +
+                    '<span class="AddUserTagValue" id="AddUserTagValue" value="' + selectedTag +'">' + selectedTag + '</span>' +
+                    '<i class="fa-regular fa-circle-xmark AddUserDeleteTagValue"></i>' +
+                    '</div>'
+            }
             tagList.innerHTML= ''
             document.getElementById('categoryTag').value = null
             /*AddUserTagMotion();*/
