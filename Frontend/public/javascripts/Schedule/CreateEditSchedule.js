@@ -394,7 +394,7 @@ function openCreateModal(infoDate) {
     /** 일정제목 */
     document.getElementsByClassName('scheduleNameDiv')[0].innerHTML
         = '<label>일정 제목</label>'
-        + '<input type="text" id="scheduleName" class="scheduleName" oninput="checkTextLength()" maxlength="200">';
+        + '<input type="text" id="scheduleName" class="scheduleName" oninput="checkTextLength(this,200)" maxlength="200">';
 
     /** 일정상태 */
     document.getElementsByClassName('scheduleStatusDiv')[0].innerHTML
@@ -847,10 +847,16 @@ function toast(string) {
     toast.classList.add("reveal"),
         toast.innerText = string
 }
-
-function checkTextLength() {
-    const inputValue = document.getElementById('scheduleName').value
-    if (inputValue.length >= 199) {
-        toast("200자 이하만 작성이 가능합니다.")
+/**
+* 담당자 : 정희성
+* 함수 내용 : 글자 길이 체크 후 팝업창 띄우는 함수
+* 주요 기능 : 글자 길이 체크 기능
+ *          초과 시 팝업창 ㅍ시 기능
+**/
+function checkTextLength(element, cnt) {
+    let inputValue = element.value;
+    if (inputValue.length >= cnt) {
+        toast(cnt + "자 이하만 작성이 가능합니다.")
     }
+
 }
