@@ -394,7 +394,7 @@ function openCreateModal(infoDate) {
     /** 일정제목 */
     document.getElementsByClassName('scheduleNameDiv')[0].innerHTML
         = '<label>일정 제목</label>'
-        + '<input type="text" id="scheduleName" class="scheduleName" maxlength="200">';
+        + '<input type="text" id="scheduleName" class="scheduleName" oninput="checkTextLength()" maxlength="200">';
 
     /** 일정상태 */
     document.getElementsByClassName('scheduleStatusDiv')[0].innerHTML
@@ -566,19 +566,19 @@ function editSchedule(scheduleId) {
     }
     /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
-        alert('시작일, 종료일을 다시 확인해주세요.')
+        toast('시작일, 종료일을 다시 확인해주세요.')
         return
     } else if (!schedules.title) {
-        alert('일정 제목을 입력해주세요.')
+        toast('일정 제목을 입력해주세요.')
         return
     } else if (!schedules.content) {
-        alert('일정 내용을 입력해주세요.')
+        toast('일정 내용을 입력해주세요.')
         return
     } else if (!schedules.priority) {
-        alert('우선순위를 입력해주세요.')
+        toast('우선순위를 입력해주세요.')
         return
     } else if (schedules.tagInfo.length == 0) {
-        alert('태그를 입력해주세요.')
+        toast('태그를 입력해주세요.')
         return
     } else {
         /** 일정 편집 API 요청 */
@@ -673,19 +673,19 @@ function saveSchedule() {
     }
     /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
-        alert('시작일, 종료일을 다시 확인해주세요.')
+        toast('시작일, 종료일을 다시 확인해주세요.')
         return
     } else if (!schedules.title) {
-        alert('일정 제목을 입력해주세요.')
+        toast('일정 제목을 입력해주세요.')
         return
     } else if (!schedules.content) {
-        alert('일정 내용을 입력해주세요.')
+        toast('일정 내용을 입력해주세요.')
         return
     } else if (!schedules.priority) {
-        alert('우선순위를 입력해주세요.')
+        toast('우선순위를 입력해주세요.')
         return
     } else if (schedules.tagInfo.length == 0) {
-        alert('태그를 입력해주세요.')
+        toast('태그를 입력해주세요.')
         return
     } else {
         /** 일정 생성 API 호출 */
@@ -782,7 +782,7 @@ function searchTag(event) {
             //태그 중복 검사
             for (let j = 0; j < tagListDiv.children.length; j++) {
                 if (tagListDiv.children[j].children[0].getAttribute('value') === autoTag[i].getAttribute('value')) {
-                    window.alert("중복된 태그가 존재합니다.")
+                    toast("중복된 태그가 존재합니다.")
                     tagCheck = true;
                 }
             }
@@ -803,7 +803,7 @@ function searchTag(event) {
         //태그 중복 검사
         for (let j = 0; j < tagListDiv.children.length; j++) {
             if (tagListDiv.children[j].children[0].getAttribute('value') === str) {
-                window.alert("중복된 태그가 존재합니다.")
+                toast("중복된 태그가 존재합니다.")
                 tagCheck = true;
             }
         }
@@ -825,4 +825,32 @@ function searchTag(event) {
  */
 function deleteTag(selectedTag) {
     selectedTag.remove();
+}
+/**
+* 담당자 : 정희성
+* 함수 내용 : 토스트 팝업창 함수
+* 주요 기능 : 토스트 팝업창을 띄우는 기능
+ *           일정 시간이 지나면 사라지는 기능
+**/
+let removeToast;
+
+function toast(string) {
+    const toast = document.getElementById("toast");
+
+    toast.classList.contains("reveal") ?
+        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1500)) :
+        removeToast = setTimeout(function () {
+            document.getElementById("toast").classList.remove("reveal")
+        }, 1500)
+    toast.classList.add("reveal"),
+        toast.innerText = string
+}
+
+function checkTextLength() {
+    const inputValue = document.getElementById('scheduleName').value
+    if (inputValue.length >= 199) {
+        toast("200자 이하만 작성이 가능합니다.")
+    }
 }

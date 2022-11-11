@@ -218,9 +218,9 @@ function saveCategory() {
         userName: arrayCategoryUser
     }
     if (!categories.title) {
-        window.alert("카테고리 제목을 작성해주세요.")
+        toast("카테고리 제목을 작성해주세요.")
     } else if (categories.tagName.length === 0) {
-        window.alert("카테고리 태그를 지정해주세요.");
+        toast("카테고리 태그를 지정해주세요.")
     } else {
         /*카테고리 저장*/
         $.ajax({
@@ -270,9 +270,9 @@ function categoryUpdate(id) {
         userName: arrayCategoryUser
     };
     if (!categories.title) {
-        window.alert("카테고리 제목을 작성해주세요.")
+        toast("카테고리 제목을 작성해주세요.")
     } else if (categories.tagName.length === 0) {
-        window.alert("카테고리 태그를 지정해주세요.");
+        toast("카테고리 태그를 지정해주세요.")
     } else {
         /*카테고리 수정*/
         $.ajax({

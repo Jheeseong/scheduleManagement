@@ -251,7 +251,7 @@ function AddUserSearchTag() {
             //태그 중복 검사
             for (let j = 0; j < tagListDiv.children.length; j++) {
                 if (tagListDiv.children[j].children[0].getAttribute('value') === autoTag[i].getAttribute('value')) {
-                    window.alert("중복된 태그가 존재합니다.")
+                    toast("중복된 태그가 존재합니다.")
                     tagCheck = true;
                 }
             }
