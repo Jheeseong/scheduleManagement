@@ -19,8 +19,11 @@
     <script defer src="/javascripts/Dashboard/ScheduleCategory.js"></script>
     <script defer src="/javascripts/TagStatistics/Chart.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-
-
+    <style>
+        .navbar li:nth-child(1) a{
+            border-bottom: 2px solid #0098fe;
+        }
+    </style>
 </head>
 <body>
 <%- include ('layout/navbar.ejs') %>
@@ -72,6 +75,7 @@
                                 </div>
                                 <div class="memoTextDiv" style="display: none">
                                     <textarea class="memoText"></textarea>
+                                    <div class="memoDateDiv"></div>
                                 </div>
                             </div>
                         </div>

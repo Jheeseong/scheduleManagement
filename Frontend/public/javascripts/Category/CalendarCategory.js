@@ -244,7 +244,7 @@ function allCategory(){
             })
             /*아무 카테고리가 없을 시 메시지 표시*/
             if(res.categories.length == 0){
-                allCategory.innerHTML = '<div class="emptyMessageDiv">공유받은 카테고리가 없습니다.</div>'
+                allCategory.innerHTML = '<div class="emptyMessageDiv">카테고리가 없습니다.</div>'
             }
             const schedules = res.schedules;
             /*바인딩 될 일정 정보를 배열에 담음*/

@@ -10,9 +10,11 @@ body{
     color: #222244;
     height: 100%;
 }
+
 /* 스크롤 */
 .scrollBox{
     width: 90%;
+    position: relative;
     overflow-x: hidden;
     overflow-y: hidden;
     height: inherit;
@@ -133,10 +135,21 @@ body{
 }
 .memoText{
     width: 97%;
-    height: 23vh;
+    height: 13vh;
     background-color: inherit;
     border: none;
     resize: none;
+}
+.maxWrapper .memoText{
+    height: 16vh;
+}
+
+.memoDateDiv{
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: #cccccc;
 }
 .memoText:focus{
     outline: none;
@@ -252,13 +265,17 @@ body{
     box-shadow: 2px 2px 4px 1px #cccccc;
 }
 .memoRow{
-    width: 85%;
+    width: 90%;
     height: calc(1rem + 3px);
     background-color: #FFF7D1;
     padding: 10px 15px;
     box-shadow: 2px 2px 0px 0px #eeeeee;
     margin-bottom: 5px;
     overflow-y: hidden;
+}
+.memoRow:hover{
+    opacity: .5;
+    cursor: pointer;
 }
 
 /* 활동 로그 */

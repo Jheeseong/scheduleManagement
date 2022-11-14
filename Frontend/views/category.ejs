@@ -13,17 +13,14 @@
     </div>
 </div>
 <div class="categoryTab">
-    <!--<div>전체</div>-->
-    <div onclick="MyCategory()">My</div>
-    <div onclick="sharedCategory()">공유함</div>
-    <div onclick="allCategory()">All</div>
+    <input type="radio" name="categoryTab" id="myCategoryTab"><label for="myCategoryTab" onclick="MyCategory()">나의 카테고리</label>
+    <input type="radio" name="categoryTab" id="sharedCategoryTab"><label for="sharedCategoryTab" onclick="sharedCategory()">공유함</label>
+    <input type="radio" name="categoryTab" id="allCategoryTab"><label for="allCategoryTab" onclick="allCategory()">전체</label>
 </div>
-<!-- my카테고리 -->
-<div class="categoryList myCategory">
-</div>
+
+<!-- 나의 카테고리 -->
+<div class="categoryList myCategory"></div>
 <!-- 공유함 -->
-<div class="categoryList sharedCategory">
-</div>
-<!-- all -->
-<div class="categoryList allCategory">
-</div>
+<div class="categoryList sharedCategory"></div>
+<!-- 전체 카테고리 -->
+<div class="categoryList allCategory"></div>

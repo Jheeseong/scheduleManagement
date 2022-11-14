@@ -37,6 +37,7 @@ function findMemoList() {
                 memoRow.innerText = memos.memo[i].content;
                 memoList.appendChild(memoRow)
             }
+
             /** 메모가 없으면 메시지 표시 */
             if(memos.memo.length == 0){
                 let emptyMessageDiv = document.createElement('div');
@@ -64,7 +65,7 @@ function memoDetail(el){
         url: 'memo/findMemoDetail/' + memoId,
         dataType: "json",
         success: function (result) {
-            showMemoText(memoId, result.memo.content)
+            showMemoText(memoId, result.memo.content, result.memo.createDate, result.memo.updateDate)
         },
         error: function (err) {
             window.alert("메모를 찾지 못하였습니다.")
@@ -91,16 +92,19 @@ function showMemoList(){
     })
     icons[2].setAttribute('onclick', 'saveMemo()')
     document.querySelector('.content--memo .fa-plus').style.display = 'inline-block';
+
+    document.querySelector('.memoDateDiv').innerText = '';
 }
 /**
  * 담당자 : 배도훈
  * 함수 설명 : 메모 영역을 글쓰기 형태로 전환하는 함수
  * 주요 기능 : 메모 영역의 요소들을 글쓰기 형태로 전환
  */
-function showMemoText(id, content){
+function showMemoText(id, content, createDate, updateDate){
     document.querySelector('.memoList').style.display = 'none';
     document.querySelector('.memoTextDiv').style.display = 'block';
     document.querySelector('.notepad').style.backgroundColor = '#FFF7D1';
+
 
     let selector;
     id ? selector = '.content--memo i.fa-chevron-left, .content--memo i.fa-check, .content--memo i.fa-trash' : selector = '.content--memo i.fa-chevron-left, .content--memo i.fa-check'
@@ -115,6 +119,12 @@ function showMemoText(id, content){
         icons[1].setAttribute('onclick', 'deleteMemo(\'' + id + '\')')
         icons[2].setAttribute('onclick', 'saveMemo(\'' + id + '\')')
         document.querySelector('.memoTextDiv textarea').value = content;
+
+        document.querySelector('.memoDateDiv').innerText = '작성일 ' + createDate.replace('T', ' ').substring(0, 16)
+
+        if(updateDate){
+            document.querySelector('.memoDateDiv').innerText += ' 수정일 ' + updateDate.replace('T', ' ').substring(0, 16)
+        }
     }
 }
 

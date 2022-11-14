@@ -58,6 +58,7 @@ function onlyMySchedule() {
 function applyCalendar(eventList) {
     var calendarEl = document.getElementById('calendar');
     calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'ko',
         timeZone: 'Asia/Seoul',
         initialView: 'dayGridMonth',
         selectable: false,
@@ -102,11 +103,19 @@ function applyCalendar(eventList) {
             }
             openListModal(selectedEventList, infoDate);
         },
+        customButtons: {
+            todayCustomButton: {
+                text: '현재',
+                click: function() {
+                    calendar.today();
+                },
+            }
+        },
         //지우면 오늘 날짜로 시작
         headerToolbar: {
             left: 'title',
             center: '',
-            right: 'today prevYear,prev,next,nextYear'
+            right: 'todayCustomButton prevYear,prev,next,nextYear'
         },
         /*하나의 일정 클릭 시 세부 정보 일정 모달 실행*/
         eventClick: function (info) {

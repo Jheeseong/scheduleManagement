@@ -11,7 +11,7 @@ var scheduleChart
  *            완료 일정/전체 일정 계산하여 퍼센트로 계산 기능
  */
 function scheduleChartLib(res) {
-    /*기존의 차트가 나마있는 경우 제거*/
+    /*기존의 차트가 남아있는 경우 제거*/
     if (scheduleChart != null) {
         scheduleChart.destroy();
     }

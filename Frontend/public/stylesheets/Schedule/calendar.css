@@ -5,6 +5,7 @@
 html, body, .wrapper{
     overflow-y: hidden;
 }
+
 .wrapper{
     display: flex;
     justify-content: center;
@@ -40,6 +41,34 @@ html, body, .wrapper{
     min-width: 700px;
     height: 90%;
 }
+/* 현재 버튼 */
+button.fc-button.fc-todayCustomButton-button{
+    background-color: #fff;
+    border: 1px solid #a8a8a8;
+    color: #222;
+    transition: all .3s ease-in-out;
+}
+button.fc-button.fc-todayCustomButton-button:hover{
+    background-color: #FFFADF;
+    border: 1px solid #FFFADF;
+    color: #222;
+    opacity: 1;
+}
+/* header buttons */
+button.fc-button.fc-next-button, button.fc-button.fc-prev-button, button.fc-button.fc-nextYear-button, button.fc-button.fc-prevYear-button{
+    background-color: inherit;
+    color: #6D6F6D;
+    border: 1px solid #a8a8a8;
+}
+button.fc-button.fc-next-button:hover, button.fc-button.fc-prev-button:hover, button.fc-button.fc-nextYear-button:hover, button.fc-button.fc-prevYear-button:hover{
+    background-color: #a8a8a8;
+    border: 1px solid #a8a8a8;
+}
+/*!* 오늘 날짜 td *!
+.fc-day-today {
+    color: #222222 !important;
+    background: #C6E0FF !important;
+}*/
 .form__subtitle{
     padding: 15px 0;
     font-size: 18px;
@@ -61,24 +90,31 @@ html, body, .wrapper{
 }
 
 .categoryTab{
+    font-size: 13px;
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.categoryTab > div{
+.categoryTab input[type="radio"]{
+    display: none;
+}
+.categoryTab input[type="radio"]:checked + label{
+    background-color: #dddddd;
+}
+.categoryTab label{
     padding: 5px 0;
     width: 33%;
     border: 1px solid #a8a8a8;
     text-align: center;
     cursor: pointer;
 }
-.categoryTab > div:first-child{
+.categoryTab label:nth-child(2){
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     border-collapse: collapse;
 }
-.categoryTab > div:last-child{
+.categoryTab label:last-child{
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
     border-collapse: collapse;

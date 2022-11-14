@@ -14,12 +14,19 @@ document.getElementById('mainMenu').addEventListener('mousedown', closeSub);
 function closeSub(event) {
     /** 클릭해도 닫히지 않을 영역 지정 */
     let targetSubDiv = event.currentTarget.querySelectorAll('.fa-chevron-down, .fa-paint-roller, .colorDiv, .iconDiv, .subDiv, .subDiv div, .subDiv i')
+    /** userDropDown 아이콘 */
+    let userDropDown = document.querySelector('.userDropDown');
 
     /** 지정한 영역 클릭 시 창을 닫지 않고 함수 종료 */
     for (let i = 0; i < targetSubDiv.length; i++) {
         if (event.target == targetSubDiv[i]) {
             return;
         }
+    }
+
+    /** userDropDown 아이콘 토글 */
+    if(userDropDown.classList.contains('open')){
+        userDropDown.classList.toggle('open')
     }
 
     /** 지정한 영역 외 영역 클릭 시 창 닫음 */
@@ -37,7 +44,10 @@ function userSub() {
     document.getElementsByClassName('bgSub')[0].style.display = 'none';
 
     /** 로그아웃창 토글 */
+    let userDropDown = document.querySelector('.userDropDown');
     let userSub = document.querySelector('.userSub');
+
+    userDropDown.classList.toggle('open');
     if (userSub.style.display == 'flex') {
         userSub.style.display = 'none';
     } else {

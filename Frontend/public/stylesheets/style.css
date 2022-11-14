@@ -169,7 +169,12 @@ button:hover {
 
 .userDropDown {
     cursor: pointer;
+    transition: all .3s ease-in-out;
 }
+.userDropDown.open{
+    transform: rotateX(180deg);
+}
+
 
 .colorDiv, .navSizeBtn {
     width: 100px;
