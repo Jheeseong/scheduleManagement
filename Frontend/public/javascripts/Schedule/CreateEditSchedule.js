@@ -663,8 +663,8 @@ function saveSchedule() {
     }
     /** DB에 저장할 일정 데이터 */
     const schedules = {
-        startDate: setTime(document.getElementById('startDate').value),
-        endDate: setTime(document.getElementById('endDate').value),
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value,
         title: document.getElementById('scheduleName').value,
         status: document.getElementById('scheduleStatus').value,
         content: document.getElementById('scheduleContent').value,
