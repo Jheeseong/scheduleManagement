@@ -21,8 +21,8 @@ function onlyMySchedule() {
             eventList = [];
             for (let i = 0; i < schedule.length; i++) {
                 eventData.title = schedule[i].title;
-                eventData.start = schedule[i].startDate.split('Z')[0];
-                eventData.end = schedule[i].endDate.split('Z')[0];
+                eventData.start = schedule[i].startDate;
+                eventData.end = schedule[i].endDate;
                 eventData.id = schedule[i]._id;
                 eventData.address = schedule[i].address;
                 eventData.tags = schedule[i].tagInfo;
@@ -59,49 +59,51 @@ function applyCalendar(eventList) {
     var calendarEl = document.getElementById('calendar');
     calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'ko',
-        timeZone: 'Asia/Seoul',
+        timeZone: 'local',
         initialView: 'dayGridMonth',
         selectable: false,
         dayMaxEventRows: true,
         /*캘린더 크기 초과 시 more 처리*/
         moreLinkClick: function(info){
-            let infoDate = info.date.toISOString().slice(0, 16)
             let selectedEventList = [];
             /*클릭한 날 포함되어 있는 일정 리스트 불러오기*/
             for (let i = 0; i < eventList.length; i++) {
                 let eventStartDay = new Date(eventList[i].start)
                 let eventEndDay = new Date(eventList[i].end)
-                let startDay = new Date(eventStartDay.getFullYear(), eventStartDay.getMonth(), eventStartDay.getDate(),9,0,0).toISOString()
-                let today = new Date(info.date).toISOString()
-                let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),9,0,0).toISOString()
+                /*let startDay = new Date(eventStartDay.getFullYear(), eventStartDay.getMonth(), eventStartDay.getDate(),0,0,0)*/
+                let today = new Date(info.date)
+                /*let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),0,0,0)*/
 
-                if (startDay <= today && today <= endDay) {
+                if (eventStartDay < today && today < eventEndDay) {
                     selectedEventList.push(eventList[i]);
                 }
             }
             /*클릭 한 날 일정들을 일정리스트 모달에 표시*/
-            openListModal(selectedEventList, infoDate);
+            openListModal(selectedEventList, info.date);
 
             return 'none';
         },
         /*클릭한 날 포함되어 있는 일정 리스트 불러오기*/
         dateClick: function (info) {
-            let infoDate = info.date.toISOString().slice(0, 16)
             let selectedEventList = [];
 
             for (let i = 0; i < eventList.length; i++) {
                 let eventStartDay = new Date(eventList[i].start)
                 let eventEndDay = new Date(eventList[i].end)
-                let startDay = new Date(eventStartDay.getFullYear(), eventStartDay.getMonth(), eventStartDay.getDate(),9,0,0).toISOString()
-                let today = new Date(info.dateStr).toISOString()/*.getDate().toString().split('T')*/
-                let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),9,0,0).toISOString()
+                /*let startDay = new Date(eventStartDay.getFullYear(), eventStartDay.getMonth(), eventStartDay.getDate(),9,0,0)*/
+                let today = info.date
+                /*let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),9,0,0)*/
 
 
-                if (startDay <= today && today <= endDay) {
+                console.log("클릭 날짜:", info.date)
+                console.log("startDate:", eventStartDay)
+                console.log("endDate:", eventEndDay)
+                if (eventStartDay <= today && today < eventEndDay) {
                     selectedEventList.push(eventList[i]);
                 }
             }
-            openListModal(selectedEventList, infoDate);
+            console.log(selectedEventList)
+            openListModal(selectedEventList, info.date);
         },
         customButtons: {
             todayCustomButton: {

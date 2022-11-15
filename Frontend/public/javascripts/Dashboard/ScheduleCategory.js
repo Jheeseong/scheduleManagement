@@ -59,7 +59,7 @@ function findScheduleList() {
                 str += '</div>';
                 str += '<div class="scheduleContent">' + res.schedule[i].content + '</div>';
                 str += '<div>';
-                str += '<i class="fa-regular fa-calendar"></i> ' + setDate(res.schedule[i].startDate) + ' ~ ' + setDate(res.schedule[i].endDate);
+                str += '<i class="fa-regular fa-calendar"></i> ' + getDate(res.schedule[i].startDate) + ' ~ ' + getDate(res.schedule[i].endDate);
                 str += '</div>';
                 str += '</div>';
 
@@ -83,6 +83,24 @@ function findScheduleList() {
         }
 
     })
+}
+
+/**
+* 담당자 : 정희성
+* 함수 내용 : 시간 변경 함수
+* 주요 기능 : locatTime으로 변환 및 am/pm 형식 변환
+**/
+function getDate(dateValue) {
+    const eventDate = new Date(dateValue)
+    const years = eventDate.getFullYear()/*dateValue.substring(0,4)*/
+    const month = eventDate.getMonth() < 10 ? '0' + eventDate.getMonth() : eventDate.getMonth()/*dateValue.substring(5,7)*/
+    const date = eventDate.getDate() < 10 ? '0' + eventDate.getDate() : eventDate.getDate()/*dateValue.substring(8,10)*/
+    const ampm = eventDate.getHours() >= 12 ? 'PM' : 'AM';
+    const hours = eventDate.getHours() % 12 ? eventDate.getHours() % 12 < 10 ? '0' + eventDate.getHours() % 12 : eventDate.getHours() % 12 : '0' + 0; /*parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;*/
+    const minutes = eventDate.getMinutes() < 10 ? '0' + eventDate.getMinutes() : eventDate.getMinutes();/*dateValue.substring(14,16)*/
+    const customDate = `${years}-${month}-${date}. ${hours}:${minutes}${ampm}`;
+
+    return customDate;
 }
 
 let sortable;
@@ -383,7 +401,7 @@ function categoryInSchedule(id, creator) {
                 str += '<div class="' + cbClasses + '" id="cb' + index + '" value="\'' + schedule._id + '\'"><i class="fa-solid fa-check fa-2xs"></i></div>' + '<span>' + schedule.title + '</span>';
                 str += '</div>';
                 str += '<div>';
-                str += '<i class="fa-regular fa-calendar"></i> ' + setDate(schedule.startDate) + ' ~ ' + setDate(schedule.endDate);
+                str += '<i class="fa-regular fa-calendar"></i> ' + getDate(schedule.startDate) + ' ~ ' + getDate(schedule.endDate);
                 str += '</div>';
                 str += '</div>';
 
@@ -484,19 +502,6 @@ function detailSchedule(scheduleId, event) {
         url: 'schedule/find/' + scheduleId,
         dataType: "json",
         success: function (res) {
-
-            /*시간 포맷 지정*/
-            function getDate(dateValue) {
-                const years = dateValue.substring(0,4)
-                const month = dateValue.substring(5,7)
-                const date = dateValue.substring(8,10)
-                const ampm = parseInt(dateValue.substring(11,13)) >= 12 ? 'PM' : 'AM';
-                const hours = parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;
-                const minutes = dateValue.substring(14,16)
-                const customDate = `${years}-${month}-${date} ${ampm} ${hours}:${minutes}`;
-
-                return customDate;
-            }
 
             /*문자 자르기*/
             function stringCut(text) {

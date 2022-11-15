@@ -156,9 +156,11 @@ const ScheduleController = {
         try {
             let date = new Date()
             /*오늘 일정을 찾기 위한 변수*/
-            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),9 ,0,0).toISOString()
-            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1,9,0,0).toISOString()
+            const endDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate(),0 ,0,0).toISOString()
+            const startDateValue = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1,0,0,0).toISOString()
 
+            console.log(startDateValue)
+            console.log(endDateValue)
             let schedules = await Schedule
                 .find({$and: [{userInfo: req.user._id},
                         {'startDate':{$lt: startDateValue}},

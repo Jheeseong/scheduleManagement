@@ -75,17 +75,18 @@ function closeModal(event, modal) {
 function openListModal(selectedEventList, infoDate) {
     /** 시간 형식을 am/pm으로 변환 */
     function getDate(dateValue) {
-        const years = dateValue.substring(0,4)
-        const month = dateValue.substring(5,7)
-        const date = dateValue.substring(8,10)
-        const ampm = parseInt(dateValue.substring(11,13)) >= 12 ? 'pm' : 'am';
-        const hours = parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;
-        const minutes = dateValue.substring(14,16)
+        const eventDate = new Date(dateValue)
+        const years = eventDate.getFullYear()/*dateValue.substring(0,4)*/
+        const month = eventDate.getMonth() < 10 ? '0' + eventDate.getMonth() : eventDate.getMonth()/*dateValue.substring(5,7)*/
+        const date = eventDate.getDate() < 10 ? '0' + eventDate.getDate() : eventDate.getDate()/*dateValue.substring(8,10)*/
+        const ampm = eventDate.getHours() >= 12 ? 'pm' : 'am';
+        const hours = eventDate.getHours() % 12 ? eventDate.getHours() % 12 < 10 ? '0' + eventDate.getHours() % 12 : eventDate.getHours() % 12 : '0' + 0; /*parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;*/
+        const minutes = eventDate.getMinutes() < 10 ? '0' + eventDate.getMinutes() : eventDate.getMinutes();/*dateValue.substring(14,16)*/
         const customDate = `${years}-${month}-${date}. ${ampm} ${hours}:${minutes}`;
 
         return customDate;
     }
-    const date = new Date(infoDate)
+    const date = infoDate
     document.querySelector('.modal_schedule_body_top').innerHTML = '<span>'+ date.getFullYear() +'년 ' + (date.getMonth() + 1) +'월 '+ date.getDate()+'일 일정 목록' +'</span>'
 
     /** 일정 생성 시 오늘 날짜를 인자로 가지는 함수를 onclick으로 지정 */
@@ -276,13 +277,14 @@ function openDetailModal(scheduleId) {
             /*시간 포맷 지정*/
             /** 날짜를 am/pm 형식으로 변환 */
             function getDate(dateValue) {
-                const years = dateValue.substring(0,4)
-                const month = dateValue.substring(5,7)
-                const date = dateValue.substring(8,10)
-                const ampm = parseInt(dateValue.substring(11,13)) >= 12 ? 'PM' : 'AM';
-                const hours = parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;
-                const minutes = dateValue.substring(14,16)
-                const customDate = `${years}-${month}-${date} ${ampm} ${hours}:${minutes}`;
+                const eventDate = new Date(dateValue)
+                const years = eventDate.getFullYear()/*dateValue.substring(0,4)*/
+                const month = eventDate.getMonth() < 10 ? '0' + eventDate.getMonth() : eventDate.getMonth()/*dateValue.substring(5,7)*/
+                const date = eventDate.getDate() < 10 ? '0' + eventDate.getDate() : eventDate.getDate()/*dateValue.substring(8,10)*/
+                const ampm = eventDate.getHours() >= 12 ? 'PM' : 'AM';
+                const hours = eventDate.getHours() % 12 ? eventDate.getHours() % 12 < 10 ? '0' + eventDate.getHours() % 12 : eventDate.getHours() % 12 : '0' + 0; /*parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;*/
+                const minutes = eventDate.getMinutes() < 10 ? '0' + eventDate.getMinutes() : eventDate.getMinutes();/*dateValue.substring(14,16)*/
+                const customDate = `${years}-${month}-${date}. ${hours}:${minutes}${ampm}`;
 
                 return customDate;
             }
@@ -473,11 +475,13 @@ function openEditModal(scheduleId) {
         url: 'schedule/find/' + scheduleId,
         dataType: "json",
         success: function (res) {
+            const startDate = new Date(res.schedule.startDate)
+            const endDate = new Date(res.schedule.endDate)
 
             /** 시작일, 종료일 */
-            document.getElementById('startDate').value = res.schedule.startDate.substring(0, 16);
+            document.getElementById('startDate').value = setTime(startDate)/*res.schedule.startDate.substring(0, 16)*/;
             document.getElementById('endDate').type = 'datetime-local';
-            document.getElementById('endDate').value = res.schedule.endDate.substring(0, 16);
+            document.getElementById('endDate').value =setTime(endDate)/*.substring(0, 16)*/;
 
             /** 제목, 상태, 내용, 우선순위, 주소 */
             document.getElementById('scheduleName').value = res.schedule.title;
@@ -536,7 +540,7 @@ function openEditModal(scheduleId) {
  */
 function setTime(date) {
     let date1 = new Date(date + ':00');
-    let newDate = new Date(date1.getTime() - new Date().getTimezoneOffset() * 120000).toISOString().slice(0, -8);
+    let newDate = new Date(date1.getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
     return newDate;
 }
 
