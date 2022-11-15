@@ -54,7 +54,7 @@ function findTagSchedule(tagId, event) {
             /*선택한 태그 표시*/
             const scheduleContentTop = document.querySelector('.scheduleContent__top > div > .selectTitle')
             scheduleContentTop.innerHTML =
-                '<div>선택 태그</div>' +
+                '<div>선택 태그 </div>' +
                 '<span>' + res.selectTag.content + '</span>' +
                 '<div class="tagScheduleReload">' +
                 '<i class="fa-solid fa-rotate-right" style="color: #222222" onclick="findMySchedule()"></i>' +
@@ -176,7 +176,7 @@ function findScheduleTag(scheduleId, event) {
             /*선택 일정 표시*/
             const tagContentTop = document.querySelector('.tagContent__top > div > .selectTitle')
             tagContentTop.innerHTML =
-                '<div>선택 일정</div>' +
+                '<div>선택 일정 </div>' +
                 '<span>' + stringCut(res.schedule.title) + '</span>' +
                 '<div class="tagScheduleReload">' +
                 '<i class="fa-solid fa-rotate-right" style="color: #222222" onclick="findMyTag()"></i>' +

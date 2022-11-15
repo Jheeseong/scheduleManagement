@@ -214,6 +214,7 @@ tr:nth-child(odd):not(thead tr){
     color: #0098fe;
     margin-right: 8px;
     font-size: 15px;
+    margin-left: 8px;
 
 }
 .selectTitle > div{
