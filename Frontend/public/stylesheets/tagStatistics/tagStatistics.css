@@ -75,6 +75,7 @@ canvas{
 }
 .content--chart:hover .legendDiv{
     overflow-y: auto;
+    overflow-y: overlay;
 }
 .labelDiv{
     display: flex;
@@ -133,8 +134,17 @@ canvas{
     align-items: center;
 }
 .tagScheduleReload{
-    cursor: pointer;
     padding-right: 25px;
+}
+.fa-rotate-right{
+    font-size: 14px;
+    cursor: pointer;
+}
+.content--chart .fa-rotate-right{
+    display: none;
+}
+.content--chart:hover .fa-rotate-right{
+    display: block;
 }
 .tagList_cnt, .scheduleList_cnt{
     color: #0098fe;
@@ -210,7 +220,6 @@ tr:nth-child(odd):not(thead tr){
     font-weight: normal;
     color: #a8a8a8;
     font-size: 15px;
-    margin-right: 8px;
 }
 
 .MyScheduleList_tr.focusedTr, .MyTagList_tr.focusedTr{
