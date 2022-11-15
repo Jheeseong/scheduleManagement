@@ -555,8 +555,8 @@ function editSchedule(scheduleId) {
     }
     /** DB에 저장하기 위한 일정 데이터 */
     const schedules = {
-        startDate: setTime(document.getElementById('startDate').value),
-        endDate: setTime(document.getElementById('endDate').value),
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value,
         title: document.getElementById('scheduleName').value,
         status: document.getElementById('scheduleStatus').value,
         content: document.getElementById('scheduleContent').value,
@@ -564,6 +564,7 @@ function editSchedule(scheduleId) {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
+    console.log('start: ' + schedules.startDate)
     /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
         toast('시작일, 종료일을 다시 확인해주세요.')
