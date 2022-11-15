@@ -95,14 +95,11 @@ function applyCalendar(eventList) {
                 /*let endDay = new Date(eventEndDay.getFullYear(), eventEndDay.getMonth(), eventEndDay.getDate(),9,0,0)*/
 
 
-                console.log("클릭 날짜:", info.date)
-                console.log("startDate:", eventStartDay)
-                console.log("endDate:", eventEndDay)
+
                 if (eventStartDay <= today && today < eventEndDay) {
                     selectedEventList.push(eventList[i]);
                 }
             }
-            console.log(selectedEventList)
             openListModal(selectedEventList, info.date);
         },
         customButtons: {

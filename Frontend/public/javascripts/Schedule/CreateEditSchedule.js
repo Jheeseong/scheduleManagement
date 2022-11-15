@@ -568,7 +568,6 @@ function editSchedule(scheduleId) {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
-    console.log('start: ' + schedules.startDate)
     /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
         toast('시작일, 종료일을 다시 확인해주세요.')
@@ -676,7 +675,6 @@ function saveSchedule() {
         address: document.getElementById('addrInput').value,
         tagInfo: arrayTag,
     }
-    console.log(arrayTag)
     /** 유효성 검사 */
     if (schedules.startDate > schedules.endDate) {
         toast('시작일, 종료일을 다시 확인해주세요.')
