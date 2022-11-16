@@ -18,7 +18,7 @@
     <script defer src="/javascripts/TagStatistics/Chart.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        .navbar li:nth-child(3) a{
+        .navbar li:nth-child(3) a {
             border-bottom: 2px solid #0098fe;
         }
     </style>
@@ -48,7 +48,7 @@
                                     <div id="overflow" style="">
                                         <div class="inner" style="">
                                             <div class="slide slide_1">
-                                                <div class="slide-content" >
+                                                <div class="slide-content">
                                                     <!--차트가 그려질 부분-->
                                                     <canvas id="myChart" width="175"></canvas>
                                                 </div>
@@ -71,7 +71,9 @@
                     </div>
 
                     <div id="legendDiv" class="legendDiv">
-                        <div class="legend"><div class="label"></div></div>
+                        <div class="legend">
+                            <div class="label"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,17 +118,27 @@
         </div>
         <div class="verticalLine"></div>
         <div class="content" style="width: 60%">
-            <div class="content--schedule">
+            <div class="content--schedule" onmouseleave="offSortMenu()">
                 <div class="content__top scheduleContent__top">
                     <div>
                         <div>일정 목록</div>
                         <div class="scheduleList_cnt"></div>
+                        <div class="sortBtnDiv">
+                            <i class="fa-solid fa-sort sortBtn" onclick="toggleSortMenu()"></i>
+                            <div class="sortMenuDiv">
+                                <div class="sortMenu" onclick="sortScheduleList('status', 'asc', this)">일정 상태</div>
+                                <div class="sortMenu" onclick="sortScheduleList('title', 'asc', this)">일정 제목</div>
+                                <div class="sortMenu" onclick="sortScheduleList('content', 'asc', this)">일정 내용</div>
+                                <div class="sortMenu" onclick="sortScheduleList('startDate', 'asc', this)">시작일</div>
+                                <div class="sortMenu" onclick="sortScheduleList('endDate', 'asc', this)">종료일</div>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <div class="selectTitle"></div>
                     </div>
-
                 </div>
+
                 <div class="content__mid ScheduleContent__mid">
                     <table class="myScheduleListTable theadTable">
                         <colgroup>

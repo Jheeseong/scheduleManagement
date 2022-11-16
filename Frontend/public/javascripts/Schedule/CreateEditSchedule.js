@@ -38,7 +38,7 @@ function closeModal(event, modal) {
             document.getElementById('endDate').setAttribute('type', 'text');
             document.getElementsByClassName('tagListDiv')[0].innerHTML = '';
             document.getElementsByClassName('scheduleBtnDiv')[1].innerHTML = '';
-        /** 배경 클릭 시 */
+            /** 배경 클릭 시 */
         } else {
             listModal.classList.remove('show');
             editModal.classList.remove('show');
@@ -55,7 +55,7 @@ function closeModal(event, modal) {
 
         /** 체크박스 및 카카오맵 모달 해제 */
         mapModal.classList.remove('show');
-        
+
         /** 빈값일 때 메세지 및 테이블 display 변경 */
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'table'
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'none'
@@ -86,8 +86,9 @@ function openListModal(selectedEventList, infoDate) {
 
         return customDate;
     }
+
     const date = infoDate
-    document.querySelector('.modal_schedule_body_top').innerHTML = '<span>'+ date.getFullYear() +'년 ' + (date.getMonth() + 1) +'월 '+ date.getDate()+'일 일정 목록' +'</span>'
+    document.querySelector('.modal_schedule_body_top').innerHTML = '<span>' + date.getFullYear() + '년 ' + (date.getMonth() + 1) + '월 ' + date.getDate() + '일 일정 목록' + '</span>'
 
     /** 일정 생성 시 오늘 날짜를 인자로 가지는 함수를 onclick으로 지정 */
     document.querySelector('.scheduleAdd__div').setAttribute('onclick', 'openCreateModal(\'' + infoDate + '\')')
@@ -105,7 +106,7 @@ function openListModal(selectedEventList, infoDate) {
     tbodyTag.innerHTML = str;
 
     /** 해당 날짜에 일정이 없을 때 */
-    if(selectedEventList.length == 0){
+    if (selectedEventList.length == 0) {
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv table').style.display = 'none'
         document.querySelector('.modal_schedule_body_mid .scheduleTableDiv .emptyMessageDiv').style.display = 'flex'
     }
@@ -137,14 +138,17 @@ function sortList(item, order) {
     arr.sort((a, b) => {
         switch (item) {
             case 'title'
-            :   condition = a.firstElementChild.innerText > b.firstElementChild.innerText;
+            :
+                condition = a.firstElementChild.innerText > b.firstElementChild.innerText;
                 break;
             case 'startDate'
-            :   condition = a.children[1].innerText > b.children[1].innerText;
+            :
+                condition = a.children[1].innerText > b.children[1].innerText;
                 break;
             case 'endDate'
-            :   condition = a.lastElementChild.innerText > b.lastElementChild.innerText;
-            break;
+            :
+                condition = a.lastElementChild.innerText > b.lastElementChild.innerText;
+                break;
         }
 
         if (order == 'asc') {
@@ -163,17 +167,20 @@ function sortList(item, order) {
     }
     document.querySelector('#scheduleTbody').innerHTML = str;
 
-    /** 제목, 시작일, 종료일 중 onclick 속성 함수의 order 인자가 변경될 요소 지정 */
+    /** 제목, 시작일, 종료일 중 onclick 시 실행될 함수의 order 인자가 변경될 요소 지정 */
     let target = document.querySelectorAll('.scheduleTable th');
     switch (item) {
         case 'title'
-        :   target = target[0];
+        :
+            target = target[0];
             break;
         case 'startDate'
-        :   target = target[1];
+        :
+            target = target[1];
             break;
         case 'endDate'
-        :   target = target[2];
+        :
+            target = target[2];
             break;
     }
     if (order == 'asc') {
@@ -181,7 +188,6 @@ function sortList(item, order) {
     } else {
         target.setAttribute('onclick', 'sortList(\'' + item + '\', \'asc\')')
     }
-
 }
 
 /**
@@ -274,6 +280,7 @@ function openDetailModal(scheduleId) {
                     += '<button class="saveBtn btn-red" onclick="deleteSchedule(\'' + scheduleId + '\')">삭제</button>'
                     + '<button class="saveBtn" onclick="openEditModal(\'' + scheduleId + '\')">편집</button>'
             }
+
             /*시간 포맷 지정*/
             /** 날짜를 am/pm 형식으로 변환 */
             function getDate(dateValue) {
@@ -288,6 +295,7 @@ function openDetailModal(scheduleId) {
 
                 return customDate;
             }
+
             /*문자 자르기*/
             function stringCut(text) {
                 let title;
@@ -323,8 +331,8 @@ function openDetailModal(scheduleId) {
             /*작성자란*/
             document.getElementById('scheduleCreator').innerHTML =
                 '<div class="creatorUser">' +
-                '<img class="userImage" src="'+ res.schedule.userInfo.image +'">' +
-                '<div class="userName">'+ res.schedule.userInfo.name +'</div>' +
+                '<img class="userImage" src="' + res.schedule.userInfo.image + '">' +
+                '<div class="userName">' + res.schedule.userInfo.name + '</div>' +
                 '</div>'
 
             /** 주소 사용 여부 */
@@ -481,7 +489,7 @@ function openEditModal(scheduleId) {
             /** 시작일, 종료일 */
             document.getElementById('startDate').value = setTime(startDate)/*res.schedule.startDate.substring(0, 16)*/;
             document.getElementById('endDate').type = 'datetime-local';
-            document.getElementById('endDate').value =setTime(endDate)/*.substring(0, 16)*/;
+            document.getElementById('endDate').value = setTime(endDate)/*.substring(0, 16)*/;
 
             /** 제목, 상태, 내용, 우선순위, 주소 */
             document.getElementById('scheduleName').value = res.schedule.title;
@@ -640,7 +648,7 @@ function addrToggle() {
         mapModal.style.height = editModal.firstElementChild.offsetHeight + 'px';
         mapModal.classList.add('show');
         searchAddr();
-    /** 체크박스 체크되지 않았을 시 */
+        /** 체크박스 체크되지 않았을 시 */
     } else {
         mapModal.classList.remove('show');
         document.getElementById('addrInput').value = '';
@@ -822,6 +830,7 @@ function searchTag(event) {
         /*tagMotion();*/
     }
 }
+
 /**
  * 담당자 : 정희성
  * 함수 설명 : 작성 태그 삭제 함수
@@ -830,12 +839,13 @@ function searchTag(event) {
 function deleteTag(selectedTag) {
     selectedTag.remove();
 }
+
 /**
-* 담당자 : 정희성
-* 함수 내용 : 토스트 팝업창 함수
-* 주요 기능 : 토스트 팝업창을 띄우는 기능
+ * 담당자 : 정희성
+ * 함수 내용 : 토스트 팝업창 함수
+ * 주요 기능 : 토스트 팝업창을 띄우는 기능
  *           일정 시간이 지나면 사라지는 기능
-**/
+ **/
 let removeToast;
 
 function toast(string) {
@@ -851,12 +861,13 @@ function toast(string) {
     toast.classList.add("reveal"),
         toast.innerText = string
 }
+
 /**
-* 담당자 : 정희성
-* 함수 내용 : 글자 길이 체크 후 팝업창 띄우는 함수
-* 주요 기능 : 글자 길이 체크 기능
+ * 담당자 : 정희성
+ * 함수 내용 : 글자 길이 체크 후 팝업창 띄우는 함수
+ * 주요 기능 : 글자 길이 체크 기능
  *          초과 시 팝업창 ㅍ시 기능
-**/
+ **/
 function checkTextLength(element, cnt) {
     let inputValue = element.value;
     if (inputValue.length >= cnt) {
