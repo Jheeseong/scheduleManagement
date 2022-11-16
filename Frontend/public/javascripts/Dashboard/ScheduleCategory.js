@@ -93,7 +93,7 @@ function findScheduleList() {
 function getDate(dateValue) {
     const eventDate = new Date(dateValue)
     const years = eventDate.getFullYear()/*dateValue.substring(0,4)*/
-    const month = eventDate.getMonth() < 10 ? '0' + eventDate.getMonth() : eventDate.getMonth()/*dateValue.substring(5,7)*/
+    const month = eventDate.getMonth() + 1 < 10 ? '0' + eventDate.getMonth() + 1 : eventDate.getMonth() + 1/*dateValue.substring(5,7)*/
     const date = eventDate.getDate() < 10 ? '0' + eventDate.getDate() : eventDate.getDate()/*dateValue.substring(8,10)*/
     const ampm = eventDate.getHours() >= 12 ? 'PM' : 'AM';
     const hours = eventDate.getHours() % 12 ? eventDate.getHours() % 12 < 10 ? '0' + eventDate.getHours() % 12 : eventDate.getHours() % 12 : '0' + 0; /*parseInt(dateValue.substring(11,13)) % 12 ? (parseInt(dateValue.substring(11,13)) % 12 < 10 ? '0' + parseInt(dateValue.substring(11,13)) % 12 : parseInt(dateValue.substring(11,13)) % 12) : '0' + 0;*/
