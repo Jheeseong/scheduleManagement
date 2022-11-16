@@ -41,7 +41,7 @@ function findMySchedule() {
  *          선택된 태그를 일정 제목 옆에 표시해주는 기능
  **/
 function findTagSchedule(tagId, event) {
-    if(focusTr(event)){
+    if (focusTr(event)) {
         return;
     }
     $.ajax({
@@ -152,7 +152,7 @@ function findMyTag() {
  *          선택 일정을 태그 목록 위에 표시해주는 기능
  **/
 function findScheduleTag(scheduleId, event) {
-    if(focusTr(event)){
+    if (focusTr(event)) {
         return;
     }
     $.ajax({
@@ -236,6 +236,7 @@ function updateTagList(tags) {
  */
 let selectedTagTr;
 let selectedScheduleTr;
+
 function focusTr(event) {
     console.log(event)
     /** 모든 tr을 배열로 저장 */
@@ -244,13 +245,13 @@ function focusTr(event) {
     /** 클릭한 tr이 이미 focusedTr 클래스를 포함하고 있을 경우 */
     if (event.classList.contains('focusedTr')) {
         /** 클릭한 tr이 일정목록의 tr일 경우 */
-        if(event.classList.contains('MyScheduleList_tr')){
+        if (event.classList.contains('MyScheduleList_tr')) {
             selectedScheduleTr = event;
             findMyTag()
         }
 
         /** 클릭한 tr이 태그목록의 tr일 경우 */
-        if(event.classList.contains('MyTagList_tr')){
+        if (event.classList.contains('MyTagList_tr')) {
             selectedTagTr = event;
             findMySchedule()
         }
@@ -258,16 +259,117 @@ function focusTr(event) {
         /** focusedTr 클래스 제거 */
         event.classList.remove('focusedTr')
         return true;
-    /** 클릭한 tr이 focusedTr 클래스가 없는 경우 */
+        /** 클릭한 tr이 focusedTr 클래스가 없는 경우 */
     } else {
         /** focusedTr 클래스를 가진 tr의 focusedTr 클래스를 제거 */
         for (let i = 0; i < trArr.length; i++) {
-            if(trArr[i].classList.contains('focusedTr')){
+            if (trArr[i].classList.contains('focusedTr')) {
                 trArr[i].classList.remove('focusedTr')
                 break;
             }
         }
         event.classList.add('focusedTr')
         return false;
+    }
+}
+
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 정렬 버튼 클릭 시 실행되는 함수
+ * 주요 기능 : 일정 목록 정렬 메뉴 토글
+ */
+function toggleSortMenu() {
+    document.querySelector('.sortMenuDiv').classList.toggle('open')
+}
+
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 정렬 메뉴 닫는 함수
+ * 주요 기능 : 마우스가 영역을 벗어나거나 목록 외 영역 클릭 시 정렬 메뉴 닫음
+ */
+function offSortMenu() {
+    document.querySelector('.sortMenuDiv').classList.remove('open')
+}
+
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 :
+ * 주요 기능 :
+ */
+function sortScheduleList(criterion, method, element) {
+    /** tr의 배열과 새로운 배열 생성 */
+    let trArr = document.querySelectorAll('.MyScheduleList_tr')
+    let newArr = [];
+    let tbody = document.querySelector('.tr_MyScheduleList')
+
+    /** 정렬메뉴버튼의 정렬방식(오름차순, 내림차순)을 클릭할 때마다 전환 */
+    method == 'asc' ? method = 'desc' : method = 'asc';
+    element.setAttribute('onclick', 'sortScheduleList(\'' + criterion + '\', \'' + method + '\', this)');
+
+    /** tr 배열의 각 tr들을 새로운 배열에 저장 */
+    for (let i = 0; i < trArr.length; i++) {
+        newArr.push(trArr[i]);
+    }
+
+    /** 새로운 배열 정렬 */
+    newArr.sort(function (a, b) {
+        if (method == 'asc') {
+            /** tr과 정렬기준을 인자로 받아 정렬기준 행의 텍스트를 리턴하는 함수를 사용하여 값을 비교 */
+            return (nthChildText(a, criterion) > nthChildText(b, criterion)) ? 1 : -1;
+        } else {
+            /** tr과 정렬기준을 인자로 받아 정렬기준 행의 텍스트를 리턴하는 함수를 사용하여 값을 비교 */
+            return (nthChildText(a, criterion) > nthChildText(b, criterion)) ? -1 : 1;
+        }
+    })
+
+    /** 정렬된 tr 배열을 tbody에 추가 */
+    tbody.innerHTML = '';
+    for (let i = 0; i < newArr.length; i++) {
+        tbody.appendChild(newArr[i]);
+    }
+}
+
+function nthChildText(tr, criterion) {
+    switch (criterion) {
+        case 'status':
+            return tr.firstElementChild.innerText;
+            break;
+        case 'title':
+            return tr.querySelector('td:nth-child(2)').innerText;
+            break;
+        case 'content':
+            return tr.querySelector('td:nth-child(3)').innerText;
+            break;
+        case 'startDate':
+            return tr.querySelector('td:nth-child(4)').innerText.substring(0, 16);
+            break;
+        case 'endDate':
+            return tr.querySelector('td:nth-child(4)').innerText.substring(19, 35);
+            break;
+    }
+};
+
+
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 특정 조건에서 정렬 메뉴를 닫는 함수를 호출하는 함수
+ * 주요 기능 : 영역 외 클릭 시 정렬 메뉴 닫는 함수 실행
+ */
+window.onmousedown = function (event) {
+    let target = event.target;
+    let sortMenuDiv = document.querySelector('.sortMenuDiv');
+    let sortMenu = document.querySelectorAll('.sortMenu');
+
+    let bool = true;
+
+    for (let i = 0; i < sortMenu.length; i++) {
+        if (target == sortMenu[i]) {
+            bool = false;
+            break;
+        }
+    }
+
+    if (target != sortMenuDiv && target != document.querySelector('.sortBtn') && bool) {
+        offSortMenu();
     }
 }

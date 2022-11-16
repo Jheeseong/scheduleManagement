@@ -96,9 +96,52 @@ canvas{
     height: 16px;
     border-radius: 50px;
 }
+.scheduleContent__top{
+    position: relative;
+}
 .scheduleContent__top, .tagContent__top, .tagChart__top{
     display: flex;
     justify-content: space-between;
+}
+/* 정렬 버튼, 정렬 메뉴 */
+.sortBtnDiv{
+    flex-direction: row;
+    padding: 0 15px;
+    display: none;
+}
+.content--schedule:hover .sortBtnDiv{
+    display: flex;
+}
+.sortBtn{
+    font-size: 14px;
+    cursor: pointer;
+}
+.sortBtn:hover{
+    opacity: .6;
+}
+.sortMenuDiv{
+    position: absolute;
+    top: calc(100% - 10px);
+    left: 120px;
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    font-size: 13px;
+    font-weight: normal;
+}
+.sortMenuDiv.open{
+    display: flex;
+}
+.sortMenuDiv > div{
+    border: 1px solid #e3e3e3;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.sortMenuDiv > div:hover{
+    background-color: #ddd;
+}
+.sortMenu:first-child, .sortMenu:nth-child(2), .sortMenu:nth-child(3), .sortMenu:nth-child(4){
+    border-bottom: none;
 }
 .ScheduleContent__mid{
     align-items: stretch;
