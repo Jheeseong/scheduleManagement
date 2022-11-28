@@ -293,8 +293,8 @@ function offSortMenu() {
 
 /**
  * 담당자 : 배도훈
- * 함수 설명 :
- * 주요 기능 :
+ * 함수 설명 : 일정 목록 정렬 함수. 분류 기준, 차순, 분류 기준 element를 인자로 받음.
+ * 주요 기능 : 일정 목록을 선택한 분류기준에 따라 오름차순 또는 내림차순 정렬
  */
 function sortScheduleList(criterion, method, element) {
     /** tr의 배열과 새로운 배열 생성 */
@@ -329,6 +329,11 @@ function sortScheduleList(criterion, method, element) {
     }
 }
 
+/**
+ * 담당자 : 배도훈
+ * 함수 설명 : 분류의 대상이 되는 tr의 n번째 텍스트를 리턴하는 함수
+ * 주요 기능 : 분류 기준에 따라 몇 번째 텍스트를 리턴하는지 결정
+ */
 function nthChildText(tr, criterion) {
     switch (criterion) {
         case 'status':

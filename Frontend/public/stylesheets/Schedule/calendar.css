@@ -2,9 +2,6 @@
  * 담당자 : 정희성, 배도훈
  * 설명 : 캘린더 페이지 css
  */
-html, body, .wrapper{
-    overflow-y: hidden;
-}
 
 .wrapper{
     display: flex;

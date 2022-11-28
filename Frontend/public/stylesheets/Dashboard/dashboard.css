@@ -10,7 +10,6 @@ body{
     color: #222244;
     height: 100%;
 }
-
 /* 스크롤 */
 .scrollBox{
     width: 90%;
@@ -31,6 +30,7 @@ body{
 
 .wrapper#dashboardWrapper{
     min-width: 1360px;
+    min-height: 530px;
 }
 .wrapper__form{
     flex-direction: row;
@@ -263,6 +263,12 @@ body{
     padding-top: 10px;
     background-color: #FFF7D1;
     box-shadow: 2px 2px 4px 1px #cccccc;
+}
+.notepad .scrollBox{
+    height: unset;
+}
+.notepad--list .scrollBox{
+    height: 100%;
 }
 .memoRow{
     width: 90%;

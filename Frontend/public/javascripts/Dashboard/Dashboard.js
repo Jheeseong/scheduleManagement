@@ -87,6 +87,7 @@ function showMemoList(){
     document.querySelector('.memoText').value = '';
     notepad.style.backgroundColor = 'inherit';
     notepad.style.boxShadow = 'none';
+    notepad.classList.add('notepad--list');
     icons.forEach(function (i) {
         i.style.display = 'none';
     })
@@ -103,8 +104,9 @@ function showMemoList(){
 function showMemoText(id, content, createDate, updateDate){
     document.querySelector('.memoList').style.display = 'none';
     document.querySelector('.memoTextDiv').style.display = 'block';
-    document.querySelector('.notepad').style.backgroundColor = '#FFF7D1';
-
+    let notepad = document.querySelector('.notepad');
+    notepad.style.backgroundColor = '#FFF7D1';
+    notepad.classList.remove('notepad--list')
 
     let selector;
     id ? selector = '.content--memo i.fa-chevron-left, .content--memo i.fa-check, .content--memo i.fa-trash' : selector = '.content--memo i.fa-chevron-left, .content--memo i.fa-check'

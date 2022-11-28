@@ -53,7 +53,6 @@ function userSub() {
     } else {
         userSub.style.display = 'flex';
     }
-
 }
 
 /**
